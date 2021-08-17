@@ -24,7 +24,7 @@ date_format: Jan 2006
 experience:
   - title: Associate Professor
     company: "Cincinnati Childrens"
-    company_url: 'http://www.cincinnatichildrens.com'
+    company_url: 'http://www.cincinnatichildrens.org'
     company_logo: 
     location: Ohio
     date_start: '2009-06-15'
