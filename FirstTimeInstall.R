@@ -1,6 +1,7 @@
 # First Time Install
 # Instructions
 # https://alison.rbind.io/blog/2020-12-new-year-new-blogdown/
+# https://shilaan.rbind.io/post/building-your-website-using-r-blogdown/#website-icon
 
 # configure GITHUB
 # https://happygitwithr.com/credential-caching.html#credential-caching
