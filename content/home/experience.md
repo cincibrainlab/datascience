@@ -25,7 +25,7 @@ experience:
   - title: Associate Professor
     company: "Cincinnati Childrens"
     company_url: 'http://www.cincinnatichildrens.org'
-    company_logo: 
+    company_logo: cchmc
     location: Ohio
     date_start: '2009-06-15'
     date_end: ''
