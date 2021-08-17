@@ -2,8 +2,8 @@
 widget: hero
 headless: true
 weight: 10
-active: true
-title: Hugo Academic Starter
+active: false
+title: Neuroscience
 hero_media: CinciBrainLab.png
 cta:
   label: '**Get Started**'
