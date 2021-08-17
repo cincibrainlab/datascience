@@ -22,14 +22,14 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
-  - title: 'Associate Professor'
-      company: 'Cincinnati Childrens'
+  - title: "Associate Professor"
+      company: "Cincinnati Childrens""
       company_url: 'http://www.cincinnatichildrens.com'
       company_logo: org-x
       location: Ohio
       date_start: '2009-06-15'
       date_end: ''
-      description: Neuroscientist and Physician for youth with Neurodevelopmental Conditions
+      description: "Neuroscientist and Physician for youth with Neurodevelopmental Conditions"
 
 design:
   columns: '2'
