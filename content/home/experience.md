@@ -23,28 +23,20 @@ date_format: Jan 2006
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
   - title: Associate Professor
-    company: GenCoin
-    company_url: ''
-    company_logo: org-gc
-    location: California
-    date_start: '2021-01-01'
+    company: "Cincinnati Childrens"
+    company_url: 'http://www.cincinnatichildrens.com'
+    company_logo: org-x
+    location: Ohio
+    date_start: '2009-06-15'
     date_end: ''
     description: |2-
         Responsibilities include:
         
-        * Analysing
-        * Modelling
-        * Deploying
+        * Physician for youth with neurodevelopmental conditions
+        * Gene therapy
+        * High-density electroencephalography
+        * Transcranial magnetic stimulation
         
-  - title: Professor of Semiconductor Physics
-    company: University X
-    company_url: ''
-    company_logo: org-x
-    location: California
-    date_start: '2016-01-01'
-    date_end: '2020-12-31'
-    description: Taught electronic engineering and researched semiconductor physics.
-
 design:
   columns: '2'
 ---
