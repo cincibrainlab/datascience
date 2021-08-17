@@ -21,3 +21,17 @@ blogdown::config_Rprofile()
 #   blogdown.ext = ".Rmarkdown",      <- add
 #   blogdown.subdir = "post"          <- add
 # )
+
+serve_site()
+
+file.edit(".gitignore")
+blogdown::check_gitignore()
+blogdown::check_content()
+
+blogdown::config_netlify()
+
+rstudioapi::navigateToFile("config/_default/menus.toml")
+
+rstudioapi::navigateToFile("config.yaml", line = 15)
+
+rstudioapi::navigateToFile("content/authors/admin/_index.md")
