@@ -1,27 +1,33 @@
 ---
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: My research interests include neurodevelopmental conditions, electroencephalography, transcranial magnetic stimulation.
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
+  - course: Residency - Pediatrics/Child Psychiatry/Adult Psychiatry
+    institution: Cincinnati Children's Hospital Medical Center
+    year: 2014
+  - course: MD
+    institution: University of Massachusetts
     year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
-email: ""
+  - course: MS in Neuroscience and Behavior
+    institution: University of Massachusetts - Amherst
+    year: 2002
+  - course: BS in Neuroscience and Behavior
+    institution: University of Massachusetts - Amherst
+    year: 2000
+email: "ernest[dot]pedapati[at]cchmc[dot]org"
 highlight_name: false
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- Fragile X Syndrome
+- Neurodevelopmental Conditions
+- Electroencephalography
+- Transcranial Magnetic Stimulation
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-role: Professor of Artificial Intelligence
+- name: Cincinnati Children's Hospital Medical Center
+  url: https://www.cincinnatichildrens.org/
+  role: Associate Professor of Psychiatry and Neurology
+- name: University of Cincinnati
+  url: https://www.uc.edu
+  role: Associate Professor-Aff
 social:
 - icon: envelope
   icon_pack: fas
@@ -30,23 +36,21 @@ social:
     header: true
   icon: twitter
   icon_pack: fab
-  label: Follow me on Twitter
-  link: https://twitter.com/GeorgeCushen
+  label: Follow us on Youtube
+  link: https://youtube.com
 - icon: graduation-cap
   icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: https://scholar.google.com/citations?user=5vxtu0QAAAAJ&hl=en
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/cincibrainlab
 - icon: linkedin
   icon_pack: fab
   link: https://www.linkedin.com/
 superuser: true
-title: Nelson Bighetti
+title: Ernest Pedapati
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Ernest Pedapati,MD,MS is an associate professor at Cincinnati Children's and University of Cincinnati. His research interests include neurodevelopmental conditions, electroencephalography, and transcranial magnetic stimulation. He directs the Cincinnati Brain Lab which develops data science tools for Neuroscientists. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
-
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/nih_biosketch.pdf" "newtab" >}}NIH Biosketch{{< /staticref >}}.
