@@ -54,3 +54,8 @@ blogdown::edit_draft(c(
 # Change username in Bash
 # git config --global user.name "ernest.pedapati@cchmc.org"
 # git config --global user.name
+
+
+blogdown::new_post(title = "Using GNU Make for Reproducible R Research", 
+                   ext = '.Rmarkdown', 
+                   subdir = "post")
