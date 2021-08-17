@@ -23,7 +23,7 @@ date_format: Jan 2006
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
 
-  - title: 'Associate Professor'
+- title: 'Associate Professor'
     company: 'Cincinnati Children's'
     company_url: 'http://www.cincinnatichildrens.com'
     company_logo: org-x
