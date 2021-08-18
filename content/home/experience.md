@@ -36,37 +36,6 @@ experience:
         * Gene therapy
         * High-density electroencephalography
         * Transcranial magnetic stimulation
-        
-  - title: Assistant Professor
-    company: "Cincinnati Childrens"
-    company_url: 'http://www.cincinnatichildrens.org'
-    company_logo: cchmc
-    location: Ohio
-    date_start: '2014-06-15'
-    date_end: '2020-08-31'
-    description:  |2-
-        Responsibilities include:
-        
-        * Physician for youth with neurodevelopmental conditions
-        * Gene therapy
-        * High-density electroencephalography
-        * Transcranial magnetic stimulation
-    
-  - title: Resident Physician
-    company: "Cincinnati Childrens"
-    company_url: 'http://www.cincinnatichildrens.org'
-    company_logo: cchmc
-    location: Ohio
-    date_start: '2009-06-15'
-    date_end: '2014-06-15'
-    description: |2-
-        Triple Board Residency:
-        
-        * Pediatrics
-        * Adult Psychiatry
-        * Child and Adolecent Psychiatry
-        * Research on Neurodevelopmental Conditions
-        
 design:
   columns: '2'
 ---
