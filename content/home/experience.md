@@ -43,7 +43,21 @@ experience:
     location: Ohio
     date_start: '2014-06-15'
     date_end: ''
+    description:
+  - title: Resident Physician
+    company: "Cincinnati Childrens"
+    company_url: 'http://www.cincinnatichildrens.org'
+    company_logo: cchmc
+    location: Ohio
+    date_start: '2009-06-15'
+    date_end: '2014-06-15'
     description: |2-
+        Triple Board Residency:
+        
+        * Pediatrics
+        * Adult Psychiatry
+        * Child and Adolecent Psychiatry
+        * Research on Neurodevelopmental Conditions
         
 design:
   columns: '2'
