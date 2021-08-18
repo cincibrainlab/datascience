@@ -27,7 +27,7 @@ experience:
     company_url: 'http://www.cincinnatichildrens.org'
     company_logo: cchmc
     location: Ohio
-    date_start: '2009-06-15'
+    date_start: '2020-09-1'
     date_end: ''
     description: |2-
         Responsibilities include:
@@ -36,6 +36,14 @@ experience:
         * Gene therapy
         * High-density electroencephalography
         * Transcranial magnetic stimulation
+  - title: Assistant Professor
+    company: "Cincinnati Childrens"
+    company_url: 'http://www.cincinnatichildrens.org'
+    company_logo: cchmc
+    location: Ohio
+    date_start: '2014-06-15'
+    date_end: ''
+    description: |2-
         
 design:
   columns: '2'
