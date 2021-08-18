@@ -1,4 +1,4 @@
-theme: "starter-hugo-academic"
+theme: "academic" #starter-hugo-
 # Configuration of Hugo
 # Guide: https://cincibrainlab.netify.app/docs/getting-started/
 # Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings

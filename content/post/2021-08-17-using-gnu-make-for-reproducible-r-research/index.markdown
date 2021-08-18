@@ -1,0 +1,48 @@
+---
+title: Using GNU Make for Reproducible R Research
+author: Ernie Pedapati
+date: '2021-08-17'
+slug: using-gnu-make-for-reproducible-r-research
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-08-17T17:15:07-04:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+
+Modern data science manuscripts are quite a tremendous feat to produce. Large datasets are churned through multiple analysis packages and several hardware platform. Many authors may contribute to sections of a manuscript. High impact illustrations and figures requires almost as much code as the analysis itself!
+
+Automation tools often require you to radically change your workflow. This is a non-starter for most practicing data scientists. When I hear that I have to change my workflow, what I really hear is "time to lock yourself into some propretary system that will be gone in a couple years and leave you with either a bill or stranded."
+
+What if you could reliably "build" a manuscript from individual components
+
+
+
+What if a 40+ year old software tool could automate generating a complex manuscript?
+
+
+A few years ago, I did a talk called ["Take a Sad Plot & Make it Better,"](/talk/2018-ohsu-sad-plot-better/) where I showed how I took a single sad plot and tried to make it better. The process of making that plot better taught me a lot about data visualization, and about the [ggplot2 package](https://ggplot2.tidyverse.org/). 
+
+Fast-forward to 2019 when I started learning [tidymodels](https://github.com/tidymodels/), and I have accumulated some pretty sad predictive modeling scripts! And my sad plots are not so lonely anymore. Specifically, my old scripts for doing cross-validation with tidymodels are particularly sad. But, I've been able to make them better (one might even call them happy), primarily due to changes in the [tune package](https://tidymodels.github.io/tune/) and the addition of the `fit_resamples()` function. The process of making these scripts better taught me a lot about predictive modeling, and about the (evolving) tidymodels ecosystem. So, why write a blog post with outdated code?
+
+1. I want to remember *that* I did this "by hand."
+1. I want to remember *how* I did this "by hand." The code still works, even if there is now a happier path to doing the same thing.
+1. I want to share cute penguin art and gifs.
+
+Let's start with some [cute penguin art](http://www.greenhumour.com/2018/04/penguins-of-world.html) by Rohan Chakravarty...
+
+
+{{% alert note %}} test {{% /alert %}}
+
+
+My objective here is **not** to provide an introduction to using tidymodels, cross-validation, or to machine learning. If that is what you came for, check out the project button at the top of this post for my workshop materials for learners, and my [associated blog post](https://education.rstudio.com/blog/2020/02/conf20-intro-ml/) on the RStudio education site.
+
