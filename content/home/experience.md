@@ -36,6 +36,7 @@ experience:
         * Gene therapy
         * High-density electroencephalography
         * Transcranial magnetic stimulation
+        
 design:
   columns: '2'
 ---
