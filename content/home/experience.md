@@ -43,7 +43,7 @@ experience:
     company_logo: cchmc
     location: Ohio
     date_start: '2014-06-15'
-    date_end: ''
+    date_end: '2020-08-31'
     description:  |2-
         Responsibilities include:
         
