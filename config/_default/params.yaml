@@ -21,7 +21,7 @@ twitter: '@cincibrainlab'
 # Contact (edit or remove options as required)
 
 email: cincibrainlab@gmail.com
-phone: 888 888 88 88
+phone: 
 address:
   street: 3333 Burnett Avenue
   city: Cincinnati
@@ -30,12 +30,12 @@ address:
   country: United States
   country_code: US
 coordinates:
-  latitude: '37.4275'
-  longitude: '-122.1697'
+  latitude: '39.1405'
+  longitude: '84.5015'
 directions: Located at Cincinnati Children's Hospital Medical Center
 office_hours:
-  - 'by appointment'
-appointment_url: 'https://calendly.com'
+  - 'Monday and Friday AM'
+appointment_url: 'https://calendly.com/cincibrainlab'
 contact_links:
 #  - icon: comments
 #    icon_pack: fas
