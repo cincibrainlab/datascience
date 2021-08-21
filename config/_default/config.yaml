@@ -3,9 +3,9 @@
 # Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
-title: Wowchemy Research Group # Website name
-baseurl: '' # Website URL
-copyright: '' # Footer text, e.g. '© {year} Me'
+title: Cinci Brain Lab # Website name
+baseurl: 'www.cincibrainlab.com' # Website URL
+copyright: '© {year} CBL' # Footer text, e.g. '© {year} Me'
 
 ############################
 ## LANGUAGE
