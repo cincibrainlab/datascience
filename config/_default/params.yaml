@@ -16,6 +16,8 @@ site_type: Organization
 local_business_type: ''
 org_name: 'cincibrainlab'
 description: We develop methods to analyze biomedical measurements with rigor, reproducibility, and robustness.
+org_name: ''
+description: My research group description.
 twitter: ''
 
 # Contact (edit or remove options as required)
