@@ -5,10 +5,10 @@
 
 # Appearance
 
-theme: Ocean
+theme: Minimal
 day_night: true
 font: native
-font_size: L
+font_size: M
 
 # SEO
 
@@ -47,7 +47,7 @@ contact_links:
 main_menu:
   enable: true
   align: r
-  show_logo: true
+  show_logo: false
   show_language: false
   show_day_night: true
   show_search: true
