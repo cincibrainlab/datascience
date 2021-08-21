@@ -6,65 +6,52 @@
 # Appearance
 
 theme: minimal
-day_night: true
-font: ''
+day_night: false
+font: native
 font_size: L
 
 # SEO
 
-site_type: Person
+site_type: Organization
 local_business_type: ''
-org_name: ''
-description: ''
+org_name: 'cincibrainlab'
+description: We develop methods to analyze biomedical measurements with rigor, reproducibility, and robustness.
 twitter: ''
 
 # Contact (edit or remove options as required)
 
-email: test@example.org
+email: cincibrainlab@gmail.com
 phone: 888 888 88 88
 address:
-  street: 450 Serra Mall
-  city: Stanford
-  region: CA
-  postcode: '94305'
+  street: 3333 Burnett Avenue
+  city: Cincinnati
+  region: OH
+  postcode: '45229'
   country: United States
   country_code: US
 coordinates:
   latitude: '37.4275'
   longitude: '-122.1697'
-directions: Enter Building 1 and take the stairs to Office 200 on Floor 2
+directions: Located at Cincinnati Children's Hospital Medical Center
 office_hours:
-  - 'Monday 10:00 to 13:00'
-  - 'Wednesday 09:00 to 10:00'
+  - 'by appointment'
 appointment_url: 'https://calendly.com'
 contact_links:
-  - icon: twitter
-    icon_pack: fab
-    name: DM Me
-    link: 'https://twitter.com/Twitter'
-  - icon: skype
-    icon_pack: fab
-    name: Skype Me
-    link: 'skype:echo123?call'
-  - icon: keybase
-    icon_pack: fab
-    name: Chat on Keybase
-    link: 'https://keybase.io/'
-  - icon: comments
-    icon_pack: fas
-    name: Discuss on Forum
-    link: 'https://discourse.gohugo.io'
+#  - icon: comments
+#    icon_pack: fas
+#    name: Discuss on Forum
+#    link: 'https://discourse.gohugo.io'
 
 # Site header
 
 main_menu:
   enable: true
-  align: l
+  align: r
   show_logo: true
   show_language: false
   show_day_night: true
   show_search: true
-  highlight_active_link: true
+  highlight_active_link: false
 
 # Localization
 
@@ -74,32 +61,17 @@ address_format: en-us
 
 # Site features
 
-highlight: true
-highlight_languages:
-  - r
-  - python
-  - latex
+highlight: false
 math: false
 diagram: false
 privacy_pack: false
-edit_page:
-  repo_url: ''
-  content_dir: ''
-  repo_branch: main
-  editable:
-    page: false
-    post: false
-    book: false
 show_related:
-  book: true
-  page: false
   post: true
   project: true
   publication: true
-  event: true
+  talk: true
 reading_time: true
 section_pager: false
-docs_section_pager: true
 sharing: true
 copyright_license:
   enable: false
@@ -107,7 +79,6 @@ copyright_license:
   share_alike: true
   allow_commercial: false
   notice: 'This work is licensed under {license}'
-abstract_length: 135
 plugins_js: []
 avatar:
   gravatar: false
@@ -119,17 +90,15 @@ projects:
   post_view: 2
   publication_view: 2
   talk_view: 2
-breadcrumb:
-  page_types:
-    book: true
 comments:
   provider: ''
   commentable:
+    page: true
     post: true
-    book: true
+    docs: true
     project: true
     publication: true
-    event: true
+    talk: true
   disqus:
     shortname: ''
     show_count: true
@@ -153,8 +122,8 @@ marketing:
   baidu_site_verification: ''
   baidu_tongji: ''
 cms:
-  branch: master
+  branch: main
   local_backend: false
 icon:
   pack:
-    ai: false
+    ai: true
