@@ -8,7 +8,7 @@ headless: true  # This file represents a page section.
 weight: 10  # Order that this section will appear.
 title: |
   Our Science
-hero_media: CinciBrainLab.png
+hero_media: WelcomeFigure.png
 design:
   # Choose how many columns the section has. Valid values: 1 or 2.
   columns: '1'
