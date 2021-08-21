@@ -8,7 +8,7 @@
 theme: minimal
 day_night: fakse
 font: native
-font_size: m
+font_size: L
 
 # SEO
 
@@ -47,7 +47,7 @@ contact_links:
 main_menu:
   enable: true
   align: r
-  show_logo: false
+  show_logo: true
   show_language: false
   show_day_night: true
   show_search: true
