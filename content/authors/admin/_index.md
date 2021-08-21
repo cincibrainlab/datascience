@@ -1,6 +1,6 @@
 ---
 # Display name
-title: Ernest Pedapati
+title: Ernest Pedapati, M.D., M.S.
 
 # Is this the primary user of the site?
 superuser: true
@@ -26,15 +26,18 @@ interests:
 
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
+  - course: Residency - Pediatrics/Child Psychiatry/Adult Psychiatry
+    institution: Cincinnati Children's Hospital Medical Center
+    year: 2014
+  - course: M.D.
+    institution: University of Massachusetts
     year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
+  - course: M.S. in Neuroscience and Behavior
+    institution: University of Massachusetts - Amherst
+    year: 2002
+  - course: B.S. in Neuroscience and Behavior
+    institution: University of Massachusetts - Amherst
+    year: 2000
 
 # Social/Academic Networking
 # For available icons, see: https://sourcethemes.com/academic/docs/page-builder/#icons
