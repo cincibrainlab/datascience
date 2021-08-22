@@ -1,5 +1,5 @@
 ---
-title: Latest News
+title: Data Science Blog
 
 # View.
 #   1 = List
