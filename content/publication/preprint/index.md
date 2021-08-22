@@ -28,8 +28,8 @@ tags:
 featured: false
 
 links:
-- name:
-url: https://www.medrxiv.org/content/10.1101/2021.05.12.21256925v1
+- name: custom link
+  url: https://www.medrxiv.org/content/10.1101/2021.05.12.21256925v1
 url_pdf: https://www.medrxiv.org/content/10.1101/2021.05.12.21256925v1.full.pdf
 url_code: ''
 url_dataset: ''
