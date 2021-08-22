@@ -25,7 +25,7 @@ summary: Fragile X Syndrome, Translational medicine, Thalamocortical, Electroenc
 
 tags:
 - Source Themes
-featured: false
+featured: true
 
 links:
 - name: custom link
@@ -44,7 +44,7 @@ url_video: ''
 image:
   caption: 'Method overview'
   focal_point: ""
-  preview_only: true
+  preview_only: false
 
 # Associated Projects (optional).
 #   Associate this publication with one or more of your projects.
@@ -60,4 +60,3 @@ projects: []
 #   Otherwise, set `slides: ""`.
 slides: ""
 ---
-Supplementary notes can be added here, including [code and math](https://sourcethemes.com/academic/docs/writing-markdown-latex/).
