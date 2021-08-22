@@ -71,9 +71,15 @@ highlight_name: false
 # Organizational groups that you belong to (for People widget)
 #   Set this to `[]` or comment out if you are not using People widget.
 user_groups:
-- Researchers
+- Principal Investigators
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Ernest "Ernie" Pedapati is an MD/MS trained physician-scientist who has maintained a productive NIH-funded lab since 2017 and an active Fragile X Syndrome and Neurodevelopmental Clinic since 2014. He is a principal investigator in the Neurobehavioral Research Group at Cincinnati Children's. He co-directs the Neurobehavioral Neurophysiology (EEG/TMS) Laboratory at CCHMC. His laboratory studies includes the development of neurophysiology-based biomarkers and novel therapeutics in Fragile X Syndrome and Autism Spectrum conditions, including a transcranial magnetic stimulation laboratory and co-director of the FXS AAV gene therapy program. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+He received a National Institutes of Health K23: Mentored Patient-Oriented Research Career Development Award in 2017 and a co-investigator of U54 Fragile X Center at Cincinnati. He is a co-investigator with joint NIH R01 studying impairments in perceptual learning between humans and mice with FXS (Goel et al., Nat Neurosci 2018). The laboratory also serves as a site for the Rare Disease Clinical Research Network currently collecting EEG data from youth with Tuberous Sclerosis Complex.
+
+His laboratory works to develop cutting-edge EEG techniques that capture transient and noncontinuous events in unaveraged EEG data, brain-computer interface, and multivariate analysis techniques.
+
+His background include training in EEG and TMS data acquisition, advanced signal processing programming, and high dimensional statistical analysis, including cluster permutation, hierarchical modeling, and network-based
+statistical approaches. Our lab was the first to model LTP-like cortical plasticity in healthy pediatric subjects (Pedapati et al., Front Hum Neurosci 2015) and youth with ASD (Pedapati et al., J Child Adolesc
+Psychopharmacol, 2016). We recently identified intracortical facilitation as a marker of ADHD cooccurrence in ASD (Pedapati et al., Nat Trans Psychiatry 2019). Most recently, our extensive resting-state EEG source analysis of a large cohort of FXS patients is under revision for Nature Communications Biology and available via preprint (Pedapati et al. Medrxiv 2021).
