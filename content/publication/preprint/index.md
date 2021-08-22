@@ -1,7 +1,7 @@
 ---
 title: "Neocortical Localization and Thalamocortical Modulation of Neuronal Hyperexcitability in Fragile X Syndrome"
-authors: Ernest V Pedapati, Lauren M. Schmitt, Rui Liu, Lauren E. Ethridge, Elizabeth Smith, John A Sweeney, Rebecca C. Shaffer, Kelli C. Dominick, Donald L. Gilbert, Steve W. Wu, Paul S. Horn, Devin Binder, Martine Lamy, Megan Axford, Makoto Miyakoshi, Craig A. Erickson
-- admin
+authors: 
+- Ernest V Pedapati, Lauren M. Schmitt, Rui Liu, Lauren E. Ethridge, Elizabeth Smith, John A Sweeney, Rebecca C. Shaffer, Kelli C. Dominick, Donald L. Gilbert, Steve W. Wu, Paul S. Horn, Devin Binder, Martine Lamy, Megan Axford, Makoto Miyakoshi, Craig A. Erickson
 date: "2021-05-13T00:00:00Z"
 doi: "https://doi.org/10.1101/2021.05.12.21256925"
 
@@ -18,7 +18,7 @@ publication_types: ["3"]
 publication: ""
 publication_short: ""
 
-abstract: Fragile X Syndrome (FXS) is a monogenetic form of intellectual disability and autism in which well-established knockout (KO) animal models point to neuronal hyperexcitability and abnormal gamma-frequency physiology as a basis for key illness features. Translating these findings into patients may identify tractable treatment targets. Using a minimum norm estimate of resting state electroencephalography data, we report novel findings in FXS including: 1) increases in gamma activity across functional networks, 2) pervasive changes of theta/alpha activity, indicative of disrupted thalamocortical modulation coupled with elevated gamma power, 3) stepwise moderation of these abnormalities based on female sex and genetic mosaicism, and 4) relationship of this physiology to intellectual disability and anxiety. Our observations extend findings in Fmr1-/- KO mice to patients with FXS and raise a key role for disrupted thalamocortical modulation in local hyperexcitability, a mechanism that has received limited preclinical attention, but has significant implications for understanding fundamental disease mechanisms.
+abstract: "Fragile X Syndrome (FXS) is a monogenetic form of intellectual disability and autism in which well-established knockout (KO) animal models point to neuronal hyperexcitability and abnormal gamma-frequency physiology as a basis for key illness features. Translating these findings into patients may identify tractable treatment targets. Using a minimum norm estimate of resting state electroencephalography data, we report novel findings in FXS including: 1) increases in gamma activity across functional networks, 2) pervasive changes of theta/alpha activity, indicative of disrupted thalamocortical modulation coupled with elevated gamma power, 3) stepwise moderation of these abnormalities based on female sex and genetic mosaicism, and 4) relationship of this physiology to intellectual disability and anxiety. Our observations extend findings in Fmr1-/- KO mice to patients with FXS and raise a key role for disrupted thalamocortical modulation in local hyperexcitability, a mechanism that has received limited preclinical attention, but has significant implications for understanding fundamental disease mechanisms."
 
 # Summary. An optional shortened abstract.
 summary: Fragile X Syndrome, Translational medicine, Thalamocortical, Electroencephalography, Gamma Oscillations, Neurodevelopmental Disorders
@@ -28,11 +28,11 @@ tags:
 featured: false
 
 links:
-- name: Preprint @ medRxiv
+- name: 
   url: https://www.medrxiv.org/content/10.1101/2021.05.12.21256925v1
-url_pdf: https://www.medrxiv.org/content/10.1101/2021.05.12.21256925v1.full.pdf
-- name: Supplemental @ medRxiv
-  url: https://www.medrxiv.org/content/10.1101/2021.05.12.21256925v1.supplementary-material
+url_pdf: 
+- name: 
+  url: https://www.medrxiv.org/content/10.1101/2021.05.12.21256925v1.full.pdf
 url_code: '#'
 url_dataset: '#'
 url_poster: '#'
