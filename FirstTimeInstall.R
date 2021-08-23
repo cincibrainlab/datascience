@@ -38,6 +38,10 @@ blogdown::config_netlify()
 # Check gitignore
 # file.edit(".gitignore")
 # blogdown::check_gitignore()
+oldPath <- Sys.getenv("PATH")
+newPath <- paste0(oldPath, ':/opt/homebrew/bin/')
+Sys.setenv(PATH = newPath)
+
 
 serve_site()
 blogdown::check_content()
@@ -55,7 +59,7 @@ blogdown::edit_draft(c(
 # git config --global user.name "ernest.pedapati@cchmc.org"
 # git config --global user.name
 
-
+blogdown::new_content(path = 'publication/fxrest',kind = 'publication/')
 blogdown::new_post(title = "Using GNU Make for Reproducible R Research", 
                    ext = '.Rmarkdown', 
                    subdir = "post")
