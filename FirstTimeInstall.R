@@ -45,7 +45,7 @@ Sys.setenv(PATH = newPath)
 
 serve_site()
 blogdown::check_content()
-
+blogdown::check_site()
 rstudioapi::navigateToFile("config/_default/menus.toml")
 rstudioapi::navigateToFile("config.yaml", line = 15)
 rstudioapi::navigateToFile("content/authors/admin/_index.md")
