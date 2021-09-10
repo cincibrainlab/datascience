@@ -10,7 +10,8 @@ design:
   css_style: null
   css_class: null
 ---
+<br>Research in our lab focuses on exploring neural circuits in neurodevelopmental conditions, using electroencephalography and transcranial magnetic stimulation. 
 
 <br>
 
-Research in our lab focuses on exploring neural circuits in neurodevelopmental conditions, using electroencephalography and transcranial magnetic stimulation. Learn more about ongoing projects in the lab!
+Learn more about ongoing projects in the lab!
