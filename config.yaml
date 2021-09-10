@@ -1,53 +1,47 @@
-# Configuration of Hugo
-# Guide: https://wowchemy.com/docs/getting-started/
-# Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
-# This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
-
-title: Cinci Brain Lab # Website name
-baseurl: 'www.cincibrainlab.com' # Website URL
-copyright: '© {year} CBL' # Footer text, e.g. '© {year} Me'
-
-############################
-## LANGUAGE
-############################
-
+---
+title: Cinci Brain Lab
+baseurl: www.cincibrainlab.com
+copyright: "© {year} CBL"
 defaultContentLanguage: en
 hasCJKLanguage: false
 defaultContentLanguageInSubdir: false
 removePathAccents: true
-
-############################
-## MODULES
-############################
-
 module:
   imports:
-    - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy-cms
-    - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy
+  - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy-cms
+  - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy
   hugoVersion:
-    min: '0.84.1'
+    min: 0.84.1
     extended: true
-
-############################
-## ADVANCED
-############################
-
 enableGitInfo: false
 summaryLength: 30
 paginate: 10
 enableEmoji: true
 enableRobotsTXT: true
-footnotereturnlinkcontents: <sup>^</sup>
-ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
+footnotereturnlinkcontents: "<sup>^</sup>"
+ignoreFiles:
+- "\\.ipynb$"
+- ".ipynb_checkpoints$"
+- "\\.Rmd$"
+- "\\.Rmarkdown$"
+- _cache$
 permalinks:
-  authors: '/author/:slug/'
-  tags: '/tag/:slug/'
-  categories: '/category/:slug/'
-  publication_types: '/publication-type/:slug/'
+  authors: "/author/:slug/"
+  tags: "/tag/:slug/"
+  categories: "/category/:slug/"
+  publication_types: "/publication-type/:slug/"
 disableAliases: true
 outputs:
-  home: [HTML, RSS, JSON, WebAppManifest, headers, redirects]
-  section: [HTML, RSS]
+  home:
+  - HTML
+  - RSS
+  - JSON
+  - WebAppManifest
+  - headers
+  - redirects
+  section:
+  - HTML
+  - RSS
 markup:
   defaultMarkdownHandler: goldmark
   goldmark:
@@ -73,7 +67,7 @@ related:
   includeNewer: true
   toLower: true
   indices:
-    - name: tags
-      weight: 100
-    - name: categories
-      weight: 70
+  - name: tags
+    weight: 100
+  - name: categories
+    weight: 70
