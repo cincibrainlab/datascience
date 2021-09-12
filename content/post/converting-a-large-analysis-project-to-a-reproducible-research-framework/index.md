@@ -9,7 +9,7 @@ image:
   focal_point: Smart
   preview_only: false
 ---
-*How easy would it be to convert an existing large MATLAB/R project to using GNU Make?*
+## *How easy would it be to convert an existing large MATLAB/R project to using GNU Make?*
 
 In these tutorials, we will find out together! 
 
@@ -29,7 +29,7 @@ make manuscript
 
 The focus of the process should be on the manuscript, not the analysis code itself. This is minor distinction but I feel makes a big difference in the execution of working with a large research project. It is far too easy to get caught up in the minutia *how* to write something rather than *what* is actually for. 
 
-### Steps to create a REProducible MAKE Manuscript:
+### Overview of creating a REProducible MAKE Manuscript from an existing project:
 
 1. Split manuscript into individual sections
 2. Identify data models, tables, and figures that need corresponding scripts
@@ -54,3 +54,17 @@ In our revision:
 4. The main manuscript and supplement including all tables and figures should be able to be built from the source EEG files.
 
 The last point may seem like a tall order, however, this is exactly what GNU Make was designed for. Remember, Make is only interested in the *filenames* and the *date/time* they were modified. In this way, Make is application agnostic - if you can build it, Make can use it!
+
+Step 1: Gather RepMake template to a new project directory
+
+The more I use RStudio, the more I come to appreciate it. The RStudio integration with GitHub and the amazing Rstudio terminal gives it a leg up on doing this process simply on your current operating system. 
+
+Use the following menu order:
+
+File -> Create New Project -> From repository
+
+Use the following settings below for the Repository URL and specify your own directory name (here I name it for the revision manuscript I am working on) and a subfolder. 
+
+I know some people use version control exclusively. I actually continue to main my R projects on a cloud hosting service, in this case Dropbox. There are unusual errors that can occur when using Git and Dropbox together, but the ability to truly restore files and share with others who may not be, eh familiar with Git, is an important factor.
+
+![Create new GIT project in RStudio](2021-09-12_19-25-33.png)
