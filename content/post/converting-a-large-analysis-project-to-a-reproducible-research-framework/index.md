@@ -55,11 +55,13 @@ In our revision:
 
 The last point may seem like a tall order, however, this is exactly what GNU Make was designed for. Remember, Make is only interested in the *filenames* and the *date/time* they were modified. In this way, Make is application agnostic - if you can build it, Make can use it!
 
-Step 1: Gather RepMake template to a new project directory
+## Step 1: Gather RepMake template to a new project directory
 
-The more I use RStudio, the more I come to appreciate it. The RStudio integration with GitHub and the amazing Rstudio terminal gives it a leg up on doing this process simply on your current operating system. 
+The next step is to retrieve or clone the RepMake repository to get the GNU Make templates we will use in our conversion. We could do this by creating a blank directory and unziping a copy of the files, but I would recommend an alternative method.
 
-Use the following menu order:
+The more I use RStudio, the more I appreciate it. RStudio is well integrated with Git version control and has a built in terminal with superpowers (wlll discuss later!). More importantly, for most of us, our statistical program is the penultimate step prior to the manuscript. My final steps are primarily in R (or in the past SPSS or SAS) to generate tables and figures to incorporate into my manuscript. By having R be the begining of your process, you ensure a smooth transition on your final steps.
+
+Let's use the following menu order to create a new project from a Git repository:
 
 File -> Create New Project -> From repository
 
@@ -67,4 +69,18 @@ Use the following settings below for the Repository URL and specify your own dir
 
 I know some people use version control exclusively. I actually continue to main my R projects on a cloud hosting service, in this case Dropbox. There are unusual errors that can occur when using Git and Dropbox together, but the ability to truly restore files and share with others who may not be, eh familiar with Git, is an important factor.
 
-![Create new GIT project in RStudio](2021-09-12_19-25-33.png)
+![Create new GIT project in RStudio](2021-09-12_19-25-33.png "A new RepMake Project in RStudio")
+
+#### Create an empty Build folder
+
+After this is complete, use the "New Folder" button to create a new directory called Build. 
+
+![Create Build Folder](2021-09-12_19-33-05.png "Create Build Folder")
+
+This will be your main Build folder. The output of your asset scripts (i.e. , model\_, table\_, figure_) will fall into this folder. However, there are times in which your projects may need additional space or reside in on a different computer. Especially during our MATLAB scripts, we have specified an alternative Build folder (called MatlabBuild) that can be used in a directory that has more storage capacity and outside the repository or cloud folder.
+
+#### Update .gitignore (optional)
+
+The .gitignore file keeps track of the files and folders you need to keep in your repository and those you do not. In this case, the Build folder is kept out of your online repository. Remember, the files within the Build folder can be created 100% from the source files. To accomplish this, simply open the .gitignore file in R studio and add the line Build/ to "ignore" it in future Git remote commands.
+
+![](2021-09-12_19-43-00.png)
