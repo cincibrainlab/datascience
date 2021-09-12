@@ -20,7 +20,7 @@ Consider common sequences like `->>`, `==`, or `%>%`. Watch how a common ligatur
 
 ### How do you install ligature fonts?
 
-[@tonsky](https://github.com/tonsky) has generously created and made Fira Code freely available through a Github repository: https://github.com/tonsky/FiraCode
+[@tonsky](https://github.com/tonsky) has generously created and made Fira Code freely available through a Github repository: <https://github.com/tonsky/FiraCode>
 
 There are numerous ways to[ install this font on windows, mac, and linux](https://github.com/tonsky/FiraCode/wiki/Installing). The fonts can be used in many programming language editors, but [some editors](https://github.com/tonsky/FiraCode/wiki) will need you to explicitly "turn on ligature support".
 
@@ -28,11 +28,15 @@ There are numerous ways to[ install this font on windows, mac, and linux](https:
 
 I thought I would try a new method of installing a font on my current Windows build that does not have Fira Code installed. Scoop is a Windows package manager. If you haven't used a package manager before, I would highly recommend learning more. A package manager can install and uninstall programs through the command line - which can be far more efficient than installing packages through the "download, pick, and click" method. 
 
-Step 1: Install Scoop package manager on Windows
+##### Step 1: Install Scoop package manager on Windows
 
-a. Run Windows Powershell
+Having a good command line tool in Windows is essential. You could perform the following instructions on the default Windows Powershell, but I would recommend installing Microsoft revamped cross-platform Powershell replacement, [Windows Terminal](https://aka.ms/pscore6). 
 
-b. adjust installation privileges by running the following command (type Y on prompt):
+##### Step 2: Run Powershell or Windows Terminal in Administrative Mode\
+
+* Alas, I hate in Windows we need to elevate our privledge level for a font installation.
+
+a. Adjust installation privileges by running:
 
 `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
@@ -40,11 +44,15 @@ c. install Scoop with the following command:
 
 `iwr -useb get.scoop.sh | iex`
 
-Step 2: Install Fira Code font which will be installed in the default Scoop directory (`C:\ProgramData\scoop`)
-
-a. use the following commands:
+##### Step 3: Install Fira Code font with the following commands:
 
 ```powershell
 scoop bucket add nerd-fonts
 scoop install firacode
 ```
+
+##### Step 4: The new font should be activated in each program editor you use.
+
+In R Studio, for example, use Tools -> Global Options -> Appearance -> Font and switch to Fira Code.
+
+![Example of ligature font](2021-09-12_18-00-40.png "Example of ligature font")
