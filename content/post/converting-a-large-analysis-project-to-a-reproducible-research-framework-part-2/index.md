@@ -187,6 +187,8 @@ MATLAB must work from the command line for Make to activate and run your script!
 
 After reading the header, notice the first section defining shortcuts used by **Make** for the rest of the file. In particular confirm you MB (Matlab build directory) and your B (Build directory) are correct. **Make** syntax is simple but rigid: no extra spaces! Don't forget to end your path with a "/" so it seamlessly fits into the filename when you use it later.
 
+> Don't forget to flip your `\` to `/` when you are using Windows for maximal compatibility. 
+
 ```
 #==============================================================================#
 #                               CONFIGURATION                                  #
@@ -198,8 +200,8 @@ After reading the header, notice the first section defining shortcuts used by **
 SHELL=/bin/bash
 R = RScript --verbose
 Matlab = matlab /minimize /nosplash /nodesktop /batch
-MB = E:/data/gedtemp/Build/#MATLAB Build
-B = C:/Users/ernie/Dropbox/cbl/GEDBOUNDS/Build/
+MB = E:/data/CommBioEEGRev/#MATLAB Build
+B = C:/Users/ernie/Dropbox/cbl/CommBioEEGRev/Build/
 S = Source/
 ```
 
@@ -236,3 +238,13 @@ Let's make sense of this **Make shorthand!**
 * Remember that Make is not analysis software. It is a very sophisticated macro software. You could simply run the command (without the shorthand) from the Makefile on the command prompt to test if it works.
 
 Let's try that now!
+
+First identify the working directory of your new Makefile and MATLAB scripts:
+
+![](2021-09-13_17-47-11.png)
+
+Next, open a terminal window and change to your working directory. Finally run the command `make matlab`. To break the suspense, since you have already tested these scripts in the GUI, they should work fine from the command line. Remember, that we have ensured a fresh clean environment with each run. If you forget to define the `target_file `in the MATLAB command from **Make** you will end up with whatever default name you specified in the file. 
+
+![Successful Make Build](untitled-project.gif "Successful Make build of a MATLAB Data Model!")
+
+Breath a sign of relief! From here on out we simply repeat this process adding Makefile entries as you build your scripts. With just on
