@@ -200,7 +200,7 @@ Makefiles are written essentially in shorthand, so I think it is worth running o
 
 First, it is important to note that `\` is just a way to add a newline. **Make** takes blanks, tabs, and spaces very seriously so this is important to use if you want to keep you code neat.
 
-The first line until the colon is the target file. 
+The first line until the colon is the target file (notice the colon!):
 
 `$(B)manuscript_main.docx:`
 
