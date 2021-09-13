@@ -84,3 +84,24 @@ This will be your main Build folder. The output of your asset scripts (i.e. , mo
 The .gitignore file keeps track of the files and folders you need to keep in your repository and those you do not. In this case, the Build folder is kept out of your online repository. Remember, the files within the Build folder can be created 100% from the source files. To accomplish this, simply open the .gitignore file in R studio and add the line Build/ to "ignore" it in future Git remote commands.
 
 ![](2021-09-12_19-43-00.png)
+
+## Recreating your manuscript to create a blueprint for the remainder of the process
+
+
+
+
+
+We will next create individual Word documents for each section of our manuscript. 
+
+*Word documents?*
+
+Although we know the advantages of other document formats, such as Google docs, Markdown or Latex, we still use Word format (and \*gasp\* Endnote). We have access and occasionally use tools like Overleaf or Authorea. In fact, Markdown and Latex remain integral to our RepMake framework serving a central role in the caption system. 
+
+It is not hard to explain why so many researchers stick with the Word + Endnote combination. 
+
+* Many major medical journals require Word documents for submission
+* Shared Endnote libraries across research collaborators
+* Track changes in Word
+* Complex formatting and styles can easily be shared in Word documents
+*
+*
