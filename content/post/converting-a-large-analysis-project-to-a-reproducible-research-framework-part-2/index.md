@@ -200,7 +200,7 @@ After reading the header, notice the first section defining shortcuts used by **
 SHELL=/bin/bash
 R = RScript --verbose
 Matlab = matlab /minimize /nosplash /nodesktop /batch
-MB = E:/data/CommBioEEGRev/#MATLAB Build
+MB = E:/data/CommBioEEGRev/MatlabBuild/#MATLAB Build
 B = C:/Users/ernie/Dropbox/cbl/CommBioEEGRev/Build/
 S = Source/
 ```
@@ -213,7 +213,7 @@ Since we currently only have one script, our recently created `model_loadDataset
 
 ### Add an entry to tell Make how to create `model_loadDataset.m`
 
-Let's create recipe to create our first target file `model_loadDataset.m`. 
+Let's create recipe to create our first target file `model_loadDataset.mat`. 
 
 ```
 #==============================================================================#
@@ -247,4 +247,26 @@ Next, open a terminal window and change to your working directory. Finally run t
 
 ![Successful Make Build](untitled-project.gif "Successful Make build of a MATLAB Data Model!")
 
-Breath a sign of relief! From here on out we simply repeat this process adding Makefile entries as you build your scripts. With just on
+If we check our MATLAB Build folder we will see the newly made MAT file. This filename holds special significance to **Make.** **Let's see a little bit of what makes Make so powerful.**
+
+![](snag-0000.png)
+
+First, let's run the command `make matlab` again. **Make** will check the date and time of the target file and the source file and decide if the file should be rebuilt. In this case, the target file is ***more recent*** than the source file so **Make** does not rebuild the file. 
+
+```
+PS C:\Users\ernie\Dropbox\cbl\CommBioEEGRev\Source\MATLAB> make matlab
+make: Nothing to be done for `matlab'.
+PS C:\Users\ernie\Dropbox\cbl\CommBioEEGRev\Source\MATLAB>
+```
+
+Let's update the source file and watch Make in action
+
+Next, return to MATLAB and edit our source file `model_loadDataset.m`. Let's make a minor change. I am going to add a few words on the notification that the file saved adding the I made a small mod" and saved the file. 
+
+Now when I run the command `make matlab` **Make** observes that the source file is more recent than the target file and reruns the code.
+
+![]()
+
+
+
+Breath a sign of relief! From here on out we simply repeat this process adding Makefile entries as you build your scripts. With just one file it is hard to show how Make can smartly determine which files should be built, but let's save something for tomorrow!
