@@ -109,3 +109,84 @@ When this is complete, try running your matlab_00_common.m file. Not much will h
 The fruit of all your labor setting up the environment will pay off in this next section. At this point, you will notice a dramatic decrease in the size of your script files because you are really only asking your script file to accomplish one major goal.
 
 For the next task, we will load our EEG dataset and save the relevant details in a MAT file for further use. Given the potential for high storage needs, we will use the MATLAB Build folder instead of the R build folder.
+
+We are going to use our template to basically create the following script:
+
+1. Data file in
+2. Computation or creation
+3. Data file out
+
+
+
+### A. Include the common Matlab file of your choosing to set the environment
+
+Start with opening the `model_template.m` file.  This generic template can be used to create a MAT file from MATLAB code. After reading the header instructions you will notice our common include file (easy to change). Remember that the **Common** file will clear your current environment, so save any work or variables you need now!
+
+```
+%=========================================================================%
+% Step 1: Load common packages, data, and functions.                      %
+% ========================================================================%
+matlab_00_common
+```
+
+### B. Add a **basename** that will keep your file names consistent. 
+
+The **basename** is a critical variable to ensure the naming of your file stays extremely consistent through this process. Our recommendation is that any Build file should match the source file name with the addition of the type of asset that it is. This will allow you to keep track of hundreds of files with very little confusion. In this case, we name the **basename** "loadDataset" and the target files will be automatically called 'model_loadDataset'. 
+
+```
+%=========================================================================%
+% Step 2: Customize basename for script                                   %
+%=========================================================================%
+
+basename    = 'loadDataset'; % Edit
+prefix      = ['model_' basename];
+```
+
+### C. Specify any preexisting data you need in your current file
+
+For most projects, data models will require additional input from preexisting data files. This section is reserved for any variables that you would like to create to be used by the rest of the script. Our default setup includes the option of loading a MAT file. We make generous use of the MATLAB `missing` keyword in these scripts as an easy way of telling what parameters are active or not. 
+
+### D. Develop and Run the Data Model in the MATLAB GUI
+
+```
+%=========================================================================%
+%                            CONSTRUCT MODEL                              %
+%=========================================================================%
+
+p = htpPortableClass;   % MATLAB object / methods / properties
+p.importDataObjects( keyfiles.datacsv, keyfiles.datamat, syspath.htpdata );
+p.updateBasePaths( syspath.htpdata );
+
+%=========================================================================%
+%                          EXPORT ENVIRONMENT                             %
+%=========================================================================%
+
+save(target_file, 'p', 'syspath', 'keyfiles')
+
+```
+
+The hard work from the previous sections have now paid off! Let's look at the actual code for loading our dataset and saving it to a MAT file. Here we are using htp functions (from our pipeline toolkit) to load the information to our raw data files, update their relative file paths, and then save the variable in a MAT file. 
+
+The target file `Build\model_loadDataset.mat` can now be used across multiple other asset scripts. 
+
+### E. Final Step: Automate the Data Model Build using Make
+
+Next, we will automate this relatively simple Build using **Make**. Open your template `Makefile` and let's make some edits. Remember that **Make** loves ***shorthand*** so don't be intimidated by any of the syntax!
+
+After reading the header, notice the first section defining shortcuts used by Make for the rest of the file.
+
+```
+#==============================================================================#
+#                               CONFIGURATION                                  #
+#==============================================================================#
+# SHORTCUTS        ============================================================#
+#                  definition: shortcut [commands or paths]                    #
+#                  usage: $(shortcut)                                          #
+#==============================================================================#
+SHELL=/bin/bash
+R = RScript --verbose
+Matlab = matlab -nogui -nosplash -batch
+MB = E:/data/gedtemp/Build/#MATLAB Build
+B = C:/Users/ernie/Dropbox/cbl/GEDBOUNDS/Build/
+S = Source/
+```
