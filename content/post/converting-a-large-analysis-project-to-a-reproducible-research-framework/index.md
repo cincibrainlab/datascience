@@ -140,4 +140,10 @@ One might wonder why separating your document into individual sections is better
 
 ## Completed Part I of the Large Project Conversion Tutorial
 
-At the end of this tutorial you will have successfully created a new project folder which contains templates for creating reproducible scripts and a new manuscript folder that contains each of your manuscript sections.
+At the end of this tutorial you will have:
+
+1. Created a new project folder containing template files from the RepMake repository.
+2. Each section of your manuscript should be in a separate Word file.
+3. You have a combined manuscript Word document in your Build folder
+
+Seems like a lot of work to basically end up with what you started, but trust me, the fun is just beginning!
