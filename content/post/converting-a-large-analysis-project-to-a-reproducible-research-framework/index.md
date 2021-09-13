@@ -87,15 +87,13 @@ The .gitignore file keeps track of the files and folders you need to keep in you
 
 ## Recreating your manuscript to create a blueprint for the remainder of the process
 
+We will next create individual Word documents for each section of our manuscript. These individual documents can be later "stitched" together during the Build process using a single Make command.
 
+#### *Word documents?*
 
+Although we know the advantages of other document formats, such as Google docs, Markdown or Latex, we still use Word format (and \*gasp\* Endnote). We have access and occasionally use tools like Overleaf or Authorea. 
 
-
-We will next create individual Word documents for each section of our manuscript. 
-
-*Word documents?*
-
-Although we know the advantages of other document formats, such as Google docs, Markdown or Latex, we still use Word format (and \*gasp\* Endnote). We have access and occasionally use tools like Overleaf or Authorea. In fact, Markdown and Latex remain integral to our RepMake framework serving a central role in the caption system. 
+Even more interesting, Markdown and Latex remain integral to our RepMake framework serving a central role in the caption system. **However, we ultimately convert everything to a Word document for dissemination.** 
 
 It is not hard to explain why so many researchers stick with the Word + Endnote combination. 
 
@@ -103,5 +101,43 @@ It is not hard to explain why so many researchers stick with the Word + Endnote 
 * Shared Endnote libraries across research collaborators
 * Track changes in Word
 * Complex formatting and styles can easily be shared in Word documents
-*
-*
+
+With all this being said, it is fairly trivial to modify our current code to use any other type of document file. 
+
+## How to convert your manuscript into individual word sections
+
+You will find the manuscript templates in the folder:
+
+`Source/manuscript`
+
+There are two notable files:
+
+**_mergeManuscript.R**: used to combine individual document files into single documents.
+
+**_styles.docx**: a blank Word template that contains the styles to apply to the rest of the combined document. 
+
+The current templates have been created with a Nature-style manuscript in mind. Keep in mind that these sections are 100% customizable. In the actual **Makefile** you will specify which filenames and which order to combine them in.  
+
+For example, you may want to have your title page, acknowledgements, and abstract in a single document. Just create a single Word file (title_ack_abstract.docx) and specify it in the **Makefile** by replacing the three separate files.
+
+You may want to have a specific separate References page. In this case, create the Word file (i.e. bibliography.docx) and add it to the main manuscript section in the **Makefile**.
+
+![Listing of Manuscript Template](2021-09-12_20-15-31.png "Listing of Manuscript Template")
+
+## Add/Edit each template and remove any unnecessary files
+
+There is nothing particularly fancy about this next step. I will carefully open my original manuscript and cut/paste each section into each template. 
+
+## Let's try to put this manuscript back together!
+
+One might wonder why separating your document into individual sections is better than keeping it combined. Hopefully after working through the next section, the benefits will be obvious!
+
+
+
+
+
+
+
+## Completed Part I of the Large Project Conversion Tutorial
+
+At the end of this tutorial you will have successfully created a new project folder which contains templates for creating reproducible scripts and a new manuscript folder that contains each of your manuscript sections.
