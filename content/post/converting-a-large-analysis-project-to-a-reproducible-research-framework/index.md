@@ -134,6 +134,43 @@ There is nothing particularly fancy about this next step. I will carefully open 
 
 One might wonder why separating your document into individual sections is better than keeping it combined. Hopefully after working through the next section, the benefits will be obvious!
 
+The next step is to open the template Makefile. This version of the Makefile should work across platforms (Windows, Mac, and Linux). 
+
+## Reviewing the Makefile line by line
+
+You will notice that lines 8 to 12 are essentially defining convenience variables to make our code look leaner. It is important to look at this section so the code in the remainder of the Makefile makes sense!
+
+Line 8: Specifies the command shell (ignored in Windows)
+
+Line 9: "R" is a shortcut referring to the command line version of R
+
+Line 10: "Matlab" is the shortcut for the command line version of Matlab. You will note the extra 'flags' used to make Matlab behave at the command line instead of opening a new Matlab window!
+
+Line 11: B is a shortcut for the Build folder
+
+Line 12: S is a shortcut for the Source folder
+
+```
+#==============================================================================#
+#                               CONFIGURATION                                  #
+#==============================================================================#
+# SHORTCUTS        ============================================================#
+#                  definition: shortcut [commands or paths]                    #
+#                  usage: $(shortcut)                                          #
+#==============================================================================#
+SHELL=/bin/bash
+R = Rscript --verbose
+Matlab = matlab -nogui -nosplash -batch
+B = Build/
+S = Source/
+#==============================================================================#
+
+```
+
+
+
+
+
 ## Completed Part I of the Large Project Conversion Tutorial
 
 At the end of this tutorial you will have:
