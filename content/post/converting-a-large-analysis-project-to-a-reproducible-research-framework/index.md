@@ -19,7 +19,7 @@ We recently began a revise and resubmit of our [EEG source localization preprint
 
 Though our previous code and datasets were sharable, they required extensive hands-on operation to reproduce our results. In 2020, I felt this code base was amazingly modular. 
 
-Today in late 2021, having designed the [repMake](https://github.com/cincibrainlab/repmake) framework what could compete with:
+Today in late 2021, having designed the **[repMake](https://github.com/cincibrainlab/repmake)** framework what could compete with:
 
 ```shell
 make manuscript
@@ -36,7 +36,7 @@ The focus of the process should be on the manuscript, not the analysis code itse
 3. Create a common function file and a master caption file
 4. Start with transition code to construct each data model
 5. Write code for each table and figure
-6. Compile manuscript using Make
+6. Compile manuscript using **Make**
 
 This process will be overly difficult because of how we programmed our initial analysis. The MATLAB code required the use of a graphical user interface (GUI) and the R code similarly required an open R Studio session. In the revision, we will streamline this code to be entirely run from the command line. 
 
@@ -53,11 +53,11 @@ In our revision:
 3. MATLAB or R scripts should clearly list inputs and outputs
 4. The main manuscript and supplement including all tables and figures should be able to be built from the source EEG files.
 
-The last point may seem like a tall order, however, this is exactly what GNU Make was designed for. Remember, Make is only interested in the *filenames* and the *date/time* they were modified. In this way, Make is application agnostic - if you can build it, Make can use it!
+The last point may seem like a tall order, however, this is exactly what **GNU Make** was designed for. Remember, **Make** is only interested in the *filenames* and the *date/time* they were modified. In this way, **Make** is application agnostic - if you can build it, **Make** can use it!
 
 ## Step 1: Gather RepMake template to a new project directory
 
-The next step is to retrieve or clone the RepMake repository to get the GNU Make templates we will use in our conversion. We could do this by creating a blank directory and unziping a copy of the files, but I would recommend an alternative method.
+The next step is to retrieve or clone the **RepMake** repository to get the **GNU Make** templates we will use in our conversion. We could do this by creating a blank directory and unziping a copy of the files, but I would recommend an alternative method.
 
 The more I use RStudio, the more I appreciate it. RStudio is well integrated with Git version control and has a built in terminal with superpowers (wlll discuss later!). More importantly, by incorporating R studio at this step we can also generate our combined manuscript immediately. 
 
@@ -89,7 +89,7 @@ The .gitignore file keeps track of the files and folders you need to keep in you
 
 ## Recreating your manuscript to create a blueprint for the remainder of the process
 
-We will next create individual Word documents for each section of our manuscript. These individual documents can be later "stitched" together during the Build process using a single Make command.
+We will next create individual Word documents for each section of our manuscript. These individual documents can be later "stitched" together during the Build process using a single **Make** command.
 
 #### *Word documents?*
 
@@ -140,15 +140,13 @@ The next step is to open the template Makefile. This version of the Makefile sho
 
 You will notice that lines 8 to 12 are essentially defining convenience variables to make our code look leaner. It is important to look at this section so the code in the remainder of the Makefile makes sense!
 
-Line 8: Specifies the command shell (ignored in Windows)
+Jump to the Shortcuts section
 
-Line 9: "R" is a shortcut referring to the command line version of R
-
-Line 10: "Matlab" is the shortcut for the command line version of Matlab. You will note the extra 'flags' used to make Matlab behave at the command line instead of opening a new Matlab window!
-
-Line 11: B is a shortcut for the Build folder
-
-Line 12: S is a shortcut for the Source folder
+* SHELL specifies the command shell (ignored in Windows)
+* R is a shortcut referring to the command line version of R
+* Matlab is the shortcut for the command line version of Matlab. You will note the extra 'flags' used to make Matlab behave at the command line instead of opening a new Matlab window!
+* B is a shortcut for the Build folder
+* S is a shortcut for the Source folder
 
 ```
 #==============================================================================#
@@ -169,13 +167,74 @@ S = Source/
 
 
 
+Next jump down to the Recipes section and find the shortcut manuscript. This tells **Make** what output to expect when you enter `make manuscript`.
 
+```
+manuscript: $(B)manuscript_main.docx 
+```
+
+Notice the form of the **Make** syntax. The `manuscript `is the name of the target. The ":" specifies the transition from the target to the dependencies. Finally, `$(B)manuscript_main.docx` is the dependency needed to achieve the target `manuscript`.
+
+It might seem confusing why the  `$(B)manuscript_main.docx` is not the target. This is because in **Make** targets often start as dependencies. So in this step manuscript might be a shortcut that refers to building the main manuscript, the cover letter, and the supplement.
+
+However, each document dependency will need to be defined below as a target on how to build it. Let's look at that now.
+
+```
+#==============================================================================#
+# MANUSCRIPT                                                                   #
+#==============================================================================#
+$(B)manuscript_main.docx: \
+$(S)manuscript/titlepage.docx \
+$(S)manuscript/acknowledgements.docx \
+$(S)manuscript/abstract.docx \
+$(S)manuscript/introduction.docx \
+$(S)manuscript/results.docx \
+$(S)manuscript/discussion.docx \
+$(S)manuscript/methods.docx
+	$(R) $(S)manuscript/_mergeManuscript.R $@ $^
+```
+
+You can see here why it doesn't really matter how many sections you have or what you name them. This is the "recipe" on how to combine your individual sections into a whole manuscript. 
+
+Makefiles are written essentially in shorthand, so I think it is worth running over the details of each line.
+
+First, it is important to note that `\` is just a way to add a newline. **Make** takes blanks, tabs, and spaces very seriously so this is important to use if you want to keep you code neat.
+
+The first line until the colon is the target file. 
+
+`$(B)manuscript_main.docx:`
+
+You will recognize that this is the exact same filename (placed in the Build directory) as in the shortcut for `manuscript `above. Here you can see that **Make** principal that most **dependency files** start off as **target files.** 
+
+The remainder of the lines are the different individual Word documents to be stitched together. Finally, you will notice a new line with a tab with the line:
+
+```
+	$(R) $(S)manuscript/_mergeManuscript.R $@ $^
+```
+
+The tab as in all **Makefiles** is intentional and required to specify the instructions on how to make the target. In this case, the line looks confusing because of all the **Make** shorthand. Let's rewrite the line by spelling out the code instead of using the shorthand.
+
+* $(R) = Rscript
+* $(S) = Source directory
+* _mergeManuscript.R = R script to combine Word files
+* $@ = shorthand for "target" or `$(B)manuscript_main.docx`
+* $^ = shorthand for "dependencies" or all the listed dependency files
+
+It is very important to note that **Make** does not perform any *magic*. It only keep tracks of filenames and runs commands. The actual know-how on how to combine Word documents is in the `_mergeManuscript.R` script. **Make** simply writes the command in such a way that it is compatible with the way we use the script. In this case, the first argument of the script is the output file `$(B)manuscript_main.docx` and the second argument(s) are the list of files to merge together.
+
+**Make** then watches carefully to make sure that once the `$(B)manuscript_main.docx` is created and placed in the Build folder to not recreate the file unless one of the dependencies changes. 
+
+In this case, that feature is incredibly useful. If you make a change to any of the source manuscript files (i.e., change the title) **Make** will recreate the combined document. 
+
+Now consider an entire manuscript where you may change a single line of code in Table 1. **Make** will intelligently recreate Table 1 from scratch, combine a caption, and then will update the `$(B)manuscript_main.docx`.
+
+You can see how many minutes the **RepMake** approach can save you for even a single code change and future reusability of your code.
 
 ## Completed Part I of the Large Project Conversion Tutorial
 
 At the end of this tutorial you will have:
 
-1. Created a new project folder containing template files from the RepMake repository.
+1. Created a new project folder containing template files from the **RepMake** repository.
 2. Each section of your manuscript should be in a separate Word file.
 3. You have a combined manuscript Word document in your Build folder
 
