@@ -59,7 +59,9 @@ The last point may seem like a tall order, however, this is exactly what GNU Mak
 
 The next step is to retrieve or clone the RepMake repository to get the GNU Make templates we will use in our conversion. We could do this by creating a blank directory and unziping a copy of the files, but I would recommend an alternative method.
 
-The more I use RStudio, the more I appreciate it. RStudio is well integrated with Git version control and has a built in terminal with superpowers (wlll discuss later!). More importantly, for most of us, our statistical program is the penultimate step prior to the manuscript. My final steps are primarily in R (or in the past SPSS or SAS) to generate tables and figures to incorporate into my manuscript. By having R be the begining of your process, you ensure a smooth transition on your final steps.
+The more I use RStudio, the more I appreciate it. RStudio is well integrated with Git version control and has a built in terminal with superpowers (wlll discuss later!). More importantly, by incorporating R studio at this step we can also generate our combined manuscript immediately. 
+
+Also, for most of us, our statistical program is the penultimate step prior to the manuscript. My final steps are primarily in R (or in the past SPSS or SAS) to generate tables and figures to incorporate into my manuscript. By having R be the begining of your process, you ensure a smooth transition on your final steps.
 
 Let's use the following menu order to create a new project from a Git repository:
 
@@ -131,12 +133,6 @@ There is nothing particularly fancy about this next step. I will carefully open 
 ## Let's try to put this manuscript back together!
 
 One might wonder why separating your document into individual sections is better than keeping it combined. Hopefully after working through the next section, the benefits will be obvious!
-
-
-
-
-
-
 
 ## Completed Part I of the Large Project Conversion Tutorial
 
