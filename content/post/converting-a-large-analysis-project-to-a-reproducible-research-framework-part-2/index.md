@@ -245,7 +245,7 @@ First identify the working directory of your new Makefile and MATLAB scripts:
 
 Next, open a terminal window and change to your working directory. Finally run the command `make matlab`. To break the suspense, since you have already tested these scripts in the GUI, they should work fine from the command line. Remember, that we have ensured a fresh clean environment with each run. If you forget to define the `target_file `in the MATLAB command from **Make** you will end up with whatever default name you specified in the file. 
 
-![Successful Make Build](untitled-project.gif "Successful Make build of a MATLAB Data Model!")
+![Successful Make Build](firstmake.gif "Successful Make build of a MATLAB Data Model!")
 
 If we check our MATLAB Build folder we will see the newly made MAT file. This filename holds special significance to **Make.** **Let's see a little bit of what makes Make so powerful.**
 
@@ -259,14 +259,18 @@ make: Nothing to be done for `matlab'.
 PS C:\Users\ernie\Dropbox\cbl\CommBioEEGRev\Source\MATLAB>
 ```
 
-Let's update the source file and watch Make in action
+### Watch Make in action as we update the original source file.
 
-Next, return to MATLAB and edit our source file `model_loadDataset.m`. Let's make a minor change. I am going to add a few words on the notification that the file saved adding the I made a small mod" and saved the file. 
+Now open the model_loadDataset.m file in MATLAB. Let's make a small change. I added "I made a small mod" to the successful save file message. 
 
-Now when I run the command `make matlab` **Make** observes that the source file is more recent than the target file and reruns the code.
+Now when I run the command `make matlab`, the system detects that the source file is more recent than the target file and reruns the code.
 
-![]()
+![Make auto updates target after updating source code](updatemake.gif "Make auto updates target after updating source code")
 
+## Summary of Part 2
 
+**In this lesson, we created a common MATLAB resource file, developed a standalone script to create a data model, and ran the script through the command line. We then hooked the script and the output file into Make so the process could be automated with a single command.**
 
-Breath a sign of relief! From here on out we simply repeat this process adding Makefile entries as you build your scripts. With just one file it is hard to show how Make can smartly determine which files should be built, but let's save something for tomorrow!
+Relax and breathe a sigh of relief! You will simply need to repeat this process as you build your scripts adding Makefile entries as you go. The true genius of Make is difficult to demonstrate with only one file, but we'll leave that for tomorrow.
+
+In Part 3, we will add additional data models and begin to construct Figures and Tables.
