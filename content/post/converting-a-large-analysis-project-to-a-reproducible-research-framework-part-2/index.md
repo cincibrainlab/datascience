@@ -40,4 +40,33 @@ We have included a file matlab_00_common.m to serve as a common include file in 
 
 Also, remember that we will be using Matlab both through the GUI for development and also running it from the command line for efficiency.  This forces us to write code that is both compatible by running line by line but also can run the entire file at once. Different users have various advice on how to accomplish this, but in our research we have one method that seems to work well in almost every situation.
 
-The template is to create an Matlab script file ("m") that contains the code to create your environment as well as a main function of your analysis in the same file. We will have plenty of examples of this below for clarification.
+The template is to create an Matlab script file ("m") that contains the code to create your environment as well as a main function of your analysis in the same file. We will have plenty of examples of this below for clarification. Each **Model** file should output a **MAT file** which contains variables of interest to be used by other analysis. In some cases, creating a CSV file or [Parquet ](https://www.mathworks.com/help/matlab/parquet-files.html)file may be more appropriate. 
+
+Let's open matlab_00_common.m and update our variables to reflect our current system needs. Notice that we add two commands to ensure that the entire Matlab environment is wiped clean (including resetting default paths) prior to any operations. This is essential to making sure that your results can be replicated on new systems. Finally, the `IsBatchMode `is a logical variable that will either be `TRUE `if running from the command line (such as through Makefile) or through the interactive GUI (as during development).
+
+```
+%=========================================================================%
+%                     CREATE REPRODUCIBLE ENVIRONMENT                     %
+%=========================================================================%
+
+clear all;
+restoredefaultpath();
+IsBatchMode = batchStartupOptionUsed;
+```
+
+Next we add variables that represent pathnames to common software toolboxes that will be used by our analysis. Since we wipe the Matlab path clean on each run, this is essential to reassigning paths on each script run. The HTP path refers to our internal tool box which contains RepMake scripts and other useful EEG functions. 
+
+```
+%=========================================================================%
+%                           TOOLBOX CONFIGURATION                         %
+% eeglab: https://sccn.ucsd.edu/eeglab/download.php                       %
+% high throughput pipline: github.com/cincibrainlab/htp_minimum.git       %
+% fieldtrip: https://www.fieldtriptoolbox.org/download/                   %
+% brainstorm: https://www.fieldtriptoolbox.org/download/                  %
+%=========================================================================%
+
+EEGLAB_PATH             = 'E:/Research Software/eeglab2021';
+HTP_PATH                = 'C:/Users/ernie/Dropbox/htp_minimum';
+BRAINSTORM_PATH         = 'E:/Research Software/brainstorm3';
+FIELDTRIP_PATH          = 'E:/Research Software/fieldtrip-master';
+```
