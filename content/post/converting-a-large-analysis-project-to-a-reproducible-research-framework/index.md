@@ -162,10 +162,7 @@ Matlab = matlab -nogui -nosplash -batch
 B = Build/
 S = Source/
 #==============================================================================#
-
 ```
-
-
 
 Next jump down to the Recipes section and find the shortcut manuscript. This tells **Make** what output to expect when you enter `make manuscript`.
 
@@ -173,7 +170,7 @@ Next jump down to the Recipes section and find the shortcut manuscript. This tel
 manuscript: $(B)manuscript_main.docx 
 ```
 
-Notice the form of the **Make** syntax. The `manuscript `is the name of the target. The ":" specifies the transition from the target to the dependencies. Finally, `$(B)manuscript_main.docx` is the dependency needed to achieve the target `manuscript`.
+Notice the form of the **Make** syntax. The `manuscript`is the name of the target. The ":" specifies the transition from the target to the dependencies. Finally, `$(B)manuscript_main.docx` is the dependency needed to achieve the target `manuscript`.
 
 It might seem confusing why the  `$(B)manuscript_main.docx` is not the target. This is because in **Make** targets often start as dependencies. So in this step manuscript might be a shortcut that refers to building the main manuscript, the cover letter, and the supplement.
 
@@ -204,7 +201,7 @@ The first line until the colon is the target file (notice the colon!):
 
 `$(B)manuscript_main.docx:`
 
-You will recognize that this is the exact same filename (placed in the Build directory) as in the shortcut for `manuscript `above. Here you can see that **Make** principal that most **dependency files** start off as **target files.** 
+You will recognize that this is the exact same filename (placed in the Build directory) as in the shortcut for `manuscript`above. Here you can see that **Make** principal that most **dependency files** start off as **target files.** 
 
 The remainder of the lines are the different individual Word documents to be stitched together. Finally, you will notice a new line with a tab with the line:
 
@@ -238,4 +235,4 @@ At the end of this tutorial you will have:
 2. Each section of your manuscript should be in a separate Word file.
 3. You have a combined manuscript Word document in your Build folder
 
-Seems like a lot of work to basically end up with what you started, but trust me, the fun is just beginning!
+Seems like a lot of work to basically end up with what you started, but trust me, the fun is just beginning! Next we will begin the process of transferring our analyses into our RepMake templates.
