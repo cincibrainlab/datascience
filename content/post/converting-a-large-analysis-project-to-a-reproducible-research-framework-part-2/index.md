@@ -1,6 +1,6 @@
 ---
 title: Converting a Large Analysis Project to a Reproducible Research Framework Part 2
-date: 2021-09-13T18:40:55.994Z
+date: 2021-09-13T19:47:27.092Z
 draft: false
 featured: false
 image:
