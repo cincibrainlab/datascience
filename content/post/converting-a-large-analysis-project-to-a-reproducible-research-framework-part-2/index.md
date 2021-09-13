@@ -31,3 +31,13 @@ On the other hand, you might have to wrangle your group_assignments.csv to reada
 The number of figures and tables in any analysis is usually equal to or greater than the number of data models. We often present data models in many different ways to make our points clear.
 
 It plays to the strength of the **Make** approach to create one or more data *models* and then use those models as dependencies in other data *models*, *figures*, and *tables*.
+
+## Step 1: Edit a common Matlab file that stores shared paths, variables, and functions. 
+
+Functional programming languages like Matlab can be a joy and pain to work with. In particular, Matlab is highly dependent on specifying particular paths to the files you want to include in your project. In addition, given Matlab's relatively enormous overhead, you want to reduce the duplication of code as much as possible.
+
+We have included a file matlab_00_common.m to serve as a common include file in each of your Malab scripts. Why the odd name? Matlab has very[ specific naming conventions](https://www.mathworks.com/help/simulink/mdl_gd/hi/naming-considerations.html) for files! If you name your file something different, just update the beginning of each of your scripts. In fact, in a complex analysis having more than one possible include file may increase your flexibility and increase the efficiency of your code.
+
+Also, remember that we will be using Matlab both through the GUI for development and also running it from the command line for efficiency.  This forces us to write code that is both compatible by running line by line but also can run the entire file at once. Different users have various advice on how to accomplish this, but in our research we have one method that seems to work well in almost every situation.
+
+The template is to create an Matlab script file ("m") that contains the code to create your environment as well as a main function of your analysis in the same file. We will have plenty of examples of this below for clarification.
