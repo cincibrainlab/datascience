@@ -24,7 +24,7 @@ The strategy for creating Make versions of MATLAB scripts remains similar to any
 
 For example, you might have a spreadsheet that contains clinical values and group assignments. This spreadsheet is an original asset that does not have a dependency. When you reference a Makefile, let's call it '`group_assignments.csv`', it must exist in your source folder to avoid getting an error. 
 
-On the other hand, you might have to wrangle your group_assignments.csv to readable group labels and exclude certain subjects. In this case, you may opt to create a new file in the Build folder named "`validated_group_assigments.csv`'. Subsequent scripts will look for this file (rather than the original) so instructions on how to create ''`validated_group_assigments.csv`" from "`group_assigments.csv`" must be specified in the Makefile. It is also good practice as your original source files remain untouched.
+On the other hand, you might want to wrangle your `group_assignments.csv` to change group labels and exclude certain subjects. In this case, you may opt to create a new file in the Build folder named "`validated_group_assigments.csv`'. Subsequent scripts will look for this file (rather than the original) so instructions on how to create ''`validated_group_assigments.csv`" from "`group_assigments.csv`" must be specified in the Makefile. It is also good practice as your original source files remain untouched.
 
 ### Start with data models, then move on to tables and figures
 
@@ -70,3 +70,42 @@ HTP_PATH                = 'C:/Users/ernie/Dropbox/htp_minimum';
 BRAINSTORM_PATH         = 'E:/Research Software/brainstorm3';
 FIELDTRIP_PATH          = 'E:/Research Software/fieldtrip-master';
 ```
+
+Next we customize specific paths and information regarding our dataset. This is information that should be useful to any script within this project. Notice that the MATLAB and R build paths are different. That is because my R build path is on a limited space cloud drive and the MATLAB build path is on a storage drive for larger analysis projects. It is simple to use the same path if desired. 
+
+Finally, the format our datasets are stored in is consistent with our high throughput pipeline (htp) which makes "objects" for each piece of EEG data (which point to a large EEG data file). This includes a CSV file and a MAT file of the objects. This code could be removed and replaced with your custom form of loading data such as in a cell array. 
+
+```
+%=========================================================================%
+%                        DIRECTORY CONFIGURATION                          %
+%=========================================================================%
+syspath.MatlabBuild  = 'E:/data/CommBioEEGRev/MatlabBuild/';
+syspath.RBuild       = 'C:/Users/ernie/Dropbox/cbl/CommBioEEGRev/Build/';
+
+% adding both build folders to MATLAB path
+cellfun(@(x) addpath(x), {syspath.MatlabBuild, syspath.RBuild}, 'uni',0)
+
+%=========================================================================%
+%                          DATA CONFIGURATION                             %
+%=========================================================================%
+syspath.htpdata  = 'E:/postdata/P1_70FXS_71_TDC/';
+keyfiles.datacsv = fullfile(syspath.htpdata, 'A00_ANALYSIS/A2109130720_subjTable_htp2bst_Stage4.csv');
+keyfiles.datamat = fullfile(syspath.htpdata, 'A00_ANALYSIS/A2109130720_subjTable_htp2bst_Stage4.mat');
+```
+
+Finally, under custom functions you can place any functions that may be used by other project scripts. In this case, I have a simple class called repMakeClass which contains useful functions for working with Makefiles.
+
+```
+%=========================================================================%
+%                          CUSTOM FUNCTIONS                               %
+%=========================================================================%
+r = repmakeClass;
+```
+
+When this is complete, try running your matlab_00_common.m file. Not much will happen, however, your Matlab environment will be prepared for the next steps!
+
+## Step 2: Generating a Data model from the command line through Make
+
+The fruit of all your labor setting up the environment will pay off in this next section. At this point, you will notice a dramatic decrease in the size of your script files because you are really only asking your script file to accomplish one major goal.
+
+For the next task, we will load our EEG dataset and save the relevant details in a MAT file for further use. Given the potential for high storage needs, we will use the MATLAB Build folder instead of the R build folder.
