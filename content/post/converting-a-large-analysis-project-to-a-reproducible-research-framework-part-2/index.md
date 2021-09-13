@@ -16,6 +16,10 @@ Welcome to Part II where we will start converting individual MATLAB scripts into
 
 In the last tutorial, we created a combined manuscript. This manuscript contains the roadmap for what assets to create (and their order) to create a reproducible research project.
 
+#### Platform agnostic
+
+In this project, we are demonstrating the capabilities of MATLAB, R, and Make on the Windows platform due to it being the most challenging. For example, the Windows version of MATLAB cannot truly be run without the GUI present as either the Mac or Linux version. Also, Make must be installed on Windows, whereas it is installed by default on most Linux installations and can be installed on Mac by installing the xcode development application. 
+
 ## Automating MATLAB scripts
 
 ### It's all about targets and dependencies
@@ -173,7 +177,15 @@ The target file `Build\model_loadDataset.mat` can now be used across multiple ot
 
 Next, we will automate this relatively simple Build using **Make**. Open your template `Makefile` and let's make some edits. Remember that **Make** loves ***shorthand*** so don't be intimidated by any of the syntax!
 
-After reading the header, notice the first section defining shortcuts used by Make for the rest of the file.
+#### Test if your MATLAB is working from the command line
+
+MATLAB must work from the command line for Make to activate and run your script! Let's test our MATLAB command in a terminal window (should work on Mac, Windows, or Linux).  In this case, I am going to open Windows terminal and run the command `matlab -nogui -nosplash -batch` . If matlab is available, Windows will complain that the nogui option is invalid (this is for Linux and Mac) but essentially tell you that it needs a script to run. Troubleshooting instructions [here](https://www.mathworks.com/help/matlab/ref/matlabwindows.html).
+
+![](2021-09-13_17-32-33.png)
+
+### Edit our Makefile: Setup short cuts
+
+After reading the header, notice the first section defining shortcuts used by **Make** for the rest of the file. In particular confirm you MB (Matlab build directory) and your B (Build directory) are correct. **Make** syntax is simple but rigid: no extra spaces! Don't forget to end your path with a "/" so it seamlessly fits into the filename when you use it later.
 
 ```
 #==============================================================================#
@@ -185,8 +197,42 @@ After reading the header, notice the first section defining shortcuts used by Ma
 #==============================================================================#
 SHELL=/bin/bash
 R = RScript --verbose
-Matlab = matlab -nogui -nosplash -batch
+Matlab = matlab /minimize /nosplash /nodesktop /batch
 MB = E:/data/gedtemp/Build/#MATLAB Build
 B = C:/Users/ernie/Dropbox/cbl/GEDBOUNDS/Build/
 S = Source/
 ```
+
+### Edit the Makefile to include our top-level "recipes"
+
+Next, we add our highest level targets to Makefile. At the highest level, we define `all `as depending on `matlab`. `matlab` refers to a series of dependencies that are the output of each of our MATLAB scripts. 
+
+Since we currently only have one script, our recently created `model_loadDataset.m` the remainder of our Makefile will be quite short. 
+
+### Add an entry to tell Make how to create `model_loadDataset.m`
+
+Let's create recipe to create our first target file `model_loadDataset.m`. 
+
+```
+#==============================================================================#
+# MATLAB RECIPIES                                                              #
+#==============================================================================#
+# MODEL: Import EEG dataset information
+$(MB)model_loadDataset.mat: model_loadDataset.m
+	$(Matlab) "target_file='$@';, run $^"
+```
+
+Let's make sense of this **Make shorthand!**
+
+* Any line that starts with # is simply a comment. 
+* the `:` is the dividing marker between the `target file` and the `dependencies`
+* following the last dependency, a `new line` and a `tab` tells **Make** to pay attention to a command
+* a `tab` is NOT a few spaces, but an actual tab character
+* When you see a `$` and `()` think either variable or function
+* `$@` is a short hand to refer to the `target file` or what is left of the `:`
+* `$^` is short hand to refer to the right of the `:` or all the `dependencies`
+* The MATLAB shorthand is used in this code as defined at the beginning of the file. It would be equally valid to use the command spelled out: `matlab /minimize /nosplash /nodesktop /batch`
+* To specify the target file that we want, we added it directly as an variable in the batch command. To be more clear, `"target_file='$@';, run $^"` instructs Make to place the filename of the target file (`$@`) and replace the `$^` with the script name from the dependency. 
+* Remember that Make is not analysis software. It is a very sophisticated macro software. You could simply run the command (without the shorthand) from the Makefile on the command prompt to test if it works.
+
+Let's try that now!
