@@ -29,3 +29,12 @@ Tracking multiple target files from a single source file is strongly discouraged
 In the next section we will load 141 scalp EEG tracings and convert the data from 2-second regular epochs to continuous data. Rather than having 141 target files representing each conversion, it is much more efficient to generate a single file which confirms the code was a success.
 
 A spreadsheet representing the path to each continuous file would be ideal, for example, if the conversion was successful. On the other hand if the process was unsuccessful, no file should be produced which tells **Make** something is wrong.
+
+## Building our second data model
+
+Let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into brainstorm. 
+
+Let's simplify this process by first creating a copy of model_loadDataset.m and opening it in the editor. Let's go through the necessary steps:
+
+1. change the basename to 'toContinuous'
+2. specify 'model_loadFile.mat' as a datafile to import
