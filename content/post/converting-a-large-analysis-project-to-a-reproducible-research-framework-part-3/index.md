@@ -14,8 +14,6 @@ In these tutorials, we will find out together!
 
 After Part 1 and Part 2, we have **Make** to automate both the creation of a manuscript and a MATLAB data model. In this lesson, we will continue to generate MATLAB code to expand our analysis.
 
-I have an additional bonus for any neuroscientists out there. Through [Brainstorm](https://neuroimage.usc.edu/brainstorm/Introduction), we will automate the process of estimating the minimal norm estimate of scalp EEG data. We previously worked out the particular details of the analysis using the graphical interface; however, we can now replicate the analysis via a command line counterpart, permanently. This is a good example that many programs, even those with graphical interfaces, can be ultimately run through command line tools.
-
 ### Recounting what MATLAB assets we have available
 
 * `matlab_00_common.m` which is common resource file
@@ -134,7 +132,7 @@ Let's rapidly prototype our script by:
 * modify the import data to `data_file = 'model_loadDataset.mat'`
 * no change to the `output_file_extension = 'MAT'`
 
-Next we will add our code for converting our data to continuous data.
+Next we will add our code for converting our data to continuous data. 
 
 ```
 try
@@ -148,3 +146,21 @@ end
 #### Sidebar: Try-Catch blocks to Track Errors
 
 Try-Catch blocks are simple ways to try code and understand what happens when there is a failure without abruptly existing your code. In this case, we "try" the function to convert our data. If the "try" succeeds or fails the variable status will be updated. The "try" block will keep MATLAB from crashing if something within the bracket causes an error. It will literally "catch" the error and allow the script to continue.
+
+### Saving and running the second data model
+
+At this point, the template code will save a MAT of the updated EEG structure. Since we have already updated the Makefile, feel free to now run the command `make matlab`.
+
+If everything is working correctly, **Make** will recognize the first data model has already been built and will move on to the new data model you just created. Following completion you should have two Build products in your MATLAB Build directory.
+
+```
+Directory: E:\data\CommBioEEGRev\MatlabBuild
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         9/14/2021  10:11 AM       52423067 model_contDataset.mat
+-a----         9/14/2021  10:05 AM       52118136 model_loadDataset.mat
+```
+
+## Conclusion of Part 3
+
+At this point we have become familiar with how to create data models in Matlab using an automated build process with **Make**. In Part 4 we will accelerate further by diving into automating the generation of an EEG source model. Finally.
