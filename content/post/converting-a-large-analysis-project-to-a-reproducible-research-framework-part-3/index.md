@@ -22,6 +22,8 @@ I have an additional bonus for any neuroscientists out there. Through [Brainstor
 * `model_loadDataset.m` which creates a MAT file that includes information of EEG datasets
 * **Makefile** with instructions to create `model_loadDataset.mat`
 
+## Using a proxy target file in place of multiple targets
+
 Tracking multiple target files from a single source file is strongly discouraged when using **Make**. Instead, a proxy file representing the target files has several advantages.
 
 In the next section we will load 141 scalp EEG tracings and convert the data from 2-second regular epochs to continuous data. Rather than having 141 target files representing each conversion, it is much more efficient to generate a single file which confirms the code was a success.
