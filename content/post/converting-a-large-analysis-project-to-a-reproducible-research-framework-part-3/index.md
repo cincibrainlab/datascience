@@ -30,6 +30,30 @@ In the next section we will load 141 scalp EEG tracings and convert the data fro
 
 A spreadsheet representing the path to each continuous file would be ideal, for example, if the conversion was successful. On the other hand if the process was unsuccessful, no file should be produced which tells **Make** something is wrong.
 
+## Starting with the Makefile
+
+On this round, why don't we start by editing the **Makefile** first? 
+
+One of the greatest advantages of having a Makefile is that you no longer have to worry about which files in your source directory really matter or are most up to date. The Makefile establishes which files are actively used in your building your assets. By starting with the Makefile you actually are setting a template which will make the remainder of the code easier to conceptualize and write.
+
+For example, let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into Brainstorm. 
+
+Let's define the name of the function we want to write:
+
+`model_contDataset.m`
+
+Let's define the dependency that this function requires:
+
+`model_loadDataset.mat`  (the data model from our last tutorial)
+
+And finally let's identify what data model or target we want **Make** to build:
+
+`model_contDataset.mat`  (notice how our model naming mirrors our script)
+
+
+
+
+
 ## Building our second data model
 
 Let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into brainstorm. 
