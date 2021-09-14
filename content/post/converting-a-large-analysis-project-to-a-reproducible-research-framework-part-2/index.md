@@ -36,7 +36,7 @@ The number of figures and tables in any analysis is usually equal to or greater 
 
 It plays to the strength of the **Make** approach to create one or more data *models* and then use those models as dependencies in other data *models*, *figures*, and *tables*.
 
-## Step 1: Edit a common Matlab file that stores shared paths, variables, and functions. 
+## Step 1: Edit a common Matlab file that stores shared paths, variables, and functions.
 
 Functional programming languages like Matlab can be a joy and pain to work with. In particular, Matlab is highly dependent on specifying particular paths to the files you want to include in your project. In addition, given Matlab's relatively enormous overhead, you want to reduce the duplication of code as much as possible.
 
@@ -46,7 +46,7 @@ Also, remember that we will be using Matlab both through the GUI for development
 
 The template is to create an Matlab script file ("m") that contains the code to create your environment as well as a main function of your analysis in the same file. We will have plenty of examples of this below for clarification. Each **Model** file should output a **MAT file** which contains variables of interest to be used by other analysis. In some cases, creating a CSV file or [Parquet ](https://www.mathworks.com/help/matlab/parquet-files.html)file may be more appropriate. 
 
-Let's open matlab_00_common.m and update our variables to reflect our current system needs. Notice that we add two commands to ensure that the entire Matlab environment is wiped clean (including resetting default paths) prior to any operations. This is essential to making sure that your results can be replicated on new systems. Finally, the `IsBatchMode `is a logical variable that will either be `TRUE `if running from the command line (such as through Makefile) or through the interactive GUI (as during development).
+Let's open matlab_00_common.m and update our variables to reflect our current system needs. Notice that we add two commands to ensure that the entire Matlab environment is wiped clean (including resetting default paths) prior to any operations. This is essential to making sure that your results can be replicated on new systems. Finally, the `IsBatchMode`is a logical variable that will either be `TRUE`if running from the command line (such as through Makefile) or through the interactive GUI (as during development).
 
 ```
 %=========================================================================%
@@ -57,10 +57,6 @@ clear all;
 restoredefaultpath();
 IsBatchMode = batchStartupOptionUsed;
 ```
-
-{{% callout note %}}
-A Markdown callout is useful for displaying notices, hints, or definitions to your readers.
-{{% /callout %}}
 
 Next we add variables that represent pathnames to common software toolboxes that will be used by our analysis. Since we wipe the Matlab path clean on each run, this is essential to reassigning paths on each script run. The HTP path refers to our internal tool box which contains RepMake scripts and other useful EEG functions. 
 
@@ -124,8 +120,6 @@ We are going to use our template to basically create the following script:
 2. Computation or creation
 3. Data file out
 
-
-
 ### A. Include the common Matlab file of your choosing to set the environment
 
 Start with opening the `model_template.m` file.  This generic template can be used to create a MAT file from MATLAB code. After reading the header instructions you will notice our common include file (easy to change). Remember that the **Common** file will clear your current environment, so save any work or variables you need now!
@@ -137,7 +131,7 @@ Start with opening the `model_template.m` file.  This generic template can be us
 matlab_00_common
 ```
 
-### B. Add a **basename** that will keep your file names consistent. 
+### B. Add a **basename** that will keep your file names consistent.
 
 The **basename** is a critical variable to ensure the naming of your file stays extremely consistent through this process. Our recommendation is that any Build file should match the source file name with the addition of the type of asset that it is. This will allow you to keep track of hundreds of files with very little confusion. In this case, we name the **basename** "loadDataset" and the target files will be automatically called 'model_loadDataset'. 
 
@@ -170,7 +164,6 @@ p.updateBasePaths( syspath.htpdata );
 %=========================================================================%
 
 save(target_file, 'p', 'syspath', 'keyfiles')
-
 ```
 
 The hard work from the previous sections have now paid off! Let's look at the actual code for loading our dataset and saving it to a MAT file. Here we are using htp functions (from our pipeline toolkit) to load the information to our raw data files, update their relative file paths, and then save the variable in a MAT file. 
@@ -190,9 +183,9 @@ MATLAB must work from the command line for Make to activate and run your script!
 ### Edit our Makefile: Setup short cuts
 
 After reading the header, notice the first section defining shortcuts used by **Make** for the rest of the file. In particular confirm you MB (Matlab build directory) and your B (Build directory) are correct. **Make** syntax is simple but rigid: no extra spaces! Don't forget to end your path with a "/" so it seamlessly fits into the filename when you use it later.
-
-> Don't forget to flip your `\` to `/` when you are using Windows for maximal compatibility. 
-
+{{% callout note %}}
+Don't forget to flip your `\` to `/` when you are using Windows for maximal compatibility. 
+{{% /callout %}}
 ```
 #==============================================================================#
 #                               CONFIGURATION                                  #
@@ -211,7 +204,7 @@ S = Source/
 
 ### Edit the Makefile to include our top-level "recipes"
 
-Next, we add our highest level targets to Makefile. At the highest level, we define `all `as depending on `matlab`. `matlab` refers to a series of dependencies that are the output of each of our MATLAB scripts. 
+Next, we add our highest level targets to Makefile. At the highest level, we define `all`as depending on `matlab`. `matlab` refers to a series of dependencies that are the output of each of our MATLAB scripts. 
 
 Since we currently only have one script, our recently created `model_loadDataset.m` the remainder of our Makefile will be quite short. 
 
@@ -247,7 +240,7 @@ First identify the working directory of your new Makefile and MATLAB scripts:
 
 ![](2021-09-13_17-47-11.png)
 
-Next, open a terminal window and change to your working directory. Finally run the command `make matlab`. To break the suspense, since you have already tested these scripts in the GUI, they should work fine from the command line. Remember, that we have ensured a fresh clean environment with each run. If you forget to define the `target_file `in the MATLAB command from **Make** you will end up with whatever default name you specified in the file. 
+Next, open a terminal window and change to your working directory. Finally run the command `make matlab`. To break the suspense, since you have already tested these scripts in the GUI, they should work fine from the command line. Remember, that we have ensured a fresh clean environment with each run. If you forget to define the `target_file`in the MATLAB command from **Make** you will end up with whatever default name you specified in the file. 
 
 ![Successful Make Build](firstmake.gif "Successful Make build of a MATLAB Data Model!")
 
@@ -275,6 +268,9 @@ Now when I run the command `make matlab`, the system detects that the source fi
 
 **In this lesson, we created a common MATLAB resource file, developed a standalone script to create a data model, and ran the script through the command line. We then hooked the script and the output file into Make so the process could be automated with a single command.**
 
+{{% callout note %}}
 Relax and breathe a sigh of relief! You will simply need to repeat this process as you build your scripts adding Makefile entries as you go. The true genius of Make is difficult to demonstrate with only one file, but we'll leave that for tomorrow.
+{{% /callout %}}
+
 
 In Part 3, we will add additional data models and begin to construct Figures and Tables.
