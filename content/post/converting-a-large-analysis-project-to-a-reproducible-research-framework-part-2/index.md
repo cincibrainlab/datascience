@@ -12,7 +12,7 @@ image:
 
 In these tutorials, we will find out together! 
 
-Welcome to Part II where we will start converting individual MATLAB scripts into a series of scripts that can be automatically created using the **Make** utility.
+**Welcome to Part II where we will start converting individual MATLAB scripts into a series of scripts that can be automatically created using the Make utility.**
 
 In the last tutorial, we created a combined manuscript. This manuscript contains the roadmap for what assets to create (and their order) to create a reproducible research project.
 
@@ -186,6 +186,7 @@ After reading the header, notice the first section defining shortcuts used by **
 {{% callout note %}}
 Don't forget to flip your `\` to `/` when you are using Windows for maximal compatibility. 
 {{% /callout %}}
+
 ```
 #==============================================================================#
 #                               CONFIGURATION                                  #
@@ -271,6 +272,5 @@ Now when I run the command `make matlab`, the system detects that the source fi
 {{% callout note %}}
 Relax and breathe a sigh of relief! You will simply need to repeat this process as you build your scripts adding Makefile entries as you go. The true genius of Make is difficult to demonstrate with only one file, but we'll leave that for tomorrow.
 {{% /callout %}}
-
 
 In Part 3, we will add additional data models and begin to construct Figures and Tables.
