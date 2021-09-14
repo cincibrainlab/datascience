@@ -1,5 +1,6 @@
 ---
 title: Converting a Large Analysis Project to a Reproducible Research Framework
+  - Part 1
 subtitle: ""
 date: 2021-09-12T22:47:00.093Z
 draft: false
@@ -236,3 +237,5 @@ At the end of this tutorial you will have:
 3. You have a combined manuscript Word document in your Build folder
 
 Seems like a lot of work to basically end up with what you started, but trust me, the fun is just beginning! Next we will begin the process of transferring our analyses into our RepMake templates.
+
+[Onward to Part 2](https://www.cincibrainlab.com/post/converting-a-large-analysis-project-to-a-reproducible-research-framework-part-2/)
