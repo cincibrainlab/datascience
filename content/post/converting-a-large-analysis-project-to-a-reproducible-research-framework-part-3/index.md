@@ -50,9 +50,74 @@ And finally let's identify what data model or target we want **Make** to build:
 
 `model_contDataset.mat`  (notice how our model naming mirrors our script)
 
+#### Let's create our **Make** command in "long hand":
 
+```
+E:/data/CommBioEEGRev/MatlabBuild/model_contDataset.mat: \
+model_contDataset.m model_loadDataset.mat
+  matlab /minimize /nosplash /nodesktop /batch \
+  'target_file=model_contDataset.mat;, run model_contDataset.m'
+```
 
+#### A few observations about this Make command for review:
 
+* By placing model_loadDataset.mat onto the dependency side (right) we force **Make** to require the file be present before executing the command below. 
+* Remember that \ specifies a line break when you want to make things clearer
+* Any dependency on the right will get the **Make** "treatment", which means **Make** will keep track of when and if the file is updated. That is why it is crucial that both the script name and the input data files be added. Now when either of those files changes, **Make** will automatically update the target.
+* Even though the shorthand of **Make** may appear confusing, you can see why it exists with this simple command. The command is too long to fit on a single line. In addition, commands in Make often use the target and dependency in the command itself. The shorthand can make it easier to read and reduces typo errors.
+
+#### Let's now rewrite the command in Make shorthand:
+
+* $(MB) is shorthand for the MATLAB Build directory
+* $(Matlab) is defined at the beginning of the Makefile
+* $@ refers to the target file (left)
+* $< is distinct from $^. In this case, $< refers only to the first dependency
+
+```
+# Data Model: Convert to continuous EEG
+$(MB)model_contDataset.mat: model_contDataset.m model_loadDataset.mat
+    $(Matlab) "target_file=$@;, run $<"
+```
+
+Let's copy and paste this into our Makefile right under our last data model.
+
+```
+#==============================================================================#
+# MATLAB RECIPIES                                                              #
+#==============================================================================#
+
+# Data Model: Load scalp EEG dataset
+$(MB)model_loadDataset.mat: model_loadDataset.m
+    $(Matlab) "target_file='$@';, run $^"
+
+# Data Model: Convert to continuous EEG
+$(MB)model_contDataset.mat: model_contDataset.m model_loadDataset.mat
+    $(Matlab) "target_file=$@;, run $<"
+```
+
+## A dubious design decision
+
+Here, we chose to set the import datafile name in the MATLAB script rather than as an argument. Similar to the target file, we could have easily added a second variable: "`data_file = model_importDataset.mat;`". **Make** enables a great deal of flexibility when reusing code since the input and output filenames are specified within the Makefile. By hardcoding the import model into the continuous model MATLAB code, I have limited the use of the continuous model code to the import model code.
+
+Telling Make about our new target file
+
+Finally, add our new target file to the MATLAB build shortcut in the combined recipes section of the Makefile. If you wanted to skip this step you could have Make run the target directly by specifying `Make target_name`. However, in this case, we want to use Make to build and track all our MATLAB scripts. 
+
+```
+#==============================================================================#
+#                                  RECIPES                                     #
+#==============================================================================#
+# COMBINED         ============================================================#
+# "RECIPES"        combination recipes create groups of assets such as all     #
+#                  tables or figures.                                          #
+#                  definition: recipe_name: asset1 asset2                      #
+#                  usage: make recipe_name                                     #
+#==============================================================================#
+
+all: matlab
+
+matlab: $(MB)model_loadDataset.mat $(MB)model_contDataset.mat
+```
 
 ## Building our second data model
 
