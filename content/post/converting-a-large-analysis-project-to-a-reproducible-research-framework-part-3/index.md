@@ -121,9 +121,30 @@ matlab: $(MB)model_loadDataset.mat $(MB)model_contDataset.mat
 
 ## Building our second data model
 
-Let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into brainstorm. 
+Setting up the Makefile first can make the development of the final script more efficient. When a pre-existing project is being converted, much of the Makefile can be planned by working backwards from the manuscript assets (i.e., tables and figures).
 
-Let's simplify this process by first creating a copy of model_loadDataset.m and opening it in the editor. Let's go through the necessary steps:
+### Creating the second data model: reshaping data
 
-1. change the basename to 'toContinuous'
-2. specify 'model_loadFile.mat' as a datafile to import
+Let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into brainstorm. Narrowing in on the scope of this script we want to load our previous target, perform our conversion operation, and save a new MAT file with the updated data model.
+
+Let's rapidly prototype our script by:
+
+* create copy and open `model_loadDataset.m`
+* change `basename = 'loadDataset' `to `basename=`'`contDataset'`
+* modify the import data to `data_file = 'model_loadDataset.mat'`
+* no change to the `output_file_extension = 'MAT'`
+
+Next we will add our code for converting our data to continuous data.
+
+```
+try
+    p.bst_prepareContinuousData;
+    status = 'Epoch2ContinuousData: Success.';
+catch
+    status = "Epoch2ContinuousData: Fail.";
+end
+```
+
+#### Sidebar: Try-Catch blocks to Track Errors
+
+Try-Catch blocks are simple ways to try code and understand what happens when there is a failure without abruptly existing your code. In this case, we "try" the function to convert our data. If the "try" succeeds or fails the variable status will be updated. The "try" block will keep MATLAB from crashing if something within the bracket causes an error. It will literally "catch" the error and allow the script to continue.
