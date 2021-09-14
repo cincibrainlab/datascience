@@ -58,6 +58,10 @@ restoredefaultpath();
 IsBatchMode = batchStartupOptionUsed;
 ```
 
+{{% callout note %}}
+A Markdown callout is useful for displaying notices, hints, or definitions to your readers.
+{{% /callout %}}
+
 Next we add variables that represent pathnames to common software toolboxes that will be used by our analysis. Since we wipe the Matlab path clean on each run, this is essential to reassigning paths on each script run. The HTP path refers to our internal tool box which contains RepMake scripts and other useful EEG functions. 
 
 ```
