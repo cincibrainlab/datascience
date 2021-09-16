@@ -12,4 +12,10 @@ image:
 
 Let me show you an easy and efficient method using R.
 
-For years I have made CSV (or Excel) files from data structures the hard way. This usually involves creating a nested for loop, taking a 3d structure, and manually forming a "tidy" or long datatable. In a "tidy" output, only a single observation can exist on a row.
+I have always made CSV (or Excel) files by hand from data structures. Usually, this involves creating a nested for loop, taking a 3D structure, and manually forming a "tidy" or long datatable. In a tidy output, each row can contain only one observation. 
+
+There are merits to this approach. You can, for example, create a CSV in whichever way you like and combine datasets more easily. In contrast, this freedom also makes it difficult to reuse the code, often adding an additional step of data manipulation.
+
+MATLAB and R can both be used independently to accomplish this approach 100%. Scientists tend, however, to generate data using MATLAB/Octave and then export those data to a statistical program. Even if you don't use R for statistics, the platform is highly flexible. You might be surprised to learn that I write this blog in RStudio? Or that you can easily create Word and Powerpoint files from scratch? Or that RStudio has a great visual Markdown editor?
+
+In this tutorial I want to demonstrate how to take 3-dimensional EEG analysis results and efficiently convert the data to a long table. In this case, I will be exporting a table from MATLAB from the commonly used open source EEG software Brainstorm and then completing the process in R and forming a "tidy" table. 
