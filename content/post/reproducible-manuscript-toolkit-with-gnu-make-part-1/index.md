@@ -3,6 +3,7 @@ title: 'Reproducible academic manuscripts using GNU Make: Part 1'
 date: 2021-09-10T02:53:39.159+00:00
 featured: false
 authors:
+- Aaron
 - Ernie
 image:
   filename: teal-white-colorful-blocks-blogger-website.png
