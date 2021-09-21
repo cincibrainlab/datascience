@@ -61,14 +61,33 @@ The use of "network" here instead of channel is intentional. In a multivariate a
 
 To tie together the previous point, a special case of a network is what Cohen's refers to as a component. The component is "formed by the weighted sum of all electrodes, that optimize the ratio between a user-specified minimization and maximization criteria [via GED}." 
 
+### Compared to univariate PAC analysis
+
 In a typical execution of a phase amplitude algorithm the input would be a pair of single channel time series. After extracting the phase series and amplitude envelope, the algorithm quantifies the relationship between the two. In this situation, the algorithm remains unaware that any more than two channels exist.
 
 In contrast, the gedCFC method computes the phase/amplitude relationship between two defined networks which involves the totality of the activity at all channel pairs. But how?
 
-Introduction to the Channel Covariate Matrix
+## Introduction to the Channel Covariate Matrix
 
-The key data structure that allows for this type of multivariate analysis is the channel covariance matrix. My first introduction to channel covariance matrix was overcomplicated, so let me present the shorthand in three steps:
+The key data structure that allows for this type of multivariate analysis is the channel covariance matrix. My first introduction to channel covariance matrix was overcomplicated, so let me present the shorthand in four logical steps:
 
-A pearson's correlation describes a linear relationship between two data vectors with the bounds 0 to 1.
+1. A Pearson's correlation computes the linear relationship between two vectors of values between the bounds of 0 to 1.
+2. EEG data is a series of channels each consisting of a vector of amplitude data. This data may be raw, filtered, or cleaned. 
+3. A correlation matrix of EEG data would consist of a square matrix (channel by channel) and each cell would contain the Pearson's correlation with the linear relationship between the pair of channel amplitudes. 
+4. A covariance matrix is identical to the correlation matrix, but measure variance which is unbounded.
 
-A channel co-variance matrix is the equilvent of a pearsons correlation between 
+In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain. Instead, let me walk you through a repEx in MATLAB.
+
+```
+% Goal create an EEG channel covariance matrix
+% Generate fake EEG data
+  no_channels = 64;
+  no_samples = 10000;
+  alices_EEG = rand(no_channels, no_samples);
+
+% examine the size of the fake EEG data
+  size(alices_EEG) % 64 x 1000
+  
+% 
+
+```
