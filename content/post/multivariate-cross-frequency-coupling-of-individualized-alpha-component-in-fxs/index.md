@@ -31,6 +31,44 @@ To complete this story, we were interested in examining cross frequency coupling
 
 Before wading to the implementation of the GEDCFC technique, we will create some pseudocode and discuss a high level overview of the process. The history of phase amplitude coupling in EEG has a long and storied history and is not without it's [controversy](https://www.frontiersin.org/articles/10.3389/fncom.2016.00087/full). Many of the modern univariate techniques were derived from application from single channel ex vivo or invasive recording data and adapted to EEG data. 
 
+### Broken assumptions about Neural Oscillations
+
 One criticism, in particular, coincides with a [more nuanced view of neural oscillations](https://www.sciencedirect.com/science/article/abs/pii/S0959438816300769?via%3Dihub). It is becoming increasingly challenged that brain oscillations are in nature sinusoids with a stable frequency. Though I do not feel any neuroscientist ever considered this to be true, the use of sinusoidal narrowband filters in EEG processing introduced a potential bias to how we interpret data and code our analysis. The alternative view of viewing oscillatory activity as having value in the non-averaged form and examining spectral events, for example, has led to some breakthroughs in understanding biophysical processes such as [tactile discrimination](https://elifesciences.org/articles/29086). 
 
+### Moving forward with novel techniques, slowly.
+
 For high-resolution EEG, multivariate analysis affords an opportunity to leverage spatiotemporal data from multiple channels to increase signal to noise and disentangle source projections. To some degree, these techniques have been well validated in simulations and small empirical datasets. Clinical applications on large datasets, such as our intent here, will be needed to truly being to incorporate these techniques into diagnostic and therapeutic pipelines.
+
+## Highest level overview of GEDCFC
+
+Cohen describes his variation on gedCFC as follows: "Method 1 is designed for a situation in which the activity of one network fluctuates as a function of the phase of a lower-frequency network."
+
+Reading between the lines:
+
+> "Method 1 ..."
+
+Cohen's insistence on transparency has been an exemplar to the field. He has provided his full methods with data (thus, [repex](https://swi-prolog.discourse.group/t/minimal-and-reproducible-working-examples/2447)) [here](mikexcohen.com/data).
+
+> "...is designed for a situation..."
+
+It is not trivial to really consider the underlying assumptions of this approach and support the use within a dataset.
+
+> "...in which the activity of one network..."
+
+The use of "network" here instead of channel is intentional. In a multivariate analysis the network consists of the pattern of activity simultaneously at all channels. 
+
+> "fluctuates as a function of the phase of a lower-frequency network."
+
+To tie together the previous point, a special case of a network is what Cohen's refers to as a component. The component is "formed by the weighted sum of all electrodes, that optimize the ratio between a user-specified minimization and maximization criteria [via GED}." 
+
+In a typical execution of a phase amplitude algorithm the input would be a pair of single channel time series. After extracting the phase series and amplitude envelope, the algorithm quantifies the relationship between the two. In this situation, the algorithm remains unaware that any more than two channels exist.
+
+In contrast, the gedCFC method computes the phase/amplitude relationship between two defined networks which involves the totality of the activity at all channel pairs. But how?
+
+Introduction to the Channel Covariate Matrix
+
+The key data structure that allows for this type of multivariate analysis is the channel covariance matrix. My first introduction to channel covariance matrix was overcomplicated, so let me present the shorthand in three steps:
+
+A pearson's correlation describes a linear relationship between two data vectors with the bounds 0 to 1.
+
+A channel co-variance matrix is the equilvent of a pearsons correlation between 
