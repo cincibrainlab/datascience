@@ -26,3 +26,9 @@ We were able to identify an individualized alpha component (clustered around 10 
 ### Incorporating gedCFC to examine functional connectivity of individualized alpha component in FXS
 
 To complete this story, we were interested in examining cross frequency coupling (CFC) between the individualized alpha component and gamma activity. We hypothesized that anterior alpha activity would demonstrate altered CFC compared to controls. Given that multivariate analysis can incorporate spatial and temporal information, we wondered if an anterior focus of alpha activity would also change the focus of PAC. At a global level, PAC may represent functional connectivity of the brain and changes in the strength or distribution of PAC may affect behavior.
+
+## Overview of GEDCFC
+
+Before wading to the implementation of the GEDCFC technique, we will create some pseudocode and discuss a high level overview of the process. The history of phase amplitude coupling in EEG has a long and storied history and is not without it's controversy. Many of the modern univariate techniques were derived from application from single channel ex vivo or invasive recording data and adapted to EEG data. 
+
+One criticism, in particular, coincides with a more nuanced view of neural oscillations. It is becoming increasingly challenged that brain oscillations are in nature sinusoids with a stable frequency. Though I do not feel any neuroscientist ever considered this to be true, the use of sinusoidal narrowband filters in EEG processing introduced a potential bias to how we interpret data and code our analysis. The alternative view of viewing oscillatory activity as having value in the non-averaged form and examining spectral events, for example, has led to some breakthroughs in understanding biophysical processes such as [tactile discrimination](https://www.sciencedirect.com/science/article/abs/pii/S0959438816300769?via%3Dihub).
