@@ -78,7 +78,7 @@ My first introduction to channel covariance matrix was overcomplicated, so let m
 3. A correlation matrix of EEG data would consist of a square matrix (channel by channel) and each table cell would contain the Pearson's correlation with the linear relationship between the pair of channel amplitudes. 
 4. A covariance matrix is identical to the correlation matrix, but measure variance which is unbounded.
 
-In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain.  Instead, let me walk you through an example in MATLAB.
+In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain. I would specifically refer you to Cohen's [general tutorial on GED](https://arxiv.org/pdf/2104.12356.pdf) and this blog post from [Towards Data Science](https://towardsdatascience.com/x%E1%B5%80x-covariance-correlation-and-cosine-matrices-d2230997fb7). Instead, let me walk you through an example in MATLAB.
 
 ```
 % === Exploring channel covariance matrices ==================
@@ -87,7 +87,6 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 % square matrix with a height/width of the number of channels.
 % A covariance, unlike a correlation, is unbounded. Larger
 % covariance values indicate the signal varies together.
-
 
 % First, generate simulated EEG data
   no_channels = 4;  no_samples = 1000;
@@ -104,24 +103,11 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 %     0.2475    0.2515    0.2493    0.3285
 %
 %  First, confirm that the covarience matrix is exactly a
-%  no_channels x no_challens square. Each cell of this 
+%  no_channels x no_channels square matrix. Each cell of this 
 %  matrix contains a volume which represents the linear
 %  relationship of two channels.The covariance between the 
 %  same variables equals variance, so, the diagonal shows
 %  the variance of each variable. 
-
-% --- Built-in cov() function in MATLAB ---------------------
-% Running the cov function in Matlab may be initially
-% discouraging. The input of the cov function should be a
-% matrix with the observations in rows and the channels
-% as columns. Therefore in MATLAB the transpose of the EEG signal (i.e.,
-% amplitude X channel) should be used in the cov() function.
-% The output of cov() is the correct dimension, channel no x channel_no,
-% however, the values have been normalized by subtracting th eman.'
-
-
-
-
 ```
 
 You may notice that MATLAB has a built in covariance function, cov(), but the output differs.
