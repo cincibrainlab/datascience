@@ -69,46 +69,64 @@ In contrast, the gedCFC method computes the phase/amplitude relationship between
 
 ## Introduction to the Channel Covariate Matrix
 
-The key data structure that allows for this type of multivariate analysis is the channel covariance matrix. 
+The key data structure that allows for this type of multivariate analysis is the channel covariance matrix. It seems like a contradiction that we will be using sinusoidal filters on our data given our above criticism. In this case, however, our coupling measure will be calculated from the channel covariance matrix, not on the underlying waveform.
 
 My first introduction to channel covariance matrix was overcomplicated, so let me present the shorthand in four logical steps:
 
 1. A Pearson's correlation computes the linear relationship between two vectors of values between the bounds of 0 to 1.
 2. EEG data is a series of channels each consisting of a vector of amplitude data. This data may be raw, filtered, or cleaned. 
-3. A correlation matrix of EEG data would consist of a square matrix (channel by channel) and each cell would contain the Pearson's correlation with the linear relationship between the pair of channel amplitudes. 
+3. A correlation matrix of EEG data would consist of a square matrix (channel by channel) and each table cell would contain the Pearson's correlation with the linear relationship between the pair of channel amplitudes. 
 4. A covariance matrix is identical to the correlation matrix, but measure variance which is unbounded.
 
-In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain.  Instead, let me walk you through a repEx in MATLAB.
+In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain.  Instead, let me walk you through an example in MATLAB.
 
 ```
-% Goal create an EEG channel covariance matrix
-% Generate fake EEG data
-  no_channels = 4;
-  no_samples = 1000;
-  alices_EEG = rand(no_channels, no_samples);
+% === Exploring channel covariance matrices ==================
+% A channel covariance matrix encodes the linear relationship
+% between all pairs of channels. The resulting matrix is a
+% square matrix with a height/width of the number of channels.
+% A covariance, unlike a correlation, is unbounded. Larger
+% covariance values indicate the signal varies together.
 
-% examine the size of the fake EEG data
-  size(alices_EEG) % 4 x 1000
+
+% First, generate simulated EEG data
+  no_channels = 4;  no_samples = 1000;
+  myEEG = rand(no_channels, no_samples);
+
+% Second, manually create a channel covariance matrix
+  cov_mat = (myEEG*myEEG')/(no_samples-1);
   
-% create channel covariance matrix
-cov_mat = (alices_EEG*alices_EEG')/no_samples;
-
-% size of final covariance matrix
-size(cov_mat) % no_channels x no_channels
-
-% examine the covariance matrix
-cov_mat
-
-covmat =
-
-    0.3324    0.2525    0.2531    0.2481
-    0.2525    0.3429    0.2537    0.2528
-    0.2531    0.2537    0.3338    0.2469
-    0.2481    0.2528    0.2469    0.3249
-
+% --- Interpreting the Output -------------------------------
+% cov_mat =
+%     0.3343    0.2530    0.2542    0.2475
+%     0.2530    0.3407    0.2541    0.2515
+%     0.2542    0.2541    0.3413    0.2493
+%     0.2475    0.2515    0.2493    0.3285
+%
+%  First, confirm that the covarience matrix is exactly a
+%  no_channels x no_challens square. Each cell of this 
+%  matrix contains a volume which represents the linear
+%  relationship of two channels.The covariance between the 
+%  same variables equals variance, so, the diagonal shows
+%  the variance of each variable. 
   
 ```
 
-I
+You may notice that MATLAB has a built in covariance function, cov(), but the output differs.
+
+```matlab
+>> cov(alices_EEG', 1)
+
+ans =
+
+    0.0836    0.0027   -0.0044    0.0014
+    0.0027    0.0829    0.0024   -0.0017
+   -0.0044    0.0024    0.0807   -0.0029
+    0.0014   -0.0017   -0.0029    0.0814
+```
+
+Why do the numbers appear smaller and with 
+
+
 
 Lines 21-24 give a subset of the covariance matrix. If you are familar with correlation matrices, you might first recognize that the diagonal doesn't have ones. In fact, the diagognal actually appears irregular. What is going on?
