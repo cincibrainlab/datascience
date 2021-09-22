@@ -67,3 +67,4 @@ In a typical execution of a phase amplitude algorithm the input would be a pair 
 
 In contrast, the gedCFC method computes the phase/amplitude relationship between two defined networks which involves the totality of the activity at all channel pairs. But how?
 
+Next we will discuss [creating a channel covariance structure](https://www.cincibrainlab.com/post/generating-eeg-channel-covariance-matrices/).
