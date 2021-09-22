@@ -109,7 +109,19 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 %  relationship of two channels.The covariance between the 
 %  same variables equals variance, so, the diagonal shows
 %  the variance of each variable. 
-  
+
+% --- Built-in cov() function in MATLAB ---------------------
+% Running the cov function in Matlab may be initially
+% discouraging. The input of the cov function should be a
+% matrix with the observations in rows and the channels
+% as columns. Therefore in MATLAB the transpose of the EEG signal (i.e.,
+% amplitude X channel) should be used in the cov() function.
+% The output of cov() is the correct dimension, channel no x channel_no,
+% however, the values have been normalized by subtracting th eman.'
+
+
+
+
 ```
 
 You may notice that MATLAB has a built in covariance function, cov(), but the output differs.
