@@ -112,19 +112,23 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 
 #### Mean-offset covariance matrix
 
-`cov_mat =
+```
+cov_mat =
     0.3343    0.2530    0.2542    0.2475
     0.2530    0.3407    0.2541    0.2515
     0.2542    0.2541    0.3413    0.2493
-    0.2475    0.2515    0.2493    0.3285`
+    0.2475    0.2515    0.2493    0.3285
+```
 
 #### Mean-centered covariance matrix
 
-`cov_mat_mc =
+```
+cov_mat_mc =
     0.0838   -0.0005    0.0016   -0.0007
    -0.0005    0.0841   -0.0016    0.0004
     0.0016   -0.0016    0.0867   -0.0009
-   -0.0007    0.0004   -0.0009    0.0827`
+   -0.0007    0.0004   -0.0009    0.0827
+```
 
 Confirm that the covariance matrix is exactly a no_channels x no_channels square matrix. Each cell of this matrix contains a volume which represents the linear relationship of two channels.The covariance between the same variables equals variance, so, the diagonal shows the variance of each variable. If you want know more about the difference between variance and correlation check out this [link](https://www.countbayesie.com/blog/2015/2/21/variance-co-variance-and-correlation).
 
