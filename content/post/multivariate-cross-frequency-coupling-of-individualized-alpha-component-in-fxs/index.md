@@ -69,25 +69,46 @@ In contrast, the gedCFC method computes the phase/amplitude relationship between
 
 ## Introduction to the Channel Covariate Matrix
 
-The key data structure that allows for this type of multivariate analysis is the channel covariance matrix. My first introduction to channel covariance matrix was overcomplicated, so let me present the shorthand in four logical steps:
+The key data structure that allows for this type of multivariate analysis is the channel covariance matrix. 
+
+My first introduction to channel covariance matrix was overcomplicated, so let me present the shorthand in four logical steps:
 
 1. A Pearson's correlation computes the linear relationship between two vectors of values between the bounds of 0 to 1.
 2. EEG data is a series of channels each consisting of a vector of amplitude data. This data may be raw, filtered, or cleaned. 
 3. A correlation matrix of EEG data would consist of a square matrix (channel by channel) and each cell would contain the Pearson's correlation with the linear relationship between the pair of channel amplitudes. 
 4. A covariance matrix is identical to the correlation matrix, but measure variance which is unbounded.
 
-In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain. Instead, let me walk you through a repEx in MATLAB.
+In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain.  Instead, let me walk you through a repEx in MATLAB.
 
 ```
 % Goal create an EEG channel covariance matrix
 % Generate fake EEG data
-  no_channels = 64;
-  no_samples = 10000;
+  no_channels = 4;
+  no_samples = 1000;
   alices_EEG = rand(no_channels, no_samples);
 
 % examine the size of the fake EEG data
-  size(alices_EEG) % 64 x 1000
+  size(alices_EEG) % 4 x 1000
   
-% 
+% create channel covariance matrix
+cov_mat = (alices_EEG*alices_EEG')/no_samples;
 
+% size of final covariance matrix
+size(cov_mat) % no_channels x no_channels
+
+% examine the covariance matrix
+cov_mat
+
+covmat =
+
+    0.3324    0.2525    0.2531    0.2481
+    0.2525    0.3429    0.2537    0.2528
+    0.2531    0.2537    0.3338    0.2469
+    0.2481    0.2528    0.2469    0.3249
+
+  
 ```
+
+I
+
+Lines 21-24 give a subset of the covariance matrix. If you are familar with correlation matrices, you might first recognize that the diagonal doesn't have ones. In fact, the diagognal actually appears irregular. What is going on?
