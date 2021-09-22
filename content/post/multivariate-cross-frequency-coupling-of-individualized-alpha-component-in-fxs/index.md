@@ -101,30 +101,36 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 %     0.2530    0.3407    0.2541    0.2515
 %     0.2542    0.2541    0.3413    0.2493
 %     0.2475    0.2515    0.2493    0.3285
-%
-%  First, confirm that the covarience matrix is exactly a
-%  no_channels x no_channels square matrix. Each cell of this 
-%  matrix contains a volume which represents the linear
-%  relationship of two channels.The covariance between the 
-%  same variables equals variance, so, the diagonal shows
-%  the variance of each variable. 
 ```
 
-You may notice that MATLAB has a built in covariance function, cov(), but the output differs.
+\--- Interpreting the Output -------------------------------
 
-```matlab
->> cov(alices_EEG', 1)
+`cov_mat =
+    0.3343    0.2530    0.2542    0.2475
+    0.2530    0.3407    0.2541    0.2515
+    0.2542    0.2541    0.3413    0.2493
+    0.2475    0.2515    0.2493    0.3285`
 
-ans =
+Confirm that the covariance matrix is exactly a no_channels x no_channels square matrix. Each cell of this matrix contains a volume which represents the linear relationship of two channels.The covariance between the same variables equals variance, so, the diagonal shows the variance of each variable. 
 
-    0.0836    0.0027   -0.0044    0.0014
-    0.0027    0.0829    0.0024   -0.0017
-   -0.0044    0.0024    0.0807   -0.0029
-    0.0014   -0.0017   -0.0029    0.0814
-```
+\--- Built-in cov() function in MATLAB ---------------------
+Running the cov function in Matlab may be initially
+discouraging. The input of the cov function should be a
+matrix with the observations in rows and the channels
+as columns. Therefore in MATLAB the transpose of the EEG signal (i.e.,
+amplitude X channel) should be used in the cov() function.
+The output of cov() is the correct dimension, channel no x channel_no,
+however, the values have been normalized by subtracting th mean.'
 
-Why do the numbers appear smaller and with 
+Minor notes #1: The denominator is usually designated as
+n for a population and n-1 for a sample. In practice, for
+EEG data in which greater than 10,000 samples are routine the
+difference between the two mathmatically is neglible. You could
+likely make a scientific argument either way, but I, like Cohen
+prefer just n.
 
-
-
-Lines 21-24 give a subset of the covariance matrix. If you are familar with correlation matrices, you might first recognize that the diagonal doesn't have ones. In fact, the diagognal actually appears irregular. What is going on?
+Minor note #2: It is crucial to check and double check the orientation
+of your matrix to avoid "silent" errors. In the MATLAB function
+the expectation is that columns are "feature" being measured and the
+rows represent the observations. EEG lab formated data is usually 
+the opposite, columns represent the observations from the time series.
