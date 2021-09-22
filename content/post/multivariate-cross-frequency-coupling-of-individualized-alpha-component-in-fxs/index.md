@@ -78,6 +78,8 @@ My first introduction to channel covariance matrix was overcomplicated, so let m
 3. A correlation matrix of EEG data would consist of a square matrix (channel by channel) and each table cell would contain the Pearson's correlation with the linear relationship between the pair of channel amplitudes. 
 4. A covariance matrix is identical to the correlation matrix, but measure variance which is unbounded.
 
+### Creating a covariance matrix in MATLAB
+
 In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+channel+covariate+matrix%3F) how to create an EEG channel covariance matrix can lead to a road of pain. I would specifically refer you to Cohen's [general tutorial on GED](https://arxiv.org/pdf/2104.12356.pdf) and this blog post from [Towards Data Science](https://towardsdatascience.com/x%E1%B5%80x-covariance-correlation-and-cosine-matrices-d2230997fb7). Instead, let me walk you through an example in MATLAB.
 
 ```
@@ -103,7 +105,7 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 %     0.2475    0.2515    0.2493    0.3285
 ```
 
-\--- Interpreting the Output -------------------------------
+### Interpreting the Output
 
 `cov_mat =
     0.3343    0.2530    0.2542    0.2475
@@ -111,9 +113,32 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
     0.2542    0.2541    0.3413    0.2493
     0.2475    0.2515    0.2493    0.3285`
 
-Confirm that the covariance matrix is exactly a no_channels x no_channels square matrix. Each cell of this matrix contains a volume which represents the linear relationship of two channels.The covariance between the same variables equals variance, so, the diagonal shows the variance of each variable. 
+Confirm that the covariance matrix is exactly a no_channels x no_channels square matrix. Each cell of this matrix contains a volume which represents the linear relationship of two channels.The covariance between the same variables equals variance, so, the diagonal shows the variance of each variable. If you want know more about the difference between variance and correlation check out this [link](https://www.countbayesie.com/blog/2015/2/21/variance-co-variance-and-correlation).
 
-\--- Built-in cov() function in MATLAB ---------------------
+### Built-in cov() function in MATLAB 
+
+MATLAB's built-in function cov() will generate a mean-centered covariance matrix. In many applications, a mean-centered covariance matrix is preferred since the original units may vary between features. The EEG data we have in this case is all measured in microvolts. Cohen extends this discussion [here](https://arxiv.org/pdf/2104.12356.pdf) following equation 8.
+
+MATLAB's cov() function does not have an option to turn off mean-centering. However, it is trivial to modify the Mathworks function so that you gain a deeper understanding of how it works. 
+
+```edit cov```
+
+Spend a moment to enjoy a piece of professional code and jump down to approximately line 154:
+
+```xc = x - sum(x,1)./m;  % Remove mean
+c = (xc' * xc) ./ denom;```
+
+Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. 
+
+
+
+Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.
+
+
+
+I'm personally surprised that 
+
+\--- ---------------------
 Running the cov function in Matlab may be initially
 discouraging. The input of the cov function should be a
 matrix with the observations in rows and the channels
