@@ -112,7 +112,7 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 
 #### Mean-offset covariance matrix
 
-```
+```matlab
 cov_mat =
     0.3343    0.2530    0.2542    0.2475
     0.2530    0.3407    0.2541    0.2515
@@ -122,7 +122,7 @@ cov_mat =
 
 #### Mean-centered covariance matrix
 
-```
+```matlab
 cov_mat_mc =
     0.0838   -0.0005    0.0016   -0.0007
    -0.0005    0.0841   -0.0016    0.0004
@@ -144,14 +144,11 @@ Spend a moment to enjoy a piece of professional code and jump down to approximat
 `xc
 c = (xc' * xc) ./ denom;`
 
-
 Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.
-
 
 `data = data-mean(data,2); % mean-center
 S = data*data’ / (size(data,2)-1);`
 
->
 > Minor notes #1: The denominator is usually designated as
 > n for a population and n-1 for a sample. In practice, for
 > EEG data in which greater than 10,000 samples are routine the
