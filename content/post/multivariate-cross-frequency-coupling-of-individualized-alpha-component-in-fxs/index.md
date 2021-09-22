@@ -90,22 +90,27 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
 % A covariance, unlike a correlation, is unbounded. Larger
 % covariance values indicate the signal varies together.
 
+% Fix random generator
+  rng(1,'twister');
+
 % First, generate simulated EEG data
   no_channels = 4;  no_samples = 1000;
   myEEG = rand(no_channels, no_samples);
 
 % Second, manually create a channel covariance matrix
   cov_mat = (myEEG*myEEG')/(no_samples-1);
+
+% The more commonly used mean-normalized covariance matrix
+  myEEG_mc = myEEG - (sum(myEEG,2) / no_samples);
+  cov_mat_mc = (myEEG_mc*myEEG_mc')/(no_samples-1);
   
-% --- Interpreting the Output -------------------------------
-% cov_mat =
-%     0.3343    0.2530    0.2542    0.2475
-%     0.2530    0.3407    0.2541    0.2515
-%     0.2542    0.2541    0.3413    0.2493
-%     0.2475    0.2515    0.2493    0.3285
+% Compare with built-in MATLAB Function
+  cov(myEEG_mc')
 ```
 
 ### Interpreting the Output
+
+#### Mean-offset covariance matrix
 
 `cov_mat =
     0.3343    0.2530    0.2542    0.2475
@@ -113,49 +118,45 @@ In this case, [googling](https://letmegooglethat.com/?q=how+to+create+an+EEG+cha
     0.2542    0.2541    0.3413    0.2493
     0.2475    0.2515    0.2493    0.3285`
 
+#### Mean-centered covariance matrix
+
+`cov_mat_mc =
+    0.0838   -0.0005    0.0016   -0.0007
+   -0.0005    0.0841   -0.0016    0.0004
+    0.0016   -0.0016    0.0867   -0.0009
+   -0.0007    0.0004   -0.0009    0.0827`
+
 Confirm that the covariance matrix is exactly a no_channels x no_channels square matrix. Each cell of this matrix contains a volume which represents the linear relationship of two channels.The covariance between the same variables equals variance, so, the diagonal shows the variance of each variable. If you want know more about the difference between variance and correlation check out this [link](https://www.countbayesie.com/blog/2015/2/21/variance-co-variance-and-correlation).
 
-### Built-in cov() function in MATLAB 
+### Built-in cov() function in MATLAB
 
 MATLAB's built-in function cov() will generate a mean-centered covariance matrix. In many applications, a mean-centered covariance matrix is preferred since the original units may vary between features. The EEG data we have in this case is all measured in microvolts. Cohen extends this discussion [here](https://arxiv.org/pdf/2104.12356.pdf) following equation 8.
 
 MATLAB's cov() function does not have an option to turn off mean-centering. However, it is trivial to modify the Mathworks function so that you gain a deeper understanding of how it works. 
 
-```edit cov```
+`edit cov`
 
 Spend a moment to enjoy a piece of professional code and jump down to approximately line 154:
-
-```xc = x - sum(x,1)./m;  % Remove mean
-c = (xc' * xc) ./ denom;```
-
-Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. 
+`xc
+c = (xc' * xc) ./ denom;`
 
 
-
-Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.
-
+Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.Most of the Mathworks teams' code consists of contingency checks, but the basic algorithm is identical. Select all (Ctrl-A), Copy (Ctrl-C), and Paste (Ctrl-V) into a new Document (Ctrl-N). Save the new function ("cov2.m") with the mean centering line commented out. Once the function is run, you will see the output matches the original square matrix.
 
 
-I'm personally surprised that 
+`data = data-mean(data,2); % mean-center
+S = data*data’ / (size(data,2)-1);`
 
-\--- ---------------------
-Running the cov function in Matlab may be initially
-discouraging. The input of the cov function should be a
-matrix with the observations in rows and the channels
-as columns. Therefore in MATLAB the transpose of the EEG signal (i.e.,
-amplitude X channel) should be used in the cov() function.
-The output of cov() is the correct dimension, channel no x channel_no,
-however, the values have been normalized by subtracting th mean.'
-
-Minor notes #1: The denominator is usually designated as
-n for a population and n-1 for a sample. In practice, for
-EEG data in which greater than 10,000 samples are routine the
-difference between the two mathmatically is neglible. You could
-likely make a scientific argument either way, but I, like Cohen
-prefer just n.
-
-Minor note #2: It is crucial to check and double check the orientation
-of your matrix to avoid "silent" errors. In the MATLAB function
-the expectation is that columns are "feature" being measured and the
-rows represent the observations. EEG lab formated data is usually 
-the opposite, columns represent the observations from the time series.
+>
+> Minor notes #1: The denominator is usually designated as
+> n for a population and n-1 for a sample. In practice, for
+> EEG data in which greater than 10,000 samples are routine the
+> difference between the two mathmatically is neglible. You could
+> likely make a scientific argument either way, but I, like Cohen
+> prefer just n.
+>
+> Minor note #2: It is crucial to check and double check the orientation
+> of your matrix to avoid "silent" errors. In the MATLAB function
+> the expectation is that columns are "feature" being measured and the
+> rows represent the observations. EEG lab formated data is usually 
+> the opposite, columns represent the observations from the time series.
