@@ -59,3 +59,11 @@ If avoiding writing custom code is not enough of a positive for you, consider fi
 > 65 MB
 
 ### So the RData, MAT format or Parquet format takes up approximately less than 15% of size of the CSV table.
+
+## Choosing the best data format for an efficient, reproducible workflow
+
+For this use, I selected the MAT format given it's comparable efficiency, but also given the simplicity in terms of transferring data to R from MATLAB. The importance of simplicity in your code cannot be understated until you let your code "ripen" for several months and try to return to work.
+
+### R.matlab package can import MAT files into R
+
+The [R.matlab Package](https://github.com/HenrikBengtsson/R.matlab) is not regularly maintained but in this sense it is a finished product. It can easily important multidimensional MAT files into R. The one caveat is that you must save your MAT file on the MATLAB side using the '-v6' tag to make sure the format is compatible. There appears to be [complicating factors](https://github.com/HenrikBengtsson/R.matlab/issues/20) in updating the package to use the more modern '7.3' MAT format.
