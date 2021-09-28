@@ -46,11 +46,11 @@ If avoiding writing custom code is not enough of a positive for you, consider fi
 > row vector for frequency step labels
 > 69 MB
 
-### Let's compare the Apache Parquet format:
+### Let's comp`are the Apache Parquet format:`
 
-> model_spectPowAbsFFT.parquet
+> `model_spectPowAbsFFT.parquet
 > direct save of dataframe/tibble of model_spectPowAbsFFT.csv
-> 69 MB
+> 69 MB`
 
 #### Finally, maybe the most efficient format of all - the RData format:
 
@@ -67,3 +67,12 @@ For this use, I selected the MAT format given it's comparable efficiency, but al
 ### R.matlab package can import MAT files into R
 
 The [R.matlab Package](https://github.com/HenrikBengtsson/R.matlab) is not regularly maintained but in this sense it is a finished product. It can easily important multidimensional MAT files into R. The one caveat is that you must save your MAT file on the MATLAB side using the '-v6' tag to make sure the format is compatible. There appears to be [complicating factors](https://github.com/HenrikBengtsson/R.matlab/issues/20) in updating the package to use the more modern '7.3' MAT format.
+
+As a refresher the save command in MATLAB is very simple to use and can either save the entire MATLAB environment (no arguments but filename) or individual variables. 
+
+Here is the call to saving my CFC data structure at the end of my MATLAB script:
+
+`save(target_file, 'mvarMatrix', 'rowName','phaseName', 'frex', '-v6');`
+
+For convenience, I have specified my target file to export directly to my R-Build directory so it will be available to my R project. In my system, I have two Build directories - one for MATLAB outputs that are large and temporary and one for smaller, final data that will end up being analyzed in R (and in a cloud folder). 
+
