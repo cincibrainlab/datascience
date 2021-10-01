@@ -29,7 +29,21 @@ target_file = fullfile(syspath.RBuild, 'model_cfcparfor.mat');
 save(target_file, 'mvarResArr');
 ```
 
-A clear advantage to this approach 
+Let's take a brief peek into the guts of the analysis function. The multivariate cross frequency coupling function ([based on Cohen's gedCFC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5262375/)) described here produces many useful outcomes. In R, these outputs can be explored and understood more quickly if they are readily available.
+
+```
+% for
+% ... analysis steps
+% end
+resultCell{1} = s.subj_basename;
+resultCell{2} = mvarpac;
+resultCell{3} = sync;
+resultCell{4} = evecs;
+resultCell{5} = evals;
+resultCell{6} = sFiltMap;
+resultCell{7} = maps;
+mvar = {resultCell};
+```
 
 ```
 mvarResArr =
