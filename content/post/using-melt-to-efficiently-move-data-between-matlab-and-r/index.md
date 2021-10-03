@@ -1,5 +1,5 @@
 ---
-title: "Efficiently Move Data Between MATLAB and R: Part I"
+title: "Part I: Efficiently Move Data Between MATLAB and R"
 subtitle: "Part I: Bulk Export of Data Variables from MATLAB to R"
 date: 2021-10-01T17:03:31.858Z
 draft: false
