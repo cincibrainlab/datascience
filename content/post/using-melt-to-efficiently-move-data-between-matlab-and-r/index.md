@@ -102,3 +102,5 @@ ans =
   1×13 cell array
     {'D0079_rest'}    {1×70 double}    {1×70 double}    {1×70 double}    {1×70 double}    {108×108 double}    {108×108 double}    {1×108 double}    {108×108 double}    {1×70 double}    {1×108 cell}    {2×70×121 double}    {2×70×121 double}
 ```
+
+## Now it is time to "catch" the data file in R.
