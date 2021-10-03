@@ -157,6 +157,55 @@ labels.frex
 [57] "F74.9" "F76.1" "F77.2" "F78.4" "F79.6" "F80.7" "F81.9" "F83"   "F84.2" "F85.4" "F86.5" "F87.7" "F88.8" "F90"  
 ```
 
-### Example 2: Import cross-frequency coupling results for each subject 
+### Example 2: Import cross-frequency coupling results for each subject
 
 The R lists with the column names mvarpac1 and mvarpac2 represent lists which contain the key results for this analysis. Like the frequency array were also stored in MATLAB as {1×70 double}. However, each vector must be associated with their paired ID. In this case, the biggest challenge is extracting the unusual "matrix-column" that R creates.
+
+```
+df.mvarpac1 <- df.import.mat %>% select(eegid, mvarpac1) %>% rename(selData = 2) %>%
+  unnest_longer(col = selData, simplify = TRUE, indices_include = FALSE) %>% 
+  mutate(selData = as.data.frame(selData)) %>%
+  select(eegid,selData) %>% 
+  mutate(eegid = unname(eegid), selData = asplit(selData,1)) %>% 
+  unnest_wider(c(selData), simplify = TRUE) %>%  
+  rename_with(~ labels.frex, starts_with("V"))
+```
+
+1. df.mvarpac1 <- df.import.mat %>% select(eegid, mvarpac1): This assigns an output variable and selects the first variable of interest from the "home base" import dataframe.
+2. %>% rename(selData = 2): we assign a common column name "selData" to make the code reusable. In fact, much of this code was reused from the Frequency example above.
+3. unnest_longer(col = selData, simplify = TRUE, indices_include = FALSE): We now expand out the data matrix of the measure of interest within the existing rows
+4. mutate(selData = as.data.frame(selData)): The expanded data is in a rare R form called a matrix-column. This means the tibble only has 2 columns - one for the ID and one for the entire matrix. This intermediate step changes the matrix-column into a dataframe-column. 
+5. select(eegid,selData) %>% mutate(eegid = unname(eegid), selData = asplit(selData,1)): We now select the two columns, remove the superfluous naming information from ID column and perform a row by row split of the dataframe-column.
+6. unnest_wider(c(selData), simplify = TRUE): We now unnest the dataframe-column into separate columns and now have the original dimensions of our data.
+7. rename_with(~ labels.frex, starts_with("V")): Finally, we add our column names using our labeled frequency vector.
+
+The completed data frame:
+
+```
+# A tibble: 136 x 71
+   eegid       F10 F11.2 F12.3 F13.5 F14.6 F15.8   F17 F18.1 F19.3 F20.4 F21.6
+   <chr>     <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+ 1 D0079_re~ 0.436 0.410 0.382 0.366 0.357 0.348 0.343 0.338 0.331 0.323 0.314
+ 2 D0099_re~ 1.20  1.11  1.03  0.936 0.849 0.774 0.720 0.693 0.671 0.660 0.647
+ 
+```
+
+The remainder of the vector variables can now be imported into data frames by just changing the variable name:
+
+```
+df.mvarpac2 <- df.import.mat %>% select(eegid, mvarpac2) %>% rename(selData = 2) %>%
+  unnest_longer(col = selData, simplify = TRUE, indices_include = FALSE) %>% mutate(selData = as.data.frame(selData)) %>%
+  select(eegid,selData) %>% mutate(eegid = unname(eegid), selData = asplit(selData,1)) %>% unnest_wider(c(selData), simplify = TRUE) %>%  
+  rename_with(~ labels.frex, starts_with("V"))
+
+df.pli1 <- df.import.mat %>% select(eegid, pli1) %>% rename(selData = 2) %>%
+  unnest_longer(col = selData, simplify = TRUE, indices_include = FALSE) %>% mutate(selData = as.data.frame(selData)) %>%
+  select(eegid,selData) %>% mutate(eegid = unname(eegid), selData = asplit(selData,1)) %>% unnest_wider(c(selData), simplify = TRUE) %>%  
+  rename_with(~ labels.frex, starts_with("V"))
+
+df.pli2 <- df.import.mat %>% select(eegid, pli2) %>% rename(selData = 2) %>%
+  unnest_longer(col = selData, simplify = TRUE, indices_include = FALSE) %>% mutate(selData = as.data.frame(selData)) %>%
+  select(eegid,selData) %>% mutate(eegid = unname(e
+```
+
+### Importing 3D data
