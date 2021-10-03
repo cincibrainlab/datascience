@@ -128,12 +128,12 @@ These code snippets can be modified to convert the lists within the "home base" 
 I would like to extract this label vector for use in subsequent data frames. The data from MATLAB was stored with each subject as a {1×70 double}. 
 
 ```terra
-df.frex  <- df.import.mat %>% select(eegid, frex) %>% rename(selData = 2) %>%
+labels.frex  <- df.import.mat %>% select(eegid, frex) %>% rename(selData = 2) %>%
   unnest_longer(col = selData, indices_include = FALSE) %>% select(-eegid) %>%
-  slice(1)  %>% 
+  slice(1) %>% 
   unlist(., use.names=FALSE)
 
-labels.frex <- paste0("F",round(df.frex,1))
+labels.frexF <- paste0("F",round(df.frex,1))
 ```
 
 1. **df.frex:** output variable
@@ -155,6 +155,26 @@ labels.frex
 [29] "F42.5" "F43.6" "F44.8" "F45.9" "F47.1" "F48.3" "F49.4" "F50.6" "F51.7" "F52.9" "F54.1" "F55.2" "F56.4" "F57.5"
 [43] "F58.7" "F59.9" "F61"   "F62.2" "F63.3" "F64.5" "F65.7" "F66.8" "F68"   "F69.1" "F70.3" "F71.4" "F72.6" "F73.8"
 [57] "F74.9" "F76.1" "F77.2" "F78.4" "F79.6" "F80.7" "F81.9" "F83"   "F84.2" "F85.4" "F86.5" "F87.7" "F88.8" "F90"  
+```
+
+Let's now import the remainder of the labels:
+
+```
+## Dimension labels
+
+labels.frex  <- df.import.mat %>% select(eegid, frex) %>% rename(selData = 2) %>%
+  unnest_longer(col = selData, indices_include = FALSE) %>% select(-eegid) %>%
+  slice(1) %>% 
+  unlist(., use.names=FALSE)
+
+labels.frexF <- paste0("F",round(df.frex,1))
+
+labels.chans  <- df.import.mat %>% select(eegid, chans) %>% rename(selData = 2) %>%
+  unnest_longer(col = selData, indices_include = FALSE) %>% select(-eegid) %>%
+  slice(1)  %>% 
+  unlist(., use.names=FALSE)
+
+labels.eegid <- df.import.mat %>% pluck("eegid") %>% unlist() %>% unname()
 ```
 
 ### Example 2: Import cross-frequency coupling results for each subject
@@ -223,4 +243,38 @@ df.pli2 <- matimport.vector("pli2") %>% pivot_longer(cols = starts_with("F"), na
 
 ### Importing 3D data
 
-Surprising, importing 3d data (channel X channel X subject) can be performed with minimal code. Two main functions are used [deframe ](https://tibble.tidyverse.org/reference/enframe.html)and [melt](https://www.datasciencemadesimple.com/melting-casting-r/). And we can reuse much of our previous code.
+Surprising, importing 3d data (channel X channel X subject) can be performed with minimal code. Two main functions are used [deframe ](https://tibble.tidyverse.org/reference/enframe.html)and [melt](https://www.datasciencemadesimple.com/melting-casting-r/). And we can reuse much of our previous code. Let's start with the eigenvector data which is a channel covariance matrix for each subject. Our expected results will have 108 channel X 108 channel X 136 subjects (eegid) or 1,586,304 rows.
+
+First, we unnest the second column to reveal the matrix-columns for each subject:
+
+```
+df.evecs <-
+  df.import.mat %>% select(eegid, evecs) %>% rename(selData = 2) %>%
+    unnest_longer(col = selData, simplify = TRUE, indices_include = FALSE)
+    
+    # A tibble: 136 x 2
+   eegid            selData                
+   <list>           <named list>           
+ 1 <named list [1]> <dbl[,108] [108 x 108]>
+ 2 <named list [1]> <dbl[,108] [108 x 108]>
+ 3 <named list [1]> <dbl[,108] [108 x 108]>
+```
+
+This special form of a tibble has two columns which are both lists. From this form we can deframe and then melt the data into a long format:
+
+```
+labels.evecs = c("chan1","chan2","evec","eegid")
+df.evecs <-
+  df.import.mat %>% select(eegid, evecs) %>% rename(selData = 2) %>%
+  unnest_longer(col = selData, simplify = TRUE, indices_include = FALSE)   %>%
+  unnest_longer(col = eegid, simplify = TRUE, indices_include = FALSE)  %>% 
+  deframe() %>% 
+  reshape2::melt() %>%
+  rename_with(~ labels.evecs)
+
+> df.evecs
+    chan1 chan2          evec      eegid
+1       1     1  2.458275e-03 D0079_rest
+2       2     1 -1.541306e-02 D0079_rest
+3       3     1 -8.371313e-02 D0079_rest
+```
