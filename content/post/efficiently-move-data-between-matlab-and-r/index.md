@@ -26,3 +26,16 @@ library(tidyverse)
 library(purrr)
 library(R.matlab)
 ```
+
+### R.matlab package can import MAT files into R
+Other than the familiar tidyverse libraries, the [R.matlab Package](https://github.com/HenrikBengtsson/R.matlab) package can import MAT files. Remember that you must save your MAT file on the MATLAB side using the '-v6' tag to make sure the format is compatible. 
+
+## Import MAT file
+```R
+list.import.mat <- R.matlab::readMat("Build/model_cfcparfor4.mat") 
+
+key <- list.import.mat$output[1] %>% unlist()
+data <-list.import.mat$output[2]
+```
+The syntax here should be straightforward. We are importing the MAT file. We are also separating out the "key" which describes each variable and "data" which is field that stores the data. This is a particular advantage of using MATLAB struct as the data export vehicle as it is easy to orientate with fieldnames.
+
