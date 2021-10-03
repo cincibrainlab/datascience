@@ -1,5 +1,6 @@
 ---
 title: Using Melt to Efficiently Move Data Between MATLAB and R
+subtitle: "Part I: Bulk Export of Data Variables from MATLAB to R"
 date: 2021-10-01T17:03:31.858Z
 draft: false
 featured: false
@@ -17,6 +18,10 @@ This is why our lab generally takes the approach of putting data into MATLAB and
 Here we demonstrate an extremely rapid method to capture high-dimensional data in MATLAB and export it for use in R. This is of course possible since most data formats, including MATLAB formats, are interchangeable through the open-source community.
 
 ## An overview of the process
+
+* overall analysis loop with data file export to R
+* peak into the individual analysis function to see how variables are captured for export
+* a look at the mixed-type data structure to import into R
 
 ### Script 1: MATLAB analysis loop across 135 subjects
 
@@ -87,28 +92,13 @@ resultCell{13} = tfT;
 mvar = {resultCell};
 ```
 
+### A look into the output structure at mixed data
+
+Inspecting the output data structure, we find that it contains all different types of data. It was previously necessary to create a specific output for each variable type in MATLAB. Now, you can see that many types of variables, including 3D arrays, coexist harmoniously. Compared to long data tables, this is one of the most efficient methods for storing multidimensional data.
+
 ```
-mvarResArr =
-  136×1 cell array
-    {1×7 cell}
-    {1×7 cell}
-    {1×7 cell}
-    {1×7 cell}
-    {1×7 cell}
-    {1×7 cell}
-    ...
-output = 
-
-  struct with fields:
-
-     key: {'eegid'  'mvarpac1'  'mvarpac2'  'pli1'  'pli2'  'evecs'  'evals'  'sFiltMap'  'netMaps'  'frex'  'chans'  'tfP'  'tfT'}
-    data: {136×1 cell}
-
 output.data{1}
-
 ans =
-
   1×13 cell array
-
     {'D0079_rest'}    {1×70 double}    {1×70 double}    {1×70 double}    {1×70 double}    {108×108 double}    {108×108 double}    {1×108 double}    {108×108 double}    {1×70 double}    {1×108 cell}    {2×70×121 double}    {2×70×121 double}
 ```
