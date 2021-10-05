@@ -1,14 +1,15 @@
 ---
-title: Converting a Large Analysis Project to a Reproducible Research Framework Part 3
-date: 2021-09-14T00:09:53.623Z
-draft: false
+title: Converting a Large Analysis Project to a Reproducible Research Framework Part
+  3
+date: 2021-09-14T00:09:53.623+00:00
 featured: false
 image:
   filename: featured
   focal_point: Smart
   preview_only: false
+
 ---
-## *How easy would it be to convert an existing large MATLAB/R project to using GNU Make?*
+## _How easy would it be to convert an existing large MATLAB/R project to using GNU Make?_
 
 In these tutorials, we will find out together!
 
@@ -30,11 +31,11 @@ A spreadsheet representing the path to each continuous file would be ideal, for 
 
 ## Starting with the Makefile
 
-On this round, why don't we start by editing the **Makefile** first? 
+On this round, why don't we start by editing the **Makefile** first?
 
 One of the greatest advantages of having a Makefile is that you no longer have to worry about which files in your source directory really matter or are most up to date. The Makefile establishes which files are actively used in your building your assets. By starting with the Makefile you actually are setting a template which will make the remainder of the code easier to conceptualize and write.
 
-For example, let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into Brainstorm. 
+For example, let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into Brainstorm.
 
 Let's define the name of the function we want to write:
 
@@ -50,17 +51,15 @@ And finally let's identify what data model or target we want **Make** to build:
 
 #### Let's create our **Make** command in "long hand":
 
-```
-E:/data/CommBioEEGRev/MatlabBuild/model_contDataset.mat: \
-model_contDataset.m model_loadDataset.mat
-  matlab /minimize /nosplash /nodesktop /batch \
-  'target_file=model_contDataset.mat;, run model_contDataset.m'
-```
+    E:/data/CommBioEEGRev/MatlabBuild/model_contDataset.mat: \
+    model_contDataset.m model_loadDataset.mat
+      matlab /minimize /nosplash /nodesktop /batch \
+      'target_file=model_contDataset.mat;, run model_contDataset.m'
 
 #### A few observations about this Make command for review:
 
-* By placing model_loadDataset.mat onto the dependency side (right) we force **Make** to require the file be present before executing the command below. 
-* Remember that \ specifies a line break when you want to make things clearer
+* By placing model_loadDataset.mat onto the dependency side (right) we force **Make** to require the file be present before executing the command below.
+* Remember that \\ specifies a line break when you want to make things clearer
 * Any dependency on the right will get the **Make** "treatment", which means **Make** will keep track of when and if the file is updated. That is why it is crucial that both the script name and the input data files be added. Now when either of those files changes, **Make** will automatically update the target.
 * Even though the shorthand of **Make** may appear confusing, you can see why it exists with this simple command. The command is too long to fit on a single line. In addition, commands in Make often use the target and dependency in the command itself. The shorthand can make it easier to read and reduces typo errors.
 
@@ -71,27 +70,23 @@ model_contDataset.m model_loadDataset.mat
 * $@ refers to the target file (left)
 * $< is distinct from $^. In this case, $< refers only to the first dependency
 
-```
-# Data Model: Convert to continuous EEG
-$(MB)model_contDataset.mat: model_contDataset.m model_loadDataset.mat
-    $(Matlab) "target_file=$@;, run $<"
-```
+    # Data Model: Convert to continuous EEG
+    $(MB)model_contDataset.mat: model_contDataset.m model_loadDataset.mat
+        $(Matlab) "target_file=$@;, run $<"
 
 Let's copy and paste this into our Makefile right under our last data model.
 
-```
-#==============================================================================#
-# MATLAB RECIPIES                                                              #
-#==============================================================================#
-
-# Data Model: Load scalp EEG dataset
-$(MB)model_loadDataset.mat: model_loadDataset.m
-    $(Matlab) "target_file='$@';, run $^"
-
-# Data Model: Convert to continuous EEG
-$(MB)model_contDataset.mat: model_contDataset.m model_loadDataset.mat
-    $(Matlab) "target_file=$@;, run $<"
-```
+    #==============================================================================#
+    # MATLAB RECIPIES                                                              #
+    #==============================================================================#
+    
+    # Data Model: Load scalp EEG dataset
+    $(MB)model_loadDataset.mat: model_loadDataset.m
+        $(Matlab) "target_file='$@';, run $^"
+    
+    # Data Model: Convert to continuous EEG
+    $(MB)model_contDataset.mat: model_contDataset.m model_loadDataset.mat
+        $(Matlab) "target_file=$@;, run $<"
 
 ## A dubious design decision
 
@@ -99,23 +94,21 @@ Here, we chose to set the import datafile name in the MATLAB script rather than 
 
 Telling Make about our new target file
 
-Finally, add our new target file to the MATLAB build shortcut in the combined recipes section of the Makefile. If you wanted to skip this step you could have Make run the target directly by specifying `Make target_name`. However, in this case, we want to use Make to build and track all our MATLAB scripts. 
+Finally, add our new target file to the MATLAB build shortcut in the combined recipes section of the Makefile. If you wanted to skip this step, you could have Make run the target directly by specifying `Make target_name`. However, in this case, we want to use Make to build and track all our MATLAB scripts.
 
-```
-#==============================================================================#
-#                                  RECIPES                                     #
-#==============================================================================#
-# COMBINED         ============================================================#
-# "RECIPES"        combination recipes create groups of assets such as all     #
-#                  tables or figures.                                          #
-#                  definition: recipe_name: asset1 asset2                      #
-#                  usage: make recipe_name                                     #
-#==============================================================================#
-
-all: matlab
-
-matlab: $(MB)model_loadDataset.mat $(MB)model_contDataset.mat
-```
+    #==============================================================================#
+    #                                  RECIPES                                     #
+    #==============================================================================#
+    # COMBINED         ============================================================#
+    # "RECIPES"        combination recipes create groups of assets such as all     #
+    #                  tables or figures.                                          #
+    #                  definition: recipe_name: asset1 asset2                      #
+    #                  usage: make recipe_name                                     #
+    #==============================================================================#
+    
+    all: matlab
+    
+    matlab: $(MB)model_loadDataset.mat $(MB)model_contDataset.mat
 
 ## Building our second data model
 
@@ -123,25 +116,23 @@ Setting up the Makefile first can make the development of the final script more 
 
 ### Creating the second data model: reshaping data
 
-Let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into brainstorm. Narrowing in on the scope of this script we want to load our previous target, perform our conversion operation, and save a new MAT file with the updated data model.
+Let's create a second data model which will reshape the trial dimension of our EEG datasets and form continuous data suitable for import into brainstorm. Narrowing in on the scope of this script, we want to load our previous target, perform our conversion operation, and save a new MAT file with the updated data model.
 
 Let's rapidly prototype our script by:
 
 * create copy and open `model_loadDataset.m`
-* change `basename = 'loadDataset' `to `basename=`'`contDataset'`
+* change `basename = 'loadDataset'`to `basename=`'`contDataset'`
 * modify the import data to `data_file = 'model_loadDataset.mat'`
 * no change to the `output_file_extension = 'MAT'`
 
-Next we will add our code for converting our data to continuous data. 
+Next we will add our code for converting our data to continuous data.
 
-```
-try
-    p.bst_prepareContinuousData;
-    status = 'Epoch2ContinuousData: Success.';
-catch
-    status = "Epoch2ContinuousData: Fail.";
-end
-```
+    try
+        p.bst_prepareContinuousData;
+        status = 'Epoch2ContinuousData: Success.';
+    catch
+        status = "Epoch2ContinuousData: Fail.";
+    end
 
 #### Sidebar: Try-Catch blocks to Track Errors
 
@@ -153,13 +144,11 @@ At this point, the template code will save a MAT of the updated EEG structure. S
 
 If everything is working correctly, **Make** will recognize the first data model has already been built and will move on to the new data model you just created. Following completion you should have two Build products in your MATLAB Build directory.
 
-```
-Directory: E:\data\CommBioEEGRev\MatlabBuild
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----         9/14/2021  10:11 AM       52423067 model_contDataset.mat
--a----         9/14/2021  10:05 AM       52118136 model_loadDataset.mat
-```
+    Directory: E:\data\CommBioEEGRev\MatlabBuild
+    Mode                 LastWriteTime         Length Name
+    ----                 -------------         ------ ----
+    -a----         9/14/2021  10:11 AM       52423067 model_contDataset.mat
+    -a----         9/14/2021  10:05 AM       52118136 model_loadDataset.mat
 
 ## Conclusion of Part 3
 
