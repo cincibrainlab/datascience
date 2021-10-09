@@ -8,7 +8,7 @@ image:
   focal_point: Smart
   preview_only: false
 ---
-Did you know that MATLAB has a [built-in function for managing and validating inputs](https://www.mathworks.com/help/matlab/ref/inputparser.html)?
+## Did you know that MATLAB has a [built-in function for managing and validating inputs](https://www.mathworks.com/help/matlab/ref/inputparser.html)?
 
 The MATLAB Input Parser allows you to validate inputs for accuracy and assign defaults to make your code easier to maintain. Let's jump in:
 
