@@ -25,8 +25,12 @@ Then identify the lightDM lock process which is hiding your desktop with the fol
 `sudo ps -aux | grep lock`
 
 Once you find the correct process ID, then kill the id.
-`matlab      2108  0.0  0.0 260772 22524 pts/3    Sl   Oct14   0:03 light-locker
-kill 2108`
+
+
+```
+matlab      2108  0.0  0.0 260772 22524 pts/3    Sl   Oct14   0:03 light-locker
+kill 2108
+```
 
 Your VNC client should immediately return to an unlocked state.
 
