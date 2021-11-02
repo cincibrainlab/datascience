@@ -45,6 +45,39 @@ It doesn't matter to Make if you have a raw data file from a EGI EEG amplifier, 
 
 It only cares that each step you have a set of input files and a defined output file that can serves as the input for other steps. And it makes sure that these instructions are followed exactly each time. 
 
-## Orchestrating a scientific manuscript
+## Manually composing a scientific manuscript
 
-For the sake of simplicity, let's focus on developing a Makefile for the
+For the sake of simplicity, let's focus on a real world example. I am currently revising a manuscript looking at results of a source localization analysis of a large dataset of subjects with Fragile X Syndrome compared with typically developing controls. 
+
+Consider the complexities of a modern scientific manuscript:
+
+* preprocessing of datasets and source analysis take a multitude of steps across multiple MATLAB custom scripts and toolboxes
+* Extract values for creation of numerical datasets for statistics
+* Create summarize tables and model data in R
+* Create figures from MATLAB and R
+* Sync results, captions, and statistics with manuscript text
+* Get all results and visualization "publication" ready
+
+This process is daunting even for experienced scientists and with many complex steps comes the ever present worry of making errors.
+
+## Orchestrating a manuscript through Make
+
+Make doesn't take away any of the difficulty of coding a complex analysis or speeding up any actual analysis steps. In fact, Make should add a tiny bit of time to your workflow.
+
+However, most practicing academics know the majority of their time isn't in creating the analysis, it's spent on verifying, delegating, testing, and picking up day after day the workflow. I would estimate 70% of my time is spent on redundancy - trying to pick up where to begin on manuscript A while trying to debug code in manuscript B. Spending hours working on a single analysis, but not having a clear idea of what the output should be. These delays are almost expected in the creation of a high-quality manuscript, but this also where Make has the greatest impact.
+
+## The true impact of Make on productivity
+
+Consider the fundamental goal of a Makefile is to force the author to think about inputs and outputs rather than the "weeds" of the process to get there. The complexity of the analysis is only reflected in the number of steps it takes to get an output.
+
+### Simple Example: Demographics Table
+
+Every clinical research manuscript has a summary different characteristics of participants. This is often the first Table. From a traditional view point, this workflow would include the raw clinical measure data, inclusion/exclusion, and summary variables.
+
+The Makefile only needs the following information:
+
+output: Table1_Demographics.docx
+
+input: project_demographics_data.csv
+
+recipe: R input output
