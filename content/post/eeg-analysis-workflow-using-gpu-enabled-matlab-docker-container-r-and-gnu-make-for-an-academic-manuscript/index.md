@@ -1,13 +1,12 @@
 ---
-title: EEG Analysis Workflow using GPU-enabled Matlab Docker Container, R, and GNU
-  Make for an Academic Manuscript
+title: EEG Analysis Workflow using GPU-enabled Matlab Docker Container, R, and
+  GNU Make for an Academic Manuscript
 date: 2021-11-02T13:09:00.505+00:00
 featured: false
 image:
   filename: featured
   focal_point: Smart
   preview_only: false
-
 ---
 The "containerization" of software platforms has made quickly setting up a high-performance, reproducible research workflow more feasible.
 
@@ -25,7 +24,7 @@ In practice, this is extremely difficult because there is no single piece of cod
 
 This is why GNU Make was created. To be clear, this is not an analogous situation that we are trying to shoehorn Make into - this is exactly the types of complex problems programmers in the 1980s were running into.
 
-At its core, GNU make manages outputs and the dependencies that create these outputs. It is agnostic to _what_ and _how_ these outputs are created. It only acts based on the _outputs_ that are created by other programs.
+At its core, GNU make manages outputs and the dependencies that create these outputs. It is agnostic to *what* and *how* these outputs are created. It only acts based on the *outputs* that are created by other programs.
 
 GNU Make is the conductor of the orchestra and never plays any of the instruments.
 
@@ -37,7 +36,7 @@ By making this mental shift, GNU can begin to orchestrate your manuscripts just 
 
 ## The simplicity of the Makefile
 
-If you use this approach, the Makefile becomes the _most_ important file of your entire publication.
+If you use this approach, the Makefile becomes the *most* important file of your entire publication.
 
 The Makefile controls 1) what analyses are performed, 2) what order the analyses are performed, 2) what outputs are necessary for the project.
 
@@ -84,10 +83,12 @@ recipe: R input output
 
 Let's start by making a template of a block of Make instructions
 
-    # Sample Make Block Instructions
-    # Output
-    # Input
-    # Recipe
+```
+# Sample Make Block Instructions
+# Output
+# Input
+# Recipe
+```
 
 At the core, Make will repeat these blocks to create your final output.
 
@@ -95,7 +96,7 @@ At the core, Make will repeat these blocks to create your final output.
 
 Let's start with the manuscript and construct in pseudocode our Make code blocks. From the manuscript:
 
-> Researchers have previously observed disorder-specific distinct spatial patterns of abnormalities associated with TCD \[24\]. Additionally, we hypothesized there would be differences across regional nodes in spectral power between FXS and TDC, and the in FXS the degree of these changes would be correlated with clinical measures of cognition, emotion, and sensory function.
+> Researchers have previously observed disorder-specific distinct spatial patterns of abnormalities associated with TCD \[24]. Additionally, we hypothesized there would be differences across regional nodes in spectral power between FXS and TDC, and the in FXS the degree of these changes would be correlated with clinical measures of cognition, emotion, and sensory function.
 
 Let's start with our final outputs first:
 
@@ -119,4 +120,48 @@ Let's understand the "recipes" used to build these assets:
 
 Finally, let's put this together and "pencil" in our tentative plan to create our final assets. The Make file will help us orchestrate the plan into action!
 
-To best represent the dependency tree, let’s make a diagram:
+To best represent these dependencies let's try to summarize in the following form:
+
+```makefile
+# Output File : Input Files
+# Recipe (Commands)
+
+# Generate source model and power from cleaned EEG data
+Model_SourceEEGs.mat : Model_PostProcessEEGs.mat\
+      MATLAB CreateSourceFromPostProcessEEGs.m
+
+Model_PowerFromSourceEEGS.mat : Model_SourceEEGs.mat\
+       Rscript CreatePowerFromSourceEEGs.m
+
+# Spectral Power Statistical Comparison
+Model_PowerComparison.RData : Model_PowerFromSourceEEGS.mat\
+       Rscript ComparePowerFromSourceEEGs.m
+
+Table_PowerComparision : Model_PowerComparison.RData
+       Rscript Table_PowerComparision.R
+
+Figure_PowerComparision : Model_PowerComparison.RData
+       Rscript Figure_PowerComparision.R
+
+# Spectral Power Clinical Correlations
+Model_CorrelationPowerWithClinical.RData : Model_PowerFromSourceEEGS.mat Model_SubjectClinicalMeasures.csv\
+       Rscript CorrelationPowerWithClinical.R
+
+Figure_CorrelationPower.RData : Model_CorrelationPower.RData
+       Rscript Figure_CorrelationPowerWithClinical.R
+
+Table_CorrelationPower.RData : Model_CorrelationPower.RData
+       Rscript Figure_CorrelationPowerWithClinical.R
+
+
+```
+
+The summary above is a blow-by-blow representation of each key step in the analysis. Notice that a single output from one step can be used by many other steps. These 30 lines of code are one of the single most efficient ways to communicate the process. Consider how many hundreds of lines of code these lines represent. Even if you were to excessively comment and document your process, what single file would you put the information? 
+
+The convention of listing your output before you input is a Make convention. I think it is also helpful to think about the end goal of a number of inputs in this way. Notice that Make is truly agnostic to the underlying software or data structures. In the correlation section, we see a RData output and a MATLAB and CSV input. 
+
+The instructions can be as simple as a running a preexisting script or any other command.
+
+### Make keeps track of data and time of output and input files
+
+The single most impressive and useful feature of Make is the ability to monitor when source files are updated and recreate ONLY the necessary outputs. Make always checks the time and date of your source (input) files to the expected output. If the input files are newer, it will re run the command. If the input files are older, it will generate a message tell you the outputs are "up to date". In general, there is one important difference from a real Make instruction file (called Makefile) and my summary above. In a true Makefile, you would place your recipe script as one of the inputs so Make would make sure to keep track of any updates.
