@@ -165,3 +165,22 @@ The instructions can be as simple as a running a preexisting script or any other
 ### Make keeps track of data and time of output and input files
 
 The single most impressive and useful feature of Make is the ability to monitor when source files are updated and recreate ONLY the necessary outputs. Make always checks the time and date of your source (input) files to the expected output. If the input files are newer, it will re run the command. If the input files are older, it will generate a message tell you the outputs are "up to date". In general, there is one important difference from a real Make instruction file (called Makefile) and my summary above. In a true Makefile, you would place your recipe script as one of the inputs so Make would make sure to keep track of any updates.
+
+```
+# Generate source model and power from cleaned EEG data
+Model_SourceEEGs.mat : Model_PostProcessEEGs.mat CreateSourceFromPostProcessEEGs.m
+      MATLAB CreateSourceFromPostProcessEEGs.m
+```
+
+Let's use Make shorthand and then unpack it below
+
+```
+# Generate source model and power from cleaned EEG data
+Model_SourceEEGs.mat : CreateSourceFromPostProcessEEGs.m Model_PostProcessEEGs.mat
+      matlab $^ $@
+
+```
+
+### If Make shorthand didn't exist, you'd create it yourself
+
+You will notice that most projects have a lot of redundancy. That is because for most major manuscripts, you may have a few main analyses but several tables and figures derived from it. One reason Make is intimidating to new users is the sheer amount of shorthand that can be used in a file. But it should be clear, especially having seen an entire analysis written out that a little shorthand would be a good thing!
