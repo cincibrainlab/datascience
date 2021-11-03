@@ -81,3 +81,16 @@ output: Table1_Demographics.docx
 input: project_demographics_data.csv
 
 recipe: R input output
+
+
+
+Let's start by making a template of a block of Make instructions
+
+```
+# Sample Make Block Instructions
+# Output
+# Input
+# Recipe
+```
+
+At the core, Make will repeat these blocks to create your final output.
