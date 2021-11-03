@@ -1,17 +1,17 @@
 ---
-title: EEG Analysis Workflow using GPU-enabled Matlab Docker Container, R, and
-  GNU Make for an Academic Manuscript
-date: 2021-11-02T13:09:00.505Z
-draft: false
+title: EEG Analysis Workflow using GPU-enabled Matlab Docker Container, R, and GNU
+  Make for an Academic Manuscript
+date: 2021-11-02T13:09:00.505+00:00
 featured: false
 image:
   filename: featured
   focal_point: Smart
   preview_only: false
+
 ---
 The "containerization" of software platforms has made quickly setting up a high-performance, reproducible research workflow more feasible.
 
-In this tutorial, we will be putting together the pieces on a full research workflow that incorporates multiple analysis platforms, but importantly, tied to the goal of a reproducible academic manuscript. 
+In this tutorial, we will be putting together the pieces on a full research workflow that incorporates multiple analysis platforms, but importantly, tied to the goal of a reproducible academic manuscript.
 
 ## Starting with the Manuscript
 
@@ -25,7 +25,7 @@ In practice, this is extremely difficult because there is no single piece of cod
 
 This is why GNU Make was created. To be clear, this is not an analogous situation that we are trying to shoehorn Make into - this is exactly the types of complex problems programmers in the 1980s were running into.
 
-At its core, GNU make manages outputs and the dependencies that create these outputs. It is agnostic to *what* and *how* these outputs are created. It only acts based on the *outputs* that are created by other programs. 
+At its core, GNU make manages outputs and the dependencies that create these outputs. It is agnostic to _what_ and _how_ these outputs are created. It only acts based on the _outputs_ that are created by other programs.
 
 GNU Make is the conductor of the orchestra and never plays any of the instruments.
 
@@ -33,21 +33,21 @@ GNU Make is the conductor of the orchestra and never plays any of the instrument
 
 The conductor (Make) always requires a piece of music to orchestrate. This is what makes Make different between computer science and academic neuroscience. In this case, we will orchestrate a scientific manuscript rather than a software application.
 
-By making this mental shift, GNU can begin to orchestrate your manuscripts just as it manages the building of the most complex software applications in the world. 
+By making this mental shift, GNU can begin to orchestrate your manuscripts just as it manages the building of the most complex software applications in the world.
 
 ## The simplicity of the Makefile
 
-If you use this approach, the Makefile becomes the *most* important file of your entire publication.
+If you use this approach, the Makefile becomes the _most_ important file of your entire publication.
 
 The Makefile controls 1) what analyses are performed, 2) what order the analyses are performed, 2) what outputs are necessary for the project.
 
-It doesn't matter to Make if you have a raw data file from a EGI EEG amplifier, a power analysis in MATLAB (or Octave), and want to use SAS rather than R to create a final figure. Or if down the road you decide to add another analysis or modify a dataset. 
+It doesn't matter to Make if you have a raw data file from a EGI EEG amplifier, a power analysis in MATLAB (or Octave), and want to use SAS rather than R to create a final figure. Or if down the road you decide to add another analysis or modify a dataset.
 
-It only cares that each step you have a set of input files and a defined output file that can serves as the input for other steps. And it makes sure that these instructions are followed exactly each time. 
+It only cares that each step you have a set of input files and a defined output file that can serves as the input for other steps. And it makes sure that these instructions are followed exactly each time.
 
 ## Manually composing a scientific manuscript
 
-For the sake of simplicity, let's focus on a real world example. I am currently revising a manuscript looking at results of a source localization analysis of a large dataset of subjects with Fragile X Syndrome compared with typically developing controls. 
+For the sake of simplicity, let's focus on a real world example. I am currently revising a manuscript looking at results of a source localization analysis of a large dataset of subjects with Fragile X Syndrome compared with typically developing controls.
 
 Consider the complexities of a modern scientific manuscript:
 
@@ -82,24 +82,20 @@ input: project_demographics_data.csv
 
 recipe: R input output
 
-
-
 Let's start by making a template of a block of Make instructions
 
-```
-# Sample Make Block Instructions
-# Output
-# Input
-# Recipe
-```
+    # Sample Make Block Instructions
+    # Output
+    # Input
+    # Recipe
 
-At the core, Make will repeat these blocks to create your final output. 
+At the core, Make will repeat these blocks to create your final output.
 
 ### A more complex example: spectral power from neural sources
 
 Let's start with the manuscript and construct in pseudocode our Make code blocks. From the manuscript:
 
-> Researchers have previously observed disorder-specific distinct spatial patterns of abnormalities associated with TCD \[24]. Additionally, we hypothesized there would be differences across regional nodes in spectral power between FXS and TDC, and the in FXS the degree of these changes would be correlated with clinical measures of cognition, emotion, and sensory function. 
+> Researchers have previously observed disorder-specific distinct spatial patterns of abnormalities associated with TCD \[24\]. Additionally, we hypothesized there would be differences across regional nodes in spectral power between FXS and TDC, and the in FXS the degree of these changes would be correlated with clinical measures of cognition, emotion, and sensory function.
 
 Let's start with our final outputs first:
 
@@ -121,4 +117,6 @@ Let's understand the "recipes" used to build these assets:
 1. Matlab scripts to generate source model and generate spectral power data into a long table
 2. R to import long data, calculate statistical model, and visualize results
 
-Finally, let's put this together and "pencil" in our tentative plan to create our final assets. The Make file will help us orchestrate our decisions!
+Finally, let's put this together and "pencil" in our tentative plan to create our final assets. The Make file will help us orchestrate the plan into action!
+
+To best represent the dependency tree, let’s make a diagram:
