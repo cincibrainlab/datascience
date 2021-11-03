@@ -93,4 +93,32 @@ Let's start by making a template of a block of Make instructions
 # Recipe
 ```
 
-At the core, Make will repeat these blocks to create your final output.
+At the core, Make will repeat these blocks to create your final output. 
+
+### A more complex example: spectral power from neural sources
+
+Let's start with the manuscript and construct in pseudocode our Make code blocks. From the manuscript:
+
+> Researchers have previously observed disorder-specific distinct spatial patterns of abnormalities associated with TCD \[24]. Additionally, we hypothesized there would be differences across regional nodes in spectral power between FXS and TDC, and the in FXS the degree of these changes would be correlated with clinical measures of cognition, emotion, and sensory function. 
+
+Let's start with our final outputs first:
+
+1. Figure: Correlation plot of node-based spectral power and clinical measures.
+2. Table: Significant differences between FXS and controls in nodal spectral power.
+
+Let's better understand the dependencies that these outputs rely on:
+
+1. Data table containing spectral power for each subject by node and corresponding clinical measures for each subject.
+2. A statistical model demonstrating overall effects of group on spectral power (by node) and associated lsmeans estimates to perform contrasts.
+
+Let's continue our dependency tree to look for further inputs:
+
+1. Spectral power involves a series of steps generated from current source density from the MNE model.
+2. Clinical measures are obtained from a redcap database
+
+Let's understand the "recipes" used to build these assets:
+
+1. Matlab scripts to generate source model and generate spectral power data into a long table
+2. R to import long data, calculate statistical model, and visualize results
+
+Finally, let's put this together and "pencil" in our tentative plan to create our final assets. The Make file will help us orchestrate our decisions!
