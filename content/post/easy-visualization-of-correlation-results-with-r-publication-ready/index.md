@@ -1,5 +1,6 @@
 ---
-title: "Easy Visualization of Correlation Results with R: Publication-Ready!"
+title: "Easy Visualization of Massive Clinical Correlation Results with R:
+  Publication-Ready!"
 subtitle: " R Shiny in 3 Levels: Basic, Publish, and Share"
 date: 2021-12-28T14:54:31.885Z
 draft: false
