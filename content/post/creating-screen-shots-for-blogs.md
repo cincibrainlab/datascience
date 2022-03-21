@@ -44,7 +44,6 @@ I do not think this last piece is a necessity, but creating webpages through Mar
 
 #### Website
 1. Save and update your webpage to your server. The captured image will be pulled from your cloud folder and displayed on the page. 
-<img src="https://www.dropbox.com/s/jtjetprqvg3wd3o/CleanShot%202022-03-21%20at%2011.57.13%402x.png?raw=1" style="width:30%;">
-
+<img src="https://www.dropbox.com/s/q1q1y8lxd9j0hfs/CleanShot%202022-03-21%20at%2012.18.39%402x.png?raw=1" style="width:30%;">
 
 ## Hopefully this workflow saves some hassle when trying to add graphics to your webpage. Adding screen and animation captures can greatly enhance the accessibility of your posts!
