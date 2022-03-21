@@ -1,6 +1,6 @@
 ---
 title: Test Post
-date: 2022-03-21T17:03:31.858Z
+date: 2022-03-21
 draft: false
 featured: false
 image:
