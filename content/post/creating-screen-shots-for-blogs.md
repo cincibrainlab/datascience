@@ -10,7 +10,7 @@ image:
 ---
 
 # Easy workflow for setting up screenshots/GIF on Blog Posts
-    Writing development blogs doesn't have to be time consuming and can serve as an permanent reference the history of your workflow. I wanted to provide from tips for other data science bloggers that might overall simplify your experience.
+Writing development blogs doesn't have to be time consuming and can serve as an permanent reference the history of your workflow. I wanted to provide from tips for other data science bloggers that might overall simplify your experience.
 
 ## Note on the tools
 I am going to layout a particular workflow with specific Mac OS and cloud tools. The tools we use fall into certain conceptual categories, so it should be easily adapted to your workflow.
