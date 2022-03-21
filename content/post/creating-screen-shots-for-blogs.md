@@ -39,7 +39,7 @@ I do not think this last piece is a necessity, but creating webpages through Mar
 1. When you want to use an image, generate a public link from your file and copy it to your clipboard. 
 <img src="https://www.dropbox.com/s/qoxdtea7f4nf0s2/CleanShot%202022-03-21%20at%2011.42.37%402x.png?raw=1" style="width:30%;">
 
-2. Different cloud providers may need modification of the link to work properly on a webpage. For example, Dropbox requires a change to the end of the link from "raw=1" to "raw=1". This would be an easy Find and Replace All after completing you draft. 
+2. Different cloud providers may need modification of the link to work properly on a webpage. For example, Dropbox requires a change to the end of the link from "dl=1" to "raw=1". This would be an easy Find and Replace All after completing you draft. 
 <img src="https://www.dropbox.com/s/jtjetprqvg3wd3o/CleanShot%202022-03-21%20at%2011.57.13%402x.png?raw=1" style="width:30%;">
 
 #### Website
