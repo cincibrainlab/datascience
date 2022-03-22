@@ -1,5 +1,5 @@
 ---
-title: Publication Stats with the R gtsummary package (Part 1/2)
+title: Publication Stats with the R gtsummary package Part 1
 date: 2022-03-22
 draft: false
 featured: false
