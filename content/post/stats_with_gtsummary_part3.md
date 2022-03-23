@@ -1,5 +1,5 @@
 ---
-title: Publication Stats with the R Normality Tests Part 3 of 3
+title: Publication Stats with the R Non-parametric mean tests with gtsummary Part 3 of 3
 date: 2022-03-23
 draft: false
 featured: false
