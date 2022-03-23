@@ -109,7 +109,7 @@ df.skewcheck %>%
   )
 
 ```
-![](https://www.dropbox.com/s/6rn22e3yj2tiyjs/CleanShot%202022-03-23%20at%2003.33.45%402x.png?dl=1)
+![](https://www.dropbox.com/s/6rn22e3yj2tiyjs/CleanShot%202022-03-23%20at%2003.33.45%402x.png?raw=1)
 
 ### Custom Normality Testing Table
 Our ad-hoc table now contains additional information to assess if they follow a normal distribution.
@@ -147,7 +147,7 @@ alternative hypothesis: greater
 ```
 ##### Examining the Result Environment
 As you can see, these results do not fit neatly into a single cell. Let's examine the results placed in a variable `jt` in the environment tab in R-Studio:
-![](https://www.dropbox.com/s/i9ebiu3s11cnuuh/CleanShot%202022-03-23%20at%2003.51.02%402x.png?dl=1)
+![](https://www.dropbox.com/s/i9ebiu3s11cnuuh/CleanShot%202022-03-23%20at%2003.51.02%402x.png?raw=1)
 
 Here you can see the underlying `environment` of the results includes several variables that the function summarizes into statements when you run the test. It also has the names of the values which we can use to `pluck` them out.
 
@@ -175,15 +175,15 @@ df.skewcheck.log <- df.skewcheck %>%
 ```
 As the dataset contains negative values, we also have to linearly transform the variable (+1 - minvalue) for the log calculation to not produce NaNs.
 
-![](https://www.dropbox.com/s/znv51rlmhwd4t29/CleanShot%202022-03-23%20at%2004.26.07%402x.png?dl=1)
+![](https://www.dropbox.com/s/znv51rlmhwd4t29/CleanShot%202022-03-23%20at%2004.26.07%402x.png?raw=1)
 
 Let's rerun our normality table on the transformed variable:
 ```r
 ```
 Let's examine the results table:
-![](https://www.dropbox.com/s/7gx85ddkmuzxh6x/CleanShot%202022-03-23%20at%2004.30.51%402x.png?dl=1)
+![](https://www.dropbox.com/s/7gx85ddkmuzxh6x/CleanShot%202022-03-23%20at%2004.30.51%402x.png?raw=1)
 And the associated plots:
-![](https://www.dropbox.com/s/mjwf21rk181c0ev/CleanShot%202022-03-23%20at%2004.30.31%402x.png?dl=1)
+![](https://www.dropbox.com/s/mjwf21rk181c0ev/CleanShot%202022-03-23%20at%2004.30.31%402x.png?raw=1)
 
 As you can see the log transform was not sufficient for this data! If you are more interested in more complex transforms I would refer you to the `bestNormalize` package (https://github.com/petersonR/bestNormalize). 
 
@@ -240,7 +240,7 @@ This step consists for both removing columns, but also the option of combining c
 On this step I am looking on how headers, labels, and data is formatted. This includes proper rounding and abbreviations.
 
 Let's look at the output table:
-![](https://www.dropbox.com/s/apt4jqpn0zndjop/CleanShot%202022-03-23%20at%2005.31.47%402x.png?dl=1)
+![](https://www.dropbox.com/s/apt4jqpn0zndjop/CleanShot%202022-03-23%20at%2005.31.47%402x.png?raw=1)
 
 ## Exporting to Word
 One of the reasons I advocate for using `flextables` is the easy export to Word. In this case, we just have to string together one additional command:
