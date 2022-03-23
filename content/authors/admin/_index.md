@@ -16,7 +16,7 @@ organizations:
   url: "www.uc.edu"
 
 # Short bio (displayed in user profile at end of posts)
-bio: Neuroscientist and physician interested in neurodevelopmental conditions.
+bio: Physician and Neuroscientist interested in neurodevelopmental conditions.
 
 interests:
 - Neurodevelopmental conditions
