@@ -1,6 +1,6 @@
 ---
-title: Generating a Correlation Table
-date: 2022-03-22
+title: Generating a Correlation Table (Part 1)
+date: 2022-03-30
 draft: false
 featured: false
 image:
