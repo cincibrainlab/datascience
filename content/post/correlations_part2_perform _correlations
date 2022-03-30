@@ -1,0 +1,141 @@
+---
+title: Generating a Correlation Table (Part 2)
+date: 2022-03-30
+draft: false
+featured: false
+image:
+  filename: featured
+  focal_point: Smart
+  preview_only: false
+---
+# Correlation Tutorial: Performing Correlation Analysis
+
+If you haven't prepared data for this tutorial, please see part 1 [here](https://www.cincibrainlab.com/post/generating-correlations/).
+
+## Introduction and Goals
+In this tutorial, we will conduct clinical correlations in a large EEG dataset. Our ambitious set of goals includes:
+1. Wrangling data into a wide-format for correlation anaysis
+2. Conducting bivariate correlations   **<- you are here**
+3. Performing partial correlations
+4. Correction for multiple comparisions
+4. Visualizing relationships
+5. Creating an interactive application for exploring correlations
+
+## Dataset
+After part I, we created a wide-style dataset of our grouping, response, and clinical variables. This table follows the form of *x* response variables with *y* clinical variables and *z* grouping variables for *n* subjects, your table should be *n* rows with *x* + *y* + *z* columns.
+
+The completed dataset from part one can be accessed here:
+<https://figshare.com/ndownloader/files/34558217>
+
+The completed code for this tutorial can be found here:
+
+## Preparation
+As we are performing computations on data, you will have a variety of different packages and base R functions to choose from. I am going to recommend an excellent package called `corx` which is well suited for large volume exploratory clinical correlations.
+
+Please see the development branch here:
+<https://github.com/conig/corx/tree/devel>
+
+The author has been very responsive to feedback and has included new features such as adjusting for multiple comparisons. However, the main CRAN version of the package is outdated and so to install the development branch you can either use:
+
+```r
+remotes::install_github("conig/corx@devel")
+```
+or my recommendation is to use the `pacman` package manager:
+```r
+pacman::p_load_gh("conig/corx@devel")
+```
+If you use the package manager it will not reload the package after installation on subsequent runs.
+
+Other package that we will need is the `tidyverse`. For themes, I will recommend `koundy` excellent theme_Publication which can be installed with as single line of code.
+
+## Data preparation
+Let's load the dataset and prepare variable names. Let's also take a peak at how the data looks by printing the first few rows.
+
+```r
+pacman::p_load_gh("conig/corx@devel")
+pacman::p_load(tidyverse)
+
+source("https://bit.ly/3lgsJ4e") # theme publication
+
+df.raw <- read_csv("https://figshare.com/ndownloader/files/34558217")
+
+grouping_variable <- c("group","sex")
+response_variables <- c("itc", "stp", "ersp") # use with starts_with
+clinical_variables <-  c(
+  "eegid",
+  "Age at Visit",
+  "Deviation IQ",
+  "Non Verbal Z Score",
+  "Verbal Z Score",
+  "ADAMS General Anxiety",
+  "ADAMS Obsessive/Compliance Behavior",
+  "SCQ Total",
+  "ABC FXS subscale 1: irritability/aggression",
+  "ABC FXS subscale 4: Hyperactivity/Noncompliance",
+  "ABC FXS subscale 5: Inappropriate speech",
+  "ABC FXS subscale 2: lethargy/social withdrawal",
+  "ABC FXS subscale 3: stereotypy",
+  "WJ-III"
+)
+
+```
+```
+> df.raw
+# A tibble: 75 × 76
+   eegid group sex   itc40_LF itc40_LO itc40_LT itc40_RF itc40_RO itc40_RT
+   <dbl> <chr> <chr>    <dbl>    <dbl>    <dbl>    <dbl>    <dbl>    <dbl>
+ 1   179 FXS   F      0.0257  0.00595  0.0145    0.0224   0.00480  0.0167 
+ 2   199 TDC   M      0.00932 0.000846 0.00273   0.00940  0.0110   0.00890
+ 3   221 TDC   M     -0.00270 0.0134   0.0181    0.00695  0.0112   0.0141
+ ```
+## Validate your table dimensions
+Spending a few minutes here to verify you data can save you a lot of time later. Here, I am confirming that the table fits my expected dimensions. If you are off by even 1 column or row I would carefully inspect previous steps before moving on.
+
+Here the table conforms to our expectation: 
+With 75 rows corresponding to each subject and a total of 76 columns which includes 3 grouping variables, 60 response variables, and 13 clinical variables.
+
+## using `corx` to run an example correlation
+Before performing the function across the whole dataset, let's try a simple example. The corx function takes two columns (`x` and `y`) and returns a table with the bivariate correlation coefficient and significance.
+
+```r
+df.raw %>% corx(x = itc40_RT, y=`WJ-III`)
+```
+```
+---------------
+         WJ-III
+---------------
+itc40_RT  .46**
+---------------
+Note. * p < 0.05; ** p < 0.01; *** p < 0.001
+```
+### Running a spearmans correlation
+A few tutorials ago we took a deep dive on these eeg variables and found they are not normally distributed. So in this case, we will switch our `method` to `Spearman` to correct for this.
+
+```r
+df.raw %>% corx(x = itc40_RT, y=`WJ-III`, method = "spearman")
+```
+```
+---------------
+         WJ-III
+---------------
+itc40_RT .69***
+---------------
+Note. * p < 0.05; ** p < 0.01; *** p < 0.001
+```
+
+### Plotting our results
+Let's also plot our results using a scatter plot and plot a quantile regression which is better suited to represent the spearman correlation.
+```r
+df.raw %>% ggplot(aes(x = itc40_RT, y=`WJ-III`)) +
+  stat_quantile(quantiles =0.5) +
+  geom_point(size=5, fill="darkgray",color="black", shape=21) +
+  xlim(0,.08) +
+  theme_Publication() +
+  theme(aspect.ratio = 1)
+```
+<img src="https://www.dropbox.com/s/9wpsd3jh1s01bqn/CleanShot%202022-03-30%20at%2009.50.05.png?raw=1" alt="drawing" width="300"
+ style="display: block; margin: 0 auto" />
+
+
+
+## Wrapping Up
