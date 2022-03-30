@@ -1,6 +1,6 @@
 ---
 title: Generating a Correlation Table - Part 2
-date: 2022-03-29
+date: 2022-03-30
 draft: false
 featured: false
 image:
@@ -308,3 +308,144 @@ The `pivot_longer` function can be used to convert a wide format into a long for
  3 itc40_LF Non Verbal Z Score                              0.0371  
  4 itc40_LF Verbal Z Score                                  0.00182 
  ```
+
+ ### Combining P Values with r and n values
+ Let's extract the rest of the relevant variables and see if we can neatly combine them together using a join type command.
+
+ Let's make a function for the pull, otherwise the code will get very messy very quickly:
+ ```r
+pull_corr <- function(df, var_name){
+  # extracts statistical columns from corx object
+  df %>% pluck(var_name) %>% 
+    as_tibble(rownames = "measure") %>%  
+    pivot_longer(cols = -measure, 
+                 names_to = "clinvar", 
+                 values_to = var_name)
+}
+ ```
+
+ Let's use a join command to merge the tables together. As tempting as it is to simply `bind_columns` this is different than a join and can potentially match two tables with different orders. Join functions can recognize that both measure and clinvar are matched columns and will use the unique combination to match the unique pairs:
+ ```r
+# create tibble of correlation statistics
+df.corr.res.tmp <- left_join(left_join(pull_corr(corx.corr.res, var_name = "r"), 
+                    pull_corr(corx.corr.res, var_name = "p")),
+          pull_corr(corx.corr.res, var_name = "n"))
+```
+
+Our output is a satisfying table of all the correlations and p values:
+```
+Joining, by = c("measure", "clinvar") # very important
+Joining, by = c("measure", "clinvar")
+
+# A tibble: 780 × 5
+   measure  clinvar                                              r        p     n
+   <chr>    <chr>                                            <dbl>    <dbl> <dbl>
+ 1 itc40_LF Age at Visit                                    -0.281 0.0965      36
+ 2 itc40_LF Deviation IQ                                     0.492 0.00366     33
+ 3 itc40_LF Non Verbal Z Score                               0.364 0.0371      33
+ 4 itc40_LF Verbal Z Score                                   0.522 0.00182     33
+ 5 itc40_LF ADAMS General Anxiety                           -0.110 0.561       30
+ ```
+## Correction for Multiple Comparisions
+R makes it relatively simple to correct for multiple comparisions with a dataframe with a p value. Though there are cases where you may want to individually correct groups of comparisions, in this case we will perform a 5% false discovery rate on 780 correlations. This rate expects about 780 * .05 = 38 comparisons to be positive due to chance. 
+
+  FDR = expected (# false predictions/ # total predictions)
+
+Let's look at our actual observed significant values:
+```r
+df.corr.res.corrected %>% filter(p <= .05)
+```
+```
+# A tibble: 71 × 6
+   measure  clinvar                                  r        p     n   adjp
+   <chr>    <chr>                                <dbl>    <dbl> <dbl>  <dbl>
+ 1 itc40_LF Deviation IQ                         0.492 0.00366     33 0.190 
+ 2 itc40_LF Non Verbal Z Score                   0.364 0.0371      33 0.471 
+ 3 itc40_LF Verbal Z Score                       0.522 0.00182     33 0.163 
+ 4 itc40_LF SCQ Total                           -0.576 0.000698    31 0.0838
+ 5 itc40_LO ADAMS Obsessive/Compliance Behavior -0.361 0.0461      31 0.521 
+ 6 itc40_LO SCQ Total                           -0.461 0.00905     31 0.240 
+ ```
+We have about 71 significant correlations out of 780 which is approximately 71/780 * 100 = 7.1% of the total. Thus, we would expect a small number of highly significant corrections after accounting for 5% of false positives.
+
+Let's implement the correction in code:
+```r
+df.corr.res.corrected <- df.corr.res.tmp %>% mutate(adjp = p.adjust(p, method="fdr"))
+
+# check for positive results at our threshold of 5% FDR
+df.corr.res.corrected %>% filter(adjp <= .05)
+```
+```
+# A tibble: 5 × 6
+  measure       clinvar                                 r         p     n   adjp
+  <chr>         <chr>                               <dbl>     <dbl> <dbl>  <dbl>
+1 itc40_RF      WJ-III                              0.712 0.0000214    28 0.0167
+2 itc40_RT      WJ-III                              0.642 0.000227     28 0.0355
+3 itc80_RT      WJ-III                              0.646 0.000203     28 0.0355
+4 stp_gamma1_LT ADAMS Obsessive/Compliance Behavior 0.623 0.000183     31 0.0355
+5 stp_gamma2_LT ADAMS Obsessive/Compliance Behavior 0.635 0.000123     31 0.0355
+```
+
+So we ended up with 5 significant correlations out of 71 and from first glance these are physiologically interesting. At this point, we want to perform a subgroup analysis on males only (in Fragile X Syndrome males expression little to no protein compared to females with FXS). For this exploratory analysis, we will also correct values, but will use a typical p < .05 as the cutoff. Instead of making 2 tables, I want to combine both correlation tables into a single table. We can do this by adding an additional column to the present table which will serve as a label for later filtering.
+
+```r
+# add label column for table
+df.corr.res.all <- df.corr.res.corrected %>% mutate(label = "ALL")
+```
+
+Let's now use our functions to quickly spin up a male only subgroup correlation analysis for male affected with Fragile X only:
+```r
+# run main correlation function
+corx.corr.res.males <- fx.corr.res(
+  df = df.raw %>% filter(sex == "M"),
+  group.variable = "group",
+  group.filter = "FXS",
+  response.variables = response_variable_names,
+  clinical.variables = clinical_variables)
+
+# create tibble of correlation statistics
+df.corr.res.male.tmp <-
+  left_join(left_join(
+    pull_corr(corx.corr.res.males,
+              var_name = "r"),
+    pull_corr(corx.corr.res.males, var_name = "p")
+  ),
+  pull_corr(corx.corr.res.males, var_name = "n"))
+
+# adjust for multiple comparisons
+df.corr.res.male.corrected <- df.corr.res.male.tmp %>% mutate(adjp = p.adjust(p, method="fdr"))
+df.corr.res.male.corrected %>% filter(p <= .05) %>% 
+  arrange(p)
+
+# add label column for table
+df.corr.res.male <- df.corr.res.male.corrected %>% mutate(label = "MALE")
+```
+Notice that in the function itself, I perform a inline filter for males ("M") prior to the the function inputs. This lets me overcome the limitation of my function of only allowing a single filtering variable. 
+
+## Creating a final raw results table
+By adding labels to each dataset, we now have the ability to bind the rows into a single table since the `label` column will be unique between the two. This will simplify reporting and allow us to implement this table easily into an R-shiny application for visualization.
+
+```r
+df.corr.res <- df.corr.res.all %>% bind_rows(df.corr.res.male)
+write_csv(df.corr.res, file = 'figshare/jon_srcchirp_correlationResults.csv')
+```
+
+## Wrapping up
+To summarize, during this lesson we:
+1. learned how to perform correlation analysis on a dataset
+1. plotted a scatter plot of the correlation results
+1. adjusted for multiple comparisons
+1. created a table which contains a main and subgroup analysis of correlations results
+
+At this point, I would recommend clearing your environmental variables and running your script to see if it will remain error free.
+
+## Coming up
+Now that we have our correlation results, it would be nice to plot the data to better understand the relationships. In this case, building a simple R shiny application to display and print plots may be of use.
+
+
+
+
+
+
+
+
