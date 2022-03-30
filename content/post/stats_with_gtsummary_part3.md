@@ -8,7 +8,6 @@ image:
   focal_point: Smart
   preview_only: false
 ---
-
 # Introduction
 In part 1, we used the `gtsummary` package to create a publication-ready demographics table with a few (relatively!) lines of code.
 
