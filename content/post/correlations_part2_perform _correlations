@@ -136,6 +136,175 @@ df.raw %>% ggplot(aes(x = itc40_RT, y=`WJ-III`)) +
 <img src="https://www.dropbox.com/s/9wpsd3jh1s01bqn/CleanShot%202022-03-30%20at%2009.50.05.png?raw=1" alt="drawing" width="300"
  style="display: block; margin: 0 auto" />
 
+### Converting the results to a dataframe for further analysis
+The results from `corx` are a custom table that can be easily converted to a `tibble` using the `as_tibble` function.
 
+```
+> corr.res %>% as_tibble(rownames = "measure")
+# A tibble: 1 × 2
+  measure  `WJ-III`
+  <chr>    <chr>   
+1 itc40_RT .69***  
+```
+## Putting it all together to run a correlation across the whole dataset
+Now that we have our basic functions in place, we can use the `corx` function to run a correlation across the whole dataset. The output will be a large `tibble` we can use to correct for multiple comparisons and tabulate for publication.
 
-## Wrapping Up
+### Designing a corx based function
+The function we will build will have inputs:
+1. The raw values
+1. A grouping variable to filter by
+1. response variables
+1. clinical variables
+
+In this case, we are not interested in how the response and clinical variables relate within each other, just between them. So we will specify our `x` and `y` inputs as the response variables and clinical variables separately.
+
+The output should be a `tibble` with the following columns:
+1. `measure`: the name of the measure
+1. `corr`: the correlation coefficient
+1. `p`: the p value
+1. `adj.p`: the adjusted p value
+
+To go from the inputs to the desired output, we have a few steps to implement, so let's build our function step by step and test it along the way.
+
+Let's first create a skeleton function with our inputs and outputs. Check your syntax by running the empty function. 
+
+```r
+corr.res <- function(df, group.variable, group.filter,
+                     response.variables, clinical.variables){
+  
+}
+```
+Let's add in our `corx` function and the other functionality needed for our inputs:
+```r
+fx.corr.res <- function(df,
+                     group.variable,
+                     group.filter,
+                     response.variables,
+                     clinical.variables) {
+  df %>%
+    filter(eval(parse(text = group.variable)) == group.filter) %>%
+    corx(x = response.variables, y = clinical.variables,
+         method = "spearman")  
+}
+```
+### Parsing Strings into Variables: Specifying an input variable with a character string
+As we may want flexiblity in our function to filter by different variables, we have to find a way to take the string input (group.variable) and let R evaluate it as a variable. There are several ways of doing things, but I added the most common tried and true method to the function.
+```
+filter(eval(parse(text = group.variable)) == group.filter) 
+```
+-the inner `parse` function takes a string and evaluates it as an R expression. 
+-the outer `eval` function takes the result of the inner `parse` function and evaluates it as an R expression.
+
+When we run the function, the filter function "sees" the string as a column name in the dataframe and allows it's usual operation.
+
+### Testing our function to output standard corx results
+Before wrangling the output, let's test our function and see if we can get corx results for the entire dataset.
+
+Let's populate our function call:
+```r
+df.corr.res <- fx.corr.res(
+  df = df.raw,
+  group.variable = "group",
+  group.filter = "FXS",
+  response.variables = response_variables,
+  clinical.variables = clinical_variables)
+```
+and see the results ...
+```
+Error: 1 name could not be found: response.variables.
+```
+
+### Troubleshooting 1: Generating multiple variable names from a dataset
+The function throws an error that `response.variables` could not be found. The error description is not very helpful, but looking at the `response_variables` definition gives us some clue on what is going on.
+```r
+response_variables <- c("itc", "stp", "ersp") # use with starts_with
+```
+R is attempting to `select` columns that match the `response_variables` input but since they only are search terms, R cannot make a match and throws an error. We opted to use a search term for a `select` helper function since typing in all 60 variable names would be tedious.
+
+So let's construct a simple expression that gives R a proper list of variable names to search for. There are many ways to accomplish this, but I chose a version with familiar functions.
+```r
+response_variable_names <- df.raw %>% 
+  select(starts_with(response_variables)) %>% 
+  names()
+```
+Here we are using the `starts_with` function to generate a list of variables that start with the string `itc`, `stp`, or `ersp`:
+```
+> response_variable_names
+ [1] "itc40_LF"       "itc40_LO"       "itc40_LT"       "itc40_RF"      
+ [5] "itc40_RO"       "itc40_RT"       "itc80_LF"       "itc80_LO"      
+ [9] "itc80_LT"       "itc80_RF"       "itc80_RO"       "itc80_RT"      
+[13] "itconset_LF"    "itconset_LO"    "itconset_LT"    "itconset_RF"   
+[17] "itconset_RO"    "itconset_RT"    "itcoffset_LF"   "itcoffset_LO"  
+[21] "itcoffset_LT"   "itcoffset_RF"   "itcoffset_RO"   "itcoffset_RT"  
+...
+```
+### Testing our function with the autogenerated variable names
+Let's retry our function with our new variable names and we have successful corx output!
+
+```r
+df.corr.res <- fx.corr.res(
+  df = df.raw,
+  group.variable = "group",
+  group.filter = "FXS",
+  response.variables = response_variable_names,
+  clinical.variables = clinical_variables)
+```
+```
+-----------------------------------------------------------------
+               eegid Age at Visit Deviation IQ Non Verbal Z Score
+-----------------------------------------------------------------
+itc40_LF         .16         -.28        .49**               .36*
+itc40_LO        -.04         -.23          .27                .31
+itc40_LT         .14         -.20        .47**              .46**
+itc40_RF         .10          .17        .46**               .38*
+itc40_RO        -.08          .23         -.15               -.20
+itc40_RT         .03          .22          .10                .12
+itc80_LF         .18          .09          .17               -.02
+```
+
+Though this output could be exported as is for further review, we want to integrate the results into the rest of our workflow which is standardized on dataframe/tibbles. We also note that the `p` columns are not included in the output and are hidden by default.
+
+### Modifying Function Output
+Let's work on the following adjustments to our custom corx function:
+1. extract out the r, p, and n values from the corx output
+1. convert each to a tibble
+1. combine columns into a single tibble
+1. corrected for multiple comparisions
+
+The default output of `corx` is an result object which contains statistical measures, but are not by default outputted in a tidy format. We can retrieve these columns by accessing the `corx` object directly.
+The  `pluck` function from the`purrr` package can be used to extract the columns from the result object. 
+
+    The `pluck` function can deeply access nested objects and extract the columns from the result object.
+
+Let's try it with the `p` values:
+```r
+corx.corr.res %>% pluck("p") 
+# as an alternative to 
+corx.corr.res$p
+```
+```
+                    eegid Age at Visit Deviation IQ Non Verbal Z Score
+itc40_LF       0.36043976  0.096467994  0.003660203        0.037139640
+itc40_LO       0.80688081  0.173993007  0.124372333        0.078895703
+itc40_LT       0.41534232  0.239117466  0.006384824        0.006548105
+itc40_RF       0.56527182  0.320416246  0.007689071        0.030320911
+itc40_RO       0.62869072  0.186083951  0.420001714        0.274026467
+```
+`pluck` can be used within pipes and also can find nested objects which makes it a smart alternative to directly accessing the variable using the base $ sign.
+
+### Extracting out P Values
+Let's extract out the p values from the corx output and convert them to a tibble.
+```r
+corx.corr.res %>% pluck("p") %>% as_tibble(rownames = "measure") %>%  
+  pivot_longer(cols = -measure, names_to = "clinvar", values_to = "p" )
+```
+The `pivot_longer` function can be used to convert a wide format into a long format. This means each observation (in this p values) will be in a single column with the current column names representing clinical measures in an adjacent column.
+```
+# A tibble: 780 × 3
+   measure  clinvar                                                p
+   <chr>    <chr>                                              <dbl>
+ 1 itc40_LF Age at Visit                                    0.0965  
+ 2 itc40_LF Deviation IQ                                    0.00366 
+ 3 itc40_LF Non Verbal Z Score                              0.0371  
+ 4 itc40_LF Verbal Z Score                                  0.00182 
+ ```
