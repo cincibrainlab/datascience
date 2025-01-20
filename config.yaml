@@ -1,73 +1,104 @@
----
 title: Cinci Brain Lab
-baseurl: www.cincibrainlab.com
-copyright: "© {year} CBL"
+baseURL: "https://www.cincibrainlab.com/"
+copyright: "© {year} Cincinnati Brain Lab"
+
+# Language settings
 defaultContentLanguage: en
-hasCJKLanguage: false
 defaultContentLanguageInSubdir: false
 removePathAccents: true
+
+# Security settings (to fix the build error)
+security:
+  funcs:
+    getenv:
+      - '^HUGO_'
+      - '^WC_POST_CSS$'
+      - '^CI$'
+  exec:
+    allow:
+      - '^dart-sass-embedded$'
+      - '^go$'
+      - '^npx$'
+      - '^postcss$'
+
+# Module imports
 module:
   imports:
-  - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy-cms
-  - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy
-  hugoVersion:
-    min: 0.84.1
-    extended: true
-enableGitInfo: false
+    - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy-cms
+      disable: false
+    - path: github.com/wowchemy/wowchemy-hugo-modules/wowchemy
+      disable: false
+
+# Hugo settings
+build:
+  writeStats: true
+hugoVersion:
+  min: "0.118.2"
+  extended: true
+
+# Site features
+enableGitInfo: true
 summaryLength: 30
 paginate: 10
 enableEmoji: true
 enableRobotsTXT: true
-footnotereturnlinkcontents: "<sup>^</sup>"
+
+# File handling
 ignoreFiles:
-- "\\.ipynb$"
-- ".ipynb_checkpoints$"
-- "\\.Rmd$"
-- "\\.Rmarkdown$"
-- _cache$
+  - \.ipynb$
+  - .ipynb_checkpoints$
+  - \.Rmd$
+  - \.Rmarkdown$
+  - _cache$
+
+# URLs
 permalinks:
-  authors: "/author/:slug/"
-  tags: "/tag/:slug/"
-  categories: "/category/:slug/"
-  publication_types: "/publication-type/:slug/"
-disableAliases: true
+  authors: '/author/:slug/'
+  tags: '/tag/:slug/'
+  categories: '/category/:slug/'
+  publication_types: '/publication-type/:slug/'
+
+# Outputs
 outputs:
-  home:
-  - HTML
-  - RSS
-  - JSON
-  - WebAppManifest
-  - headers
-  - redirects
-  section:
-  - HTML
-  - RSS
+  home: [HTML, RSS, JSON, WebAppManifest, headers, redirects]
+  section: [HTML, RSS]
+
+# Markup
 markup:
   defaultMarkdownHandler: goldmark
   goldmark:
     renderer:
       unsafe: true
   highlight:
-    codeFences: false
+    codeFences: true
+    style: monokai
   tableOfContents:
     startLevel: 2
     endLevel: 3
+
+# Image processing
 imaging:
   resampleFilter: lanczos
   quality: 75
   anchor: smart
+
+# Performance
 timeout: 600000
+
+# Taxonomy
 taxonomies:
   tag: tags
   category: categories
   publication_type: publication_types
   author: authors
+
+# Related content
 related:
   threshold: 80
   includeNewer: true
   toLower: true
   indices:
-  - name: tags
-    weight: 100
-  - name: categories
-    weight: 70
+    - name: tags
+      weight: 100
+    - name: categories
+      weight: 70
