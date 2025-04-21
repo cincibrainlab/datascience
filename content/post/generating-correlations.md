@@ -63,6 +63,7 @@ df <- read_csv("https://figshare.com/ndownloader/files/34554656") %>%
 # Review # of rows and columns
 df
 ```
+
 ```
 # A tibble: 5,100 × 46
     ...1 eegid chan    rejtrials stp_gamma stp_gamma1 stp_gamma2 stp_alpha
